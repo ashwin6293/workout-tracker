@@ -86,6 +86,7 @@ header.top h1{font-size:26px;line-height:1.1;margin:2px 0 0;font-weight:700;lett
 .tile .s{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:14px}
 .card{background:var(--surface);border-radius:14px;box-shadow:0 0 0 1px var(--border);padding:14px;margin:12px 16px}
 .card h2{font-size:15px;margin:0;font-weight:650}
+.card h2 .u{font-weight:500;color:var(--muted);font-size:13px}
 .card .meta{font-size:12px;color:var(--ink2);margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .delta{font-weight:600;display:inline-flex;align-items:center;gap:3px}
 .delta.good{color:var(--good)} .delta.bad{color:var(--bad)} .delta.neutral{color:var(--ink2)}
@@ -188,6 +189,7 @@ pre.schema{background:var(--chip);border-radius:8px;padding:10px;font-size:11.5p
 <script>
 'use strict';
 /* ---------------- utilities ---------------- */
+const APP_VERSION = '5 Nov 2026 · horizontal labels';
 const DAY = 864e5;
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -629,8 +631,8 @@ function renderWorkout(){
 
   // chart card
   const d = deltaInfo(list, mk);
-  h += `<section class="card"><h2>${esc(M[mk].label)}${ov ? ' &amp; ' + esc(M[ov].label) : ''} ${BY_WORD[V.period]}</h2><div class="meta">${d.html}</div><div class="chartwrap" id="chart"></div><div id="legend"></div><div id="tbl"></div></section>`;
-  V.specs.push({el:'chart', legendEl:'legend', tblEl:'tbl', bks, mk, ov, H:ov ? 230 : 210, ...seriesFor(tab, mk)});
+  h += `<section class="card"><h2>${esc(M[mk].label)} <span class="u" id="u_chart"></span>${ov ? ' &amp; ' + esc(M[ov].label) + ' <span class="u" id="u2_chart"></span>' : ''} ${BY_WORD[V.period]}</h2><div class="meta">${d.html}</div><div class="chartwrap" id="chart"></div><div id="legend"></div><div id="tbl"></div></section>`;
+  V.specs.push({el:'chart', legendEl:'legend', tblEl:'tbl', unitEl:'u_chart', ovUnitEl:'u2_chart', bks, mk, ov, H:ov ? 230 : 210, ...seriesFor(tab, mk)});
 
   // HR zones
   h += zonesCard(rangeList);
@@ -689,9 +691,9 @@ function graphsHtml(tab, ti, bks, list, rangeList, mk){
     ser.forEach((se, i) => {
       const sub = rangeList.filter(se.test), v = agg(sub, mk), d = deltaInfo(list.filter(se.test), mk);
       const ico = se.key === 'other' ? 'other' : typeInfo(se.key).icon;
-      h += `<section class="card gcard"><div class="ghead"><div class="gt"><span class="ico sm" style="background:${se.color}">${icon(ico, 2)}</span><h2>${esc(se.key === 'other' ? 'Other' : typeInfo(se.key).title)}</h2></div><div class="gv">${valHtml(mk, v)}</div></div>` +
+      h += `<section class="card gcard"><div class="ghead"><div class="gt"><span class="ico sm" style="background:${se.color}">${icon(ico, 2)}</span><h2>${esc(se.key === 'other' ? 'Other' : typeInfo(se.key).title)} <span class="u" id="u_gc${i}"></span></h2></div><div class="gv">${valHtml(mk, v)}</div></div>` +
            `<div class="meta">${d.badge}<span>${esc(d.label)}</span></div><div class="chartwrap" id="gc${i}"></div></section>`;
-      V.specs.push({el:'gc'+i, bks, mk, H:150, maxRaw, series:[se], stacked:false});
+      V.specs.push({el:'gc'+i, unitEl:'u_gc'+i, bks, mk, H:150, maxRaw, series:[se], stacked:false});
     });
     return h;
   }
@@ -700,13 +702,13 @@ function graphsHtml(tab, ti, bks, list, rangeList, mk){
   const metrics = tab === 'all' ? ALL_METRICS : ti.metrics;
   if (tab === 'all'){
     const ser = allSeries().filter(se => rangeList.some(se.test));
-    if (ser.length > 1) h += `<div class="legend pad" style="margin-top:0">${ser.map(se => `<span><i class="sw" style="background:${se.color}"></i>${esc(se.label)}</span>`).join('')}</div>`;
+
   }
   metrics.forEach((k, i) => {
     const v = agg(rangeList, k), d = deltaInfo(list, k);
-    h += `<section class="card gcard"><div class="ghead"><h2>${esc(M[k].label)}</h2><div class="gv">${valHtml(k, v)}</div></div>` +
-         `<div class="meta">${d.badge}<span>${esc(d.label)}</span></div><div class="chartwrap" id="gc${i}"></div></section>`;
-    V.specs.push({el:'gc'+i, bks, mk:k, H:150, ...seriesFor(tab, k)});
+    h += `<section class="card gcard"><div class="ghead"><h2>${esc(M[k].label)} <span class="u" id="u_gc${i}"></span></h2><div class="gv">${valHtml(k, v)}</div></div>` +
+         `<div class="meta">${d.badge}<span>${esc(d.label)}</span></div><div class="chartwrap" id="gc${i}"></div><div id="lg${i}"></div></section>`;
+    V.specs.push({el:'gc'+i, unitEl:'u_gc'+i, legendEl:'lg'+i, bks, mk:k, H:150, ...seriesFor(tab, k)});
   });
   return h;
 }
@@ -770,6 +772,24 @@ function shortFmt(mk, v){
   }
 }
 const CW = 5.9;   // ~px per character at 10px
+/* one unit per chart: the heading shows it, the numbers don't repeat it */
+function chartUnit(mk, maxRaw){
+  const u = U(), r1 = v => (v >= 100 ? Math.round(v) : +v.toFixed(1)).toString();
+  switch (mk){
+    case 'duration': case 'avg_dur':
+      return maxRaw < 7200 ? {u:'min', f:v => String(Math.round(v/60))} : {u:'h', f:v => r1(v/3600)};
+    case 'distance': case 'longest': case 'avg_dist': return {u:u.d, f:v => { const d = v/u.dm; return d >= 1000 ? compact(d) : r1(d); }};
+    case 'pace': return {u:'min/' + u.d, f:fmtMS};
+    case 'pace100': return {u:'min/100m', f:fmtMS};
+    case 'speed': return {u:u.sp, f:v => v.toFixed(1)};
+    case 'elevation': return {u:u.e, f:v => compact(Math.round(v/u.em))};
+    case 'calories': return {u:'kcal', f:v => compact(Math.round(v))};
+    case 'steps': return {u:'steps', f:v => compact(Math.round(v))};
+    case 'count': return {u:'', f:v => String(Math.round(v))};
+    case 'avg_hr': case 'max_hr': return {u:'bpm', f:v => String(Math.round(v))};
+    default: return {u:'', f:v => compact(v)};
+  }
+}
 function smoothPath(p){
   if (!p.length) return '';
   if (p.length === 1) return `M${p[0][0]},${p[0][1]}`;
@@ -799,13 +819,17 @@ function drawSpec(sp){
   const rawMax = sp.maxRaw != null ? sp.maxRaw : Math.max(0, ...tot.filter(x => x != null));
   const H = sp.H || 210, W = Math.max(260, el.clientWidth), pl = 4, pr = 4, pb = 34;
   const n = bks.length, slot = (W - pl - pr) / n, bw = Math.min(26, Math.max(6, slot * .64));
-  const labels = tot.map(v => (v != null && v > 0) || (v != null && M[mk].kind !== 'sum') ? shortFmt(mk, v) : '');
+  const cu = chartUnit(mk, rawMax);
+  const labels = tot.map(v => (v != null && v > 0) || (v != null && M[mk].kind !== 'sum') ? cu.f(v) : '');
   const longest = Math.max(1, ...labels.map(l => l.length));
-  const rotate = longest * CW + 4 > slot;                     // labels too wide for the column: stand them up
-  const pt = rotate ? Math.min(H * .32, longest * CW + 10) : 18;
+  // always horizontal: shrink the type to fit the column (down to 8px), then stagger every other label
+  const fs = Math.max(8, Math.min(10.5, (slot - 2) / (longest * .6)));
+  const stagger = longest * .6 * fs > slot - 2;
+  const pt = 18 + (stagger ? fs + 3 : 0);
   const ph = H - pt - pb;
   const top = Math.max(rawMax, 1e-9);
   const y = v => pt + ph - (v / top) * ph;
+  if (sp.unitEl){ const e = document.getElementById(sp.unitEl); if (e) e.textContent = cu.u ? `(${cu.u})` : ''; }
   let s = `<svg viewBox="0 0 ${W} ${H}" height="${H}" role="img" aria-label="${esc(m.label)} bar chart"><defs>` +
     series.map((se, si) => `<linearGradient id="g${uid}_${si}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:${se.color}"/><stop offset="1" style="stop-color:${se.color};stop-opacity:var(--bar-fade)"/></linearGradient>`).join('') + `</defs>`;
   s += `<line x1="${pl}" x2="${W-pr}" y1="${pt+ph}" y2="${pt+ph}" stroke="var(--axis)" stroke-width="1"/>`;
@@ -828,20 +852,19 @@ function drawSpec(sp){
       } else s += `<rect x="${x}" y="${t}" width="${bw}" height="${hgt}" style="${st}"/>`;
       // value of each stacked segment, inside it when there is room
       if (stacked && segs.length > 1){
-        const lab = shortFmt(mk, g.v), w = lab.length * 5.3;
-        if (w + 3 <= bw && hgt >= 12) s += `<text class="inl" x="${cx}" y="${t + hgt/2 + 3.2}" text-anchor="middle">${esc(lab)}</text>`;
-        else if (hgt >= w + 6 && bw >= 11) s += `<text class="inl" x="${cx}" y="${t + hgt/2}" text-anchor="middle" dominant-baseline="central" transform="rotate(-90 ${cx} ${t + hgt/2})">${esc(lab)}</text>`;
+        const lab = cu.f(g.v), ifs = Math.min(9, (bw - 2) / (lab.length * .58));
+        if (ifs >= 7 && hgt >= ifs + 4) s += `<text class="inl" x="${cx}" y="${t + hgt/2 + ifs*.36}" text-anchor="middle" style="font-size:${ifs.toFixed(1)}px">${esc(lab)}</text>`;
       }
     });
     s += `</g>`;
     // total on top of every bar
     const bt = tot[i] != null ? y(Math.max(0, tot[i])) : pt + ph;
     barTops.push(bt);
-    barLabelBox.push(!labels[i] ? [-99, -99] : rotate ? [bt - 5 - labels[i].length * CW, bt - 5] : [bt - 14, bt - 4]);
+    const lift = stagger && (n - 1 - i) % 2 === 1 ? fs + 2 : 0;
+    barLabelBox.push(!labels[i] ? [-99, -99] : [bt - 5 - lift - fs, bt - 3 - lift]);
     if (labels[i]){
       const cls = `vlabel${hi ? ' hi' : ''}`, op = dimmed ? ' opacity=".45"' : '';
-      if (rotate) s += `<text class="${cls}"${op} x="${cx}" y="${bt - 5}" text-anchor="start" dominant-baseline="central" transform="rotate(-90 ${cx} ${bt - 5})">${esc(labels[i])}</text>`;
-      else s += `<text class="${cls}"${op} x="${cx}" y="${bt - 5}" text-anchor="middle">${esc(labels[i])}</text>`;
+      s += `<text class="${cls}"${op} x="${cx}" y="${bt - 5 - lift}" text-anchor="middle" style="font-size:${fs.toFixed(1)}px">${esc(labels[i])}</text>`;
     }
     if (n <= 14 || i % 2 === (n-1) % 2){
       s += `<text class="xl" x="${cx}" y="${H-pb+15}" text-anchor="middle" style="${b.cur ? 'font-weight:700;fill:var(--ink)' : ''}">${esc(b.lab)}</text>`;
@@ -857,8 +880,10 @@ function drawSpec(sp){
     // smooth line: monotone cubic through each unbroken run of points (no overshoot past the real values)
     const d = smoothPath(pts.filter(Boolean));   // joins across periods with no workout; those have no dot
     s += `<path d="${d}" fill="none" class="ovline"/>`;
-    const fs = 9, lw = l => l.length * 5.4 + 4;
-    const labs = ovals.map(v => v == null ? '' : shortFmt(ov, v));
+    const lw = l => l.length * 5.4 + 4;
+    const ou = chartUnit(ov, Math.max(0, ...ovals.filter(v => v != null)));
+    const labs = ovals.map(v => v == null ? '' : ou.f(v));
+    if (sp.ovUnitEl){ const e = document.getElementById(sp.ovUnitEl); if (e) e.textContent = ou.u ? `(${ou.u})` : ''; }
     const crowded = labs.some(l => l && lw(l) > slot - 1);
     pts.forEach((p, i) => {
       if (!p) return;
@@ -966,6 +991,7 @@ function renderSettings(){
     </details>
   </div>
   <h3>Reset</h3><div class="card"><div class="srow"><div class="grow">Restore default settings<div class="n">Keeps your data</div></div><button class="btn" data-reset>Reset</button></div></div>
+  <div class="note pad" style="text-align:center;margin-top:14px">App version ${APP_VERSION}</div>
   <div style="height:16px"></div></div>`;
   $('#main').innerHTML = h;
 }
