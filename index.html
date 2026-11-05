@@ -43,7 +43,14 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 #app{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
-header.top{position:sticky;top:0;z-index:6;background:var(--page);padding:calc(14px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+header.top{position:sticky;top:0;z-index:6;background:color-mix(in srgb,var(--page) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:calc(14px + env(safe-area-inset-top)) 16px 10px;transition:box-shadow .2s}
+header.top .hrow{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+header.top.scrolled{box-shadow:0 1px 0 var(--border),0 8px 24px -12px rgba(0,0,0,.35)}
+header.top.scrolled .eyebrow{display:none}
+header.top.scrolled h1{font-size:19px}
+#controls:empty{display:none}
+#controls .seg{margin:10px 0 0}
+#controls .subrow{margin:8px 0 0;min-height:26px}
 header.top h1{font-size:26px;line-height:1.1;margin:2px 0 0;font-weight:700;letter-spacing:-.01em}
 .eyebrow{font-size:12px;color:var(--muted)}
 .pill{font-size:11px;padding:3px 8px;border-radius:999px;background:var(--chip);color:var(--ink2);white-space:nowrap}
@@ -68,6 +75,10 @@ header.top h1{font-size:26px;line-height:1.1;margin:2px 0 0;font-weight:700;lett
 .caption button{border:0;background:none;color:var(--ink2);font-size:12px;padding:0;text-decoration:underline}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 16px}
 .tile{background:var(--surface);border-radius:12px;box-shadow:0 0 0 1px var(--border);padding:9px 10px;border:0;text-align:left;min-height:64px;display:flex;flex-direction:column;justify-content:space-between}
+.tile{position:relative}
+.tile .tag{position:absolute;top:6px;right:7px;font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+.tile.ov{box-shadow:0 0 0 2px var(--ink)}
+.tile.ov .tag{color:var(--ink)}
 .tile.on{box-shadow:0 0 0 2px var(--accent),0 0 calc(var(--glow)*2) -2px var(--accent)}
 .tile .l{font-size:11px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tile .v{font-size:17px;font-weight:650;margin-top:2px;white-space:nowrap}
@@ -83,7 +94,14 @@ header.top h1{font-size:26px;line-height:1.1;margin:2px 0 0;font-weight:700;lett
 .chartwrap text{font-family:inherit}
 .tick{font-size:10px;fill:var(--muted);font-variant-numeric:tabular-nums}
 .xl{font-size:10px;fill:var(--ink2)} .xs{font-size:9.5px;fill:var(--muted)}
-.vlabel{font-size:11px;fill:var(--ink);font-weight:600}
+.vlabel{font-size:10px;fill:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+.vlabel.hi{fill:var(--ink);font-weight:700}
+.inl{font-size:9px;font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(0,0,0,.35);stroke-width:2px;pointer-events:none}
+.ovline{stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 var(--glow) var(--ink));pointer-events:none}
+.ovdot{fill:var(--ink);stroke:var(--surface);stroke-width:2;pointer-events:none}
+.ovlabel.hi{font-size:10.5px}
+.ovlabel{font-size:9px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3px;font-variant-numeric:tabular-nums;pointer-events:none}
+.lnsw{display:inline-block;width:14px;height:2px;border-radius:1px;background:var(--ink);vertical-align:middle}
 .tip{position:absolute;z-index:4;pointer-events:none;background:var(--tip-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--ink);border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:0 0 0 1px var(--border),0 6px 20px rgba(0,0,0,.14);min-width:130px;max-width:260px}
 .tip .t{font-weight:650;margin-bottom:4px}
 .tip .r{display:flex;align-items:center;gap:12px;justify-content:space-between;white-space:nowrap;color:var(--ink2);font-variant-numeric:tabular-nums}
@@ -159,9 +177,9 @@ pre.schema{background:var(--chip);border-radius:8px;padding:10px;font-size:11.5p
 </head>
 <body>
 <div id="app">
-  <header class="top">
-    <div><div class="eyebrow" id="hdrSub"></div><h1 id="hdrTitle">Workouts</h1></div>
-    <div id="hdrRight"></div>
+  <header class="top" id="hdr">
+    <div class="hrow"><div><div class="eyebrow" id="hdrSub"></div><h1 id="hdrTitle">Workouts</h1></div><div id="hdrRight"></div></div>
+    <div id="controls"></div>
   </header>
   <main id="main"></main>
 </div>
@@ -569,7 +587,7 @@ function renderWorkout(){
   const compare = cmpAble && S.compare;
   const bks = buckets(V.period, compare);
   const list = actsFor(tab);
-  const mk = ti.metrics.includes(S.metric[tab]) ? S.metric[tab] : ti.metrics[0];
+  const msel = selMetrics(tab, ti), mk = msel[0], ov = msel[1] || null;
   if (V.sel != null && V.sel >= bks.length) V.sel = null;
   bks.forEach(b => b.list = inRange(list, b.start, b.end));
   const rangeList = V.sel != null ? bks[V.sel].list : bks.flatMap(b => b.list);
@@ -588,29 +606,31 @@ function renderWorkout(){
       keys.map(k => { const on = !f || f.includes(k); const ti2 = typeInfo(k);
         return `<button class="chip ${f && on ? 'on' : ''} ${on?'':'off'}" data-allf="${esc(k)}" aria-pressed="${on}"><span class="sw" style="background:${ti2.color}"></span>${esc(ti2.label)} <span style="color:var(--muted)">${c[k]}</span></button>`; }).join('') + `</div>`;
   }
-  h += `<div class="seg" role="tablist">` + PERIODS.map(p => `<button role="tab" data-period="${p.k}" class="${p.k===V.period?'on':''}" aria-selected="${p.k===V.period}">${p.l}</button>`).join('') + `</div>`;
-  h += `<div class="subrow"><div class="desc">${esc(per.desc)}${compare ? (V.period==='m12' ? ` · each month 1–${today0().getDate()}` : ` · each year to ${fmtDM(today0())}`) : ''}</div>` +
+  let ctl = `<div class="seg" role="tablist">` + PERIODS.map(p => `<button role="tab" data-period="${p.k}" class="${p.k===V.period?'on':''}" aria-selected="${p.k===V.period}">${p.l}</button>`).join('') + `</div>`;
+  ctl += `<div class="subrow"><div class="desc">${esc(per.desc)}${compare ? (V.period==='m12' ? ` · each month 1–${today0().getDate()}` : ` · each year to ${fmtDM(today0())}`) : ''}</div>` +
        (cmpAble ? `<button class="switch ${compare?'on':''}" data-compare aria-pressed="${compare}"><span>Same-date compare</span><span class="tr"></span></button>` : '') + `</div>`;
+  $('#controls').innerHTML = ctl;
 
   V.specs = [];
   if (gm){ h += graphsHtml(tab, ti, bks, list, rangeList, mk); $('#main').innerHTML = h; drawAll(); return; }
 
   // metric tiles
   const capTxt = V.sel != null ? `Selected: ${bks[V.sel].title}` : `${per.l === '7D' ? 'Last 7 days' : per.l === '14D' ? 'Last 14 days' : 'Whole range shown'} · totals`;
-  h += `<div class="caption"><span>${esc(capTxt)}</span>${V.sel != null ? '<button data-clearsel>Clear</button>' : ''}</div><div class="tiles">`;
+  h += `<div class="caption"><span>${esc(capTxt)}</span>${V.sel != null ? '<button data-clearsel>Clear</button>' : `<span>${ov ? 'Tap a box to change or remove' : 'Tap another box to overlay it'}</span>`}</div><div class="tiles">`;
   for (const k of ti.metrics){
     const v = agg(rangeList, k);
     let sub = '';
     if (k === 'avg_hr' && v) sub = `Z${zoneOf(v)+1} · ${ZONES[zoneOf(v)].n}`;
     else if (V.sel == null && M[k].perLabel && M[k].kind === 'sum') sub = `≈ ${M[k].fmt(v / bks.length)}${M[k].unit() ? ' '+M[k].unit() : ''} /${per.unit}`;
-    h += `<button class="tile ${k===mk?'on':''}" data-metric="${k}" aria-pressed="${k===mk}"><div class="l">${esc(M[k].label)}</div><div class="v">${valHtml(k, v)}</div><div class="s">${esc(sub)}</div></button>`;
+    const role = k === mk ? 'on' : k === ov ? 'ov' : '';
+    h += `<button class="tile ${role}" data-metric="${k}" aria-pressed="${!!role}">${role ? `<span class="tag">${role === 'on' ? 'Bars' : 'Line'}</span>` : ''}<div class="l">${esc(M[k].label)}</div><div class="v">${valHtml(k, v)}</div><div class="s">${esc(sub)}</div></button>`;
   }
   h += `</div>`;
 
   // chart card
   const d = deltaInfo(list, mk);
-  h += `<section class="card"><h2>${esc(M[mk].label)} ${BY_WORD[V.period]}</h2><div class="meta">${d.html}</div><div class="chartwrap" id="chart"></div><div id="legend"></div><div id="tbl"></div></section>`;
-  V.specs.push({el:'chart', legendEl:'legend', tblEl:'tbl', bks, mk, H:210, ...seriesFor(tab, mk)});
+  h += `<section class="card"><h2>${esc(M[mk].label)}${ov ? ' &amp; ' + esc(M[ov].label) : ''} ${BY_WORD[V.period]}</h2><div class="meta">${d.html}</div><div class="chartwrap" id="chart"></div><div id="legend"></div><div id="tbl"></div></section>`;
+  V.specs.push({el:'chart', legendEl:'legend', tblEl:'tbl', bks, mk, ov, H:ov ? 230 : 210, ...seriesFor(tab, mk)});
 
   // HR zones
   h += zonesCard(rangeList);
@@ -637,6 +657,11 @@ function deltaInfo(list, mk){
   const badge = `<span class="delta ${cls}">${arrow} ${fmtNum(Math.abs(pct), Math.abs(pct) < 10 ? 1 : 0)}%</span>`;
   return {html:`${badge}<span>${esc(cmp.label)} (${esc(valStr(mk, cmp.cur))} vs ${esc(valStr(mk, cmp.prev))})</span>`, badge, label:cmp.label};
 }
+function selMetrics(tab, ti){
+  let a = S.metric[tab]; if (!Array.isArray(a)) a = a ? [a] : [];
+  a = a.filter(k => ti.metrics.includes(k)).slice(0, 2);
+  return a.length ? a : [ti.metrics[0]];
+}
 function seriesFor(tab, mk){
   if (tab === 'all' && M[mk].kind === 'sum') return {series:allSeries(), stacked:true};
   const color = tab === 'all' ? 'var(--accent)' : typeInfo(tab).color;
@@ -655,7 +680,7 @@ function graphsHtml(tab, ti, bks, list, rangeList, mk){
 
   if (byWorkout){
     // one chart per workout type, one measure, same y-scale
-    h += `<div class="chips" style="padding-top:0">${ALL_METRICS.map(k => `<button class="chip ${k===mk?'on':''}" data-metric="${k}">${esc(M[k].label)}</button>`).join('')}</div>`;
+    h += `<div class="chips" style="padding-top:0">${ALL_METRICS.map(k => `<button class="chip ${k===mk?'on':''}" data-gmetric="${k}">${esc(M[k].label)}</button>`).join('')}</div>`;
     const ser = allSeries();
     let maxRaw = 0;
     ser.forEach(se => bks.forEach(b => { const v = agg(b.list.filter(se.test), mk); if (v > maxRaw) maxRaw = v; }));
@@ -728,66 +753,138 @@ function niceScale(max, n = 4){
 }
 let UID = 0;
 function drawAll(){ (V.specs || []).forEach(drawSpec); }
+/* short value labels that fit on a bar */
+function shortFmt(mk, v){
+  if (v == null || !isFinite(v)) return '';
+  const u = U();
+  switch (mk){
+    case 'duration': case 'avg_dur':
+      return v < 3600 ? Math.round(v/60) + 'm' : (v/3600).toFixed(v < 36000 ? 1 : 0).replace(/\.0$/,'') + 'h';
+    case 'pace': case 'pace100': return fmtMS(v);
+    case 'distance': case 'longest': case 'avg_dist': {
+      const d = v / u.dm; return d >= 1000 ? compact(d) : d >= 100 ? String(Math.round(d)) : d.toFixed(1); }
+    case 'elevation': return compact(Math.round(v / u.em));
+    case 'speed': return v.toFixed(1);
+    case 'count': case 'avg_hr': case 'max_hr': return String(Math.round(v));
+    default: return compact(Math.round(v));
+  }
+}
+const CW = 5.9;   // ~px per character at 10px
+function smoothPath(p){
+  if (!p.length) return '';
+  if (p.length === 1) return `M${p[0][0]},${p[0][1]}`;
+  const n = p.length, dx = [], m = [], t = new Array(n);
+  for (let i = 0; i < n-1; i++){ dx[i] = p[i+1][0] - p[i][0]; m[i] = (p[i+1][1] - p[i][1]) / dx[i]; }
+  t[0] = m[0]; t[n-1] = m[n-2];
+  for (let i = 1; i < n-1; i++) t[i] = m[i-1] * m[i] <= 0 ? 0 : (m[i-1] + m[i]) / 2;
+  for (let i = 0; i < n-1; i++){            // Fritsch–Carlson: keep it monotone between points
+    if (m[i] === 0){ t[i] = t[i+1] = 0; continue; }
+    const a = t[i] / m[i], b = t[i+1] / m[i], h = a*a + b*b;
+    if (h > 9){ const k = 3 / Math.sqrt(h); t[i] = k*a*m[i]; t[i+1] = k*b*m[i]; }
+  }
+  let d = `M${p[0][0].toFixed(1)},${p[0][1].toFixed(1)}`;
+  for (let i = 0; i < n-1; i++){
+    const h = dx[i] / 3;
+    d += `C${(p[i][0]+h).toFixed(1)},${(p[i][1]+h*t[i]).toFixed(1)} ${(p[i+1][0]-h).toFixed(1)},${(p[i+1][1]-h*t[i+1]).toFixed(1)} ${p[i+1][0].toFixed(1)},${p[i+1][1].toFixed(1)}`;
+  }
+  return d;
+}
+
 function drawSpec(sp){
   const el = document.getElementById(sp.el); if (!el) return;
-  const {bks, mk, series, stacked} = sp, m = M[mk], uid = ++UID;
+  const {bks, mk, series, stacked, ov} = sp, m = M[mk], uid = ++UID;
   const vals = bks.map(b => stacked ? series.map(se => agg(b.list.filter(se.test), mk)) : [agg(b.list.filter(series[0].test), mk)]);
   const tot = vals.map(v => v.every(x => x == null) ? null : v.reduce((a,b) => a + (b || 0), 0));
+  const ovals = ov ? bks.map(b => { const l = stacked ? b.list : b.list.filter(series[0].test); return l.length ? agg(l, ov) : null; }) : null;   // no workouts = gap in the line
   const rawMax = sp.maxRaw != null ? sp.maxRaw : Math.max(0, ...tot.filter(x => x != null));
-  const ax = m.axis ? m.axis(rawMax) : {conv:v => v, tick:v => compact(v)};
-  const H = sp.H || 210, sc = niceScale(ax.conv(rawMax), H < 180 ? 3 : 4);
-  const W = Math.max(260, el.clientWidth), pl = 40, pr = 6, pt = 20, pb = 34;
-  const pw = W - pl - pr, ph = H - pt - pb, n = bks.length, slot = pw / n;
-  const bw = Math.min(24, Math.max(6, slot * .62));
-  const y = v => pt + ph - (ax.conv(v) / sc.top) * ph;
+  const H = sp.H || 210, W = Math.max(260, el.clientWidth), pl = 4, pr = 4, pb = 34;
+  const n = bks.length, slot = (W - pl - pr) / n, bw = Math.min(26, Math.max(6, slot * .64));
+  const labels = tot.map(v => (v != null && v > 0) || (v != null && M[mk].kind !== 'sum') ? shortFmt(mk, v) : '');
+  const longest = Math.max(1, ...labels.map(l => l.length));
+  const rotate = longest * CW + 4 > slot;                     // labels too wide for the column: stand them up
+  const pt = rotate ? Math.min(H * .32, longest * CW + 10) : 18;
+  const ph = H - pt - pb;
+  const top = Math.max(rawMax, 1e-9);
+  const y = v => pt + ph - (v / top) * ph;
   let s = `<svg viewBox="0 0 ${W} ${H}" height="${H}" role="img" aria-label="${esc(m.label)} bar chart"><defs>` +
     series.map((se, si) => `<linearGradient id="g${uid}_${si}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:${se.color}"/><stop offset="1" style="stop-color:${se.color};stop-opacity:var(--bar-fade)"/></linearGradient>`).join('') + `</defs>`;
-  for (let tv = 0; tv <= sc.top + 1e-9; tv += sc.step){
-    const yy = pt + ph - tv / sc.top * ph;
-    s += `<line x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}" stroke="var(${tv === 0 ? '--axis' : '--grid'})" stroke-width="1"/>`;
-    s += `<text class="tick" x="${pl-6}" y="${yy+3.5}" text-anchor="end">${esc(ax.tick(+tv.toFixed(6)))}</text>`;
-  }
+  s += `<line x1="${pl}" x2="${W-pr}" y1="${pt+ph}" y2="${pt+ph}" stroke="var(--axis)" stroke-width="1"/>`;
   const hiIdx = V.sel != null ? V.sel : (tot[n-1] != null ? n-1 : null);
+  const barTops = [], barLabelBox = [];
   bks.forEach((b, i) => {
-    const x = pl + i*slot + (slot - bw)/2, dimmed = V.sel != null && V.sel !== i, hi = i === hiIdx;
+    const x = pl + i*slot + (slot - bw)/2, cx = x + bw/2, dimmed = V.sel != null && V.sel !== i, hi = i === hiIdx;
     s += `<rect x="${x}" y="${pt}" width="${bw}" height="${ph}" rx="4" style="fill:var(--chip);opacity:${dimmed ? .25 : .55}"/>`;
     let acc = 0; const segs = [];
-    vals[i].forEach((v, si) => { if (v > 0){ segs.push({y0:acc, y1:acc+v, si}); acc += v; } });
+    vals[i].forEach((v, si) => { if (v > 0){ segs.push({y0:acc, y1:acc+v, v, si}); acc += v; } });
     s += `<g opacity="${dimmed ? .3 : 1}">`;
     segs.forEach((g, gi) => {
-      const top = y(g.y1), bot = y(g.y0) - (gi > 0 ? 2 : 0), hgt = bot - top;
+      const t = y(g.y1), bot = y(g.y0) - (gi > 0 ? 2 : 0), hgt = bot - t;
       if (hgt <= 0.5) return;
       const col = series[g.si].color, st = `fill:url(#g${uid}_${g.si});filter:drop-shadow(0 0 ${hi ? 'var(--glow-hi)' : 'var(--glow)'} ${col})`;
       if (gi === segs.length - 1){
         const r = Math.min(4, hgt, bw/2);
-        s += `<path d="M${x},${bot}V${top+r}Q${x},${top} ${x+r},${top}H${x+bw-r}Q${x+bw},${top} ${x+bw},${top+r}V${bot}Z" style="${st}"/>`;
-        s += `<rect x="${x+1}" y="${top}" width="${bw-2}" height="2" rx="1" style="fill:${col}"/>`;
-      } else s += `<rect x="${x}" y="${top}" width="${bw}" height="${hgt}" style="${st}"/>`;
+        s += `<path d="M${x},${bot}V${t+r}Q${x},${t} ${x+r},${t}H${x+bw-r}Q${x+bw},${t} ${x+bw},${t+r}V${bot}Z" style="${st}"/>`;
+        s += `<rect x="${x+1}" y="${t}" width="${bw-2}" height="2" rx="1" style="fill:${col}"/>`;
+      } else s += `<rect x="${x}" y="${t}" width="${bw}" height="${hgt}" style="${st}"/>`;
+      // value of each stacked segment, inside it when there is room
+      if (stacked && segs.length > 1){
+        const lab = shortFmt(mk, g.v), w = lab.length * 5.3;
+        if (w + 3 <= bw && hgt >= 12) s += `<text class="inl" x="${cx}" y="${t + hgt/2 + 3.2}" text-anchor="middle">${esc(lab)}</text>`;
+        else if (hgt >= w + 6 && bw >= 11) s += `<text class="inl" x="${cx}" y="${t + hgt/2}" text-anchor="middle" dominant-baseline="central" transform="rotate(-90 ${cx} ${t + hgt/2})">${esc(lab)}</text>`;
+      }
     });
     s += `</g>`;
-    if (hi && tot[i] != null){
-      const ty = Math.max(11, y(tot[i]) - 6);
-      const anchor = i === n-1 ? 'end' : i === 0 ? 'start' : 'middle';
-      const tx = anchor === 'end' ? x + bw : anchor === 'start' ? x : x + bw/2;
-      s += `<text class="vlabel" x="${tx}" y="${ty}" text-anchor="${anchor}">${esc(m.fmt(tot[i]))}</text>`;
+    // total on top of every bar
+    const bt = tot[i] != null ? y(Math.max(0, tot[i])) : pt + ph;
+    barTops.push(bt);
+    barLabelBox.push(!labels[i] ? [-99, -99] : rotate ? [bt - 5 - labels[i].length * CW, bt - 5] : [bt - 14, bt - 4]);
+    if (labels[i]){
+      const cls = `vlabel${hi ? ' hi' : ''}`, op = dimmed ? ' opacity=".45"' : '';
+      if (rotate) s += `<text class="${cls}"${op} x="${cx}" y="${bt - 5}" text-anchor="start" dominant-baseline="central" transform="rotate(-90 ${cx} ${bt - 5})">${esc(labels[i])}</text>`;
+      else s += `<text class="${cls}"${op} x="${cx}" y="${bt - 5}" text-anchor="middle">${esc(labels[i])}</text>`;
     }
-    const cx = pl + i*slot + slot/2;
     if (n <= 14 || i % 2 === (n-1) % 2){
       s += `<text class="xl" x="${cx}" y="${H-pb+15}" text-anchor="middle" style="${b.cur ? 'font-weight:700;fill:var(--ink)' : ''}">${esc(b.lab)}</text>`;
       if (b.sub) s += `<text class="xs" x="${cx}" y="${H-pb+28}" text-anchor="middle">${esc(b.sub)}</text>`;
     }
-    s += `<rect data-i="${i}" x="${pl + i*slot}" y="0" width="${slot}" height="${H}" fill="transparent" style="cursor:pointer"/>`;
   });
+
+  // overlay: second measure as a line on its own (unlabelled) scale
+  if (ov){
+    const omax = Math.max(1e-9, ...ovals.filter(v => v != null));
+    const oy = v => pt + ph - (v / omax) * ph * .7;     // line peaks at 70% height so it runs through the bars, not over their labels
+    const pts = ovals.map((v, i) => v == null ? null : [pl + i*slot + slot/2, oy(v)]);
+    // smooth line: monotone cubic through each unbroken run of points (no overshoot past the real values)
+    const d = smoothPath(pts.filter(Boolean));   // joins across periods with no workout; those have no dot
+    s += `<path d="${d}" fill="none" class="ovline"/>`;
+    const fs = 9, lw = l => l.length * 5.4 + 4;
+    const labs = ovals.map(v => v == null ? '' : shortFmt(ov, v));
+    const crowded = labs.some(l => l && lw(l) > slot - 1);
+    pts.forEach((p, i) => {
+      if (!p) return;
+      const dimmed = V.sel != null && V.sel !== i, hi = i === hiIdx;
+      s += `<circle cx="${p[0]}" cy="${p[1]}" r="${hi ? 4.5 : 3.5}" class="ovdot" opacity="${dimmed ? .35 : 1}"/>`;
+      // value at every point; when labels are wider than a column they alternate above / below the line
+      const [bTop, bBot] = barLabelBox[i];                       // vertical span of the bar's own label
+      const hits = y => y > bTop - 3 && y - 9 < bBot + 3;
+      let ly = crowded && i % 2 === 1 ? p[1] + 15 : p[1] - 9;
+      if (hits(ly) || ly < 9) ly = p[1] + 15;
+      if (hits(ly) || ly > pt + ph - 2) ly = Math.min(p[1] - 9, bTop - 4);
+      s += `<text class="ovlabel${hi ? ' hi' : ''}" x="${p[0]}" y="${ly}" text-anchor="middle" opacity="${dimmed ? .45 : 1}">${esc(labs[i])}</text>`;
+    });
+  }
+  bks.forEach((b, i) => { s += `<rect data-i="${i}" x="${pl + i*slot}" y="0" width="${slot}" height="${H}" fill="transparent" style="cursor:pointer"/>`; });
   s += `</svg><div class="tip" hidden></div>`;
   el.innerHTML = s;
 
   if (sp.legendEl){
     const shown = series.filter((se, si) => vals.some(v => v[si] > 0));
-    document.getElementById(sp.legendEl).innerHTML = stacked && shown.length > 1
-      ? `<div class="legend">${shown.map(se => `<span><i class="sw" style="background:${se.color}"></i>${esc(se.label)}</span>`).join('')}</div>` : '';
+    let lg = stacked && shown.length > 1 ? shown.map(se => `<span><i class="sw" style="background:${se.color}"></i>${esc(se.label)}</span>`).join('') : '';
+    if (ov) lg = (stacked && shown.length > 1 ? '' : `<span><i class="sw" style="background:${series[0].color}"></i>${esc(m.label)} (bars)</span>`) + lg + `<span><i class="lnsw"></i>${esc(M[ov].label)} (line)</span>`;
+    document.getElementById(sp.legendEl).innerHTML = lg ? `<div class="legend">${lg}</div>` : '';
   }
-  if (sp.tblEl) document.getElementById(sp.tblEl).innerHTML = `<details class="tbl"><summary>Show as table</summary><table><tr><th>Period</th><th>${esc(m.label)}</th><th>Workouts</th></tr>` +
-    bks.map((b,i) => `<tr><td>${esc(b.title)}</td><td>${esc(valStr(mk, tot[i]))}</td><td>${b.list.filter(series.length === 1 ? series[0].test : () => true).length}</td></tr>`).reverse().join('') + `</table></details>`;
+  if (sp.tblEl) document.getElementById(sp.tblEl).innerHTML = `<details class="tbl"><summary>Show as table</summary><table><tr><th>Period</th><th>${esc(m.label)}</th>${ov ? `<th>${esc(M[ov].label)}</th>` : ''}<th>Workouts</th></tr>` +
+    bks.map((b,i) => `<tr><td>${esc(b.title)}</td><td>${esc(valStr(mk, tot[i]))}</td>${ov ? `<td>${esc(valStr(ov, ovals[i]))}</td>` : ''}<td>${b.list.filter(series.length === 1 ? series[0].test : () => true).length}</td></tr>`).reverse().join('') + `</table></details>`;
 
   const tip = el.querySelector('.tip');
   const showTip = i => {
@@ -797,6 +894,7 @@ function drawSpec(sp){
       t += `<div class="r"><span>Total</span><b>${esc(valStr(mk, tot[i]))}</b></div>`;
       series.forEach((se, si) => { const v = vals[i][si]; if (v > 0) t += `<div class="r"><span class="k"><i class="sw" style="background:${se.color}"></i>${esc(se.label)}</span><b>${esc(valStr(mk, v))}</b></div>`; });
     } else t += `<div class="r"><span>${esc(m.label)}</span><b>${esc(valStr(mk, tot[i]))}</b></div>`;
+    if (ov) t += `<div class="r"><span class="k"><i class="lnsw"></i>${esc(M[ov].label)}</span><b>${esc(valStr(ov, ovals[i]))}</b></div>`;
     t += `<div class="r"><span>Workouts</span><b>${cnt}</b></div>`;
     if (b.full && b.end < b.full && !b.cur && m.kind === 'sum'){
       const fl = inRange(actsFor(V.tab), b.start, b.full).filter(stacked ? () => true : series[0].test);
@@ -823,6 +921,7 @@ const SCHEMA = `start_time,type,duration_s,distance_m,avg_hr,max_hr,calories,ele
 2026-10-31T06:12:00,run,2710,7520,151,172,498,41,6540,60,420,1580,600,50`;
 function renderSettings(){
   $('#hdrTitle').textContent = 'Settings';
+  $('#controls').innerHTML = '';
   $('#hdrSub').textContent = 'Workout tracker';
   $('#hdrRight').innerHTML = '';
   const c = presentTypes(), order = S.navOrder, onCount = S.navOn.length;
@@ -887,7 +986,13 @@ document.addEventListener('click', async e => {
   if (d.tab){ if (d.tab !== V.tab){ V.tab = d.tab; V.sel = null; V.listLimit = 25; if (d.tab !== 'settings'){ S.lastTab = d.tab; save(); } render(); } return; }
   if (d.period){ V.period = d.period; V.sel = null; V.listLimit = 25; renderWorkout(); return; }
   if ('compare' in d){ S.compare = !S.compare; V.sel = null; save(); renderWorkout(); return; }
-  if (d.metric){ S.metric[V.tab] = d.metric; save(); const sy = window.scrollY; renderWorkout(); window.scrollTo({top:sy}); return; }
+  if (d.metric || d.gmetric){
+    const ti = typeInfo(V.tab), k = d.metric || d.gmetric; let a = selMetrics(V.tab, ti);
+    if (d.gmetric) a = [k, ...a.slice(1).filter(x => x !== k)];
+    else if (a.includes(k)){ if (a.length > 1) a = a.filter(x => x !== k); }   // tap a selected box: remove it (keep at least one)
+    else a = a.length < 2 ? [...a, k] : [a[0], k];                             // a third tap replaces the line
+    S.metric[V.tab] = a; save(); const sy = window.scrollY; renderWorkout(); window.scrollTo({top:sy}); return;
+  }
   if (d.vmode){ S.viewMode = d.vmode; V.sel = null; save(); renderWorkout(); window.scrollTo({top:0}); return; }
   if (d.gby){ S.graphsBy = d.gby; V.sel = null; save(); renderWorkout(); return; }
   if ('clearsel' in d){ V.sel = null; renderWorkout(); return; }
@@ -941,6 +1046,12 @@ document.addEventListener('change', e => {
     S[k] = v; save();
   }
 });
+let compactHdr = false;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (!compactHdr && y > 60){ compactHdr = true; $('#hdr').classList.add('scrolled'); }
+  else if (compactHdr && y < 8){ compactHdr = false; $('#hdr').classList.remove('scrolled'); }
+}, {passive:true});
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (V.tab !== 'settings') drawAll(); }, 120); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && V.sel != null){ V.sel = null; renderWorkout(); } });
 
