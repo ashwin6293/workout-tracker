@@ -4,12 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Workout Tracker</title>
+<meta name="theme-color" content="#07090d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
 :root{
   color-scheme:light;
   --page:#f1f3f6; --surface:#fcfcfd; --ink:#0b0d12; --ink2:#4b5260; --muted:#868c99;
   --grid:#e3e6ec; --axis:#c4c9d3; --border:rgba(11,13,18,.09); --chip:#e6e9ef; --chip-on:#0b0d12; --chip-on-ink:#fcfcfd;
-  --accent:#0094ab; --glow:0px; --glow-hi:0px; --bar-fade:.55; --tip-bg:rgba(252,252,253,.96);
+  --accent:#0094ab; --line:#0b0d12; --glow:0px; --glow-hi:0px; --bar-fade:.55; --tip-bg:rgba(252,252,253,.96);
   --good:#006300; --bad:#d03b3b;
   --c-run:#00a3bf; --c-cycle:#e14f00; --c-yoga:#ca358b; --c-walk:#009e34;
   --c-swim:#1f5ed9; --c-hike:#ce9400; --c-strength:#703dc6; --c-hiit:#d02940; --c-other:#868c99;
@@ -20,7 +27,7 @@
     color-scheme:dark;
     --page:#07090d; --surface:#0f1218; --ink:#eef3fa; --ink2:#a9b3c4; --muted:#6f7a8c;
     --grid:#1b212b; --axis:#2b3442; --border:rgba(120,200,255,.10); --chip:#181d26; --chip-on:#00d0e2; --chip-on-ink:#06090d;
-    --accent:#00d0e2; --glow:5px; --glow-hi:10px; --bar-fade:.28; --tip-bg:rgba(15,18,24,.92);
+    --accent:#00d0e2; --line:#eef3fa; --glow:5px; --glow-hi:10px; --bar-fade:.28; --tip-bg:rgba(15,18,24,.92);
     --good:#0ca30c; --bad:#e66767;
     --c-run:#009db8; --c-cycle:#d34100; --c-yoga:#d13d91; --c-walk:#00ab41;
     --c-swim:#2867e4; --c-hike:#c08600; --c-strength:#9568f3; --c-hiit:#c51a38; --c-other:#6f7a8c;
@@ -31,7 +38,7 @@
     color-scheme:dark;
     --page:#07090d; --surface:#0f1218; --ink:#eef3fa; --ink2:#a9b3c4; --muted:#6f7a8c;
     --grid:#1b212b; --axis:#2b3442; --border:rgba(120,200,255,.10); --chip:#181d26; --chip-on:#00d0e2; --chip-on-ink:#06090d;
-    --accent:#00d0e2; --glow:5px; --glow-hi:10px; --bar-fade:.28; --tip-bg:rgba(15,18,24,.92);
+    --accent:#00d0e2; --line:#eef3fa; --glow:5px; --glow-hi:10px; --bar-fade:.28; --tip-bg:rgba(15,18,24,.92);
     --good:#0ca30c; --bad:#e66767;
     --c-run:#009db8; --c-cycle:#d34100; --c-yoga:#d13d91; --c-walk:#00ab41;
     --c-swim:#2867e4; --c-hike:#c08600; --c-strength:#9568f3; --c-hiit:#c51a38; --c-other:#6f7a8c;
@@ -98,11 +105,11 @@ header.top h1{font-size:26px;line-height:1.1;margin:2px 0 0;font-weight:700;lett
 .vlabel{font-size:10px;fill:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
 .vlabel.hi{fill:var(--ink);font-weight:700}
 .inl{font-size:9px;font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(0,0,0,.35);stroke-width:2px;pointer-events:none}
-.ovline{stroke:var(--ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 var(--glow) var(--ink));pointer-events:none}
-.ovdot{fill:var(--ink);stroke:var(--surface);stroke-width:2;pointer-events:none}
+.ovline{stroke:var(--line);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 var(--glow) var(--line));pointer-events:none}
+.ovdot{fill:var(--line);stroke:var(--surface);stroke-width:2;pointer-events:none}
 .ovlabel.hi{font-size:10.5px}
 .ovlabel{font-size:9px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3px;font-variant-numeric:tabular-nums;pointer-events:none}
-.lnsw{display:inline-block;width:14px;height:2px;border-radius:1px;background:var(--ink);vertical-align:middle}
+.lnsw{display:inline-block;width:14px;height:2px;border-radius:1px;background:var(--line);vertical-align:middle}
 .tip{position:absolute;z-index:4;pointer-events:none;background:var(--tip-bg);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--ink);border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:0 0 0 1px var(--border),0 6px 20px rgba(0,0,0,.14);min-width:130px;max-width:260px}
 .tip .t{font-weight:650;margin-bottom:4px}
 .tip .r{display:flex;align-items:center;gap:12px;justify-content:space-between;white-space:nowrap;color:var(--ink2);font-variant-numeric:tabular-nums}
@@ -143,7 +150,7 @@ header.top .miniseg{margin-bottom:2px}
 nav.bottom{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);box-shadow:0 -1px 0 var(--border);padding-bottom:env(safe-area-inset-bottom)}
 nav.bottom .in{max-width:560px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
 nav.bottom .in::-webkit-scrollbar{display:none}
-nav.bottom button{flex:1 0 62px;border:0;background:none;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--muted);position:relative;min-height:56px}
+nav.bottom button{flex:1 0 58px;border:0;background:none;padding:8px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:var(--muted);position:relative;min-height:56px}
 nav.bottom button svg{width:24px;height:24px}
 nav.bottom button.on{color:var(--ink);font-weight:600}
 nav.bottom button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--bar,var(--accent));box-shadow:0 0 var(--glow-hi) var(--bar,var(--accent))}
@@ -174,9 +181,74 @@ pre.schema{background:var(--chip);border-radius:8px;padding:10px;font-size:11.5p
 .stack .lbl{font-size:13px;font-weight:600}
 .stack .n{font-size:12px;color:var(--muted)}
 .btnrow{display:flex;gap:8px;flex-wrap:wrap}
+
+html,body{overscroll-behavior-y:contain}
+#ptr{position:fixed;left:50%;top:-44px;z-index:20;transform:translateY(0);margin-left:-70px;width:140px;height:36px;border-radius:999px;background:var(--surface);box-shadow:0 0 0 1px var(--border),0 6px 18px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink2);opacity:0;transition:opacity .15s}
+#ptr.on{opacity:1}
+#ptr.armed{color:var(--accent);box-shadow:0 0 0 1.5px var(--accent),0 0 16px -2px var(--accent)}
+.toast{position:fixed;left:50%;transform:translate(-50%,-20px);top:calc(10px + env(safe-area-inset-top));z-index:30;max-width:min(92vw,480px);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 14px;font-size:13px;box-shadow:0 0 0 1px var(--border),0 10px 28px rgba(0,0,0,.3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;display:flex;align-items:center;gap:8px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.ok{box-shadow:0 0 0 1.5px var(--good),0 10px 28px rgba(0,0,0,.3)}
+.toast.err{box-shadow:0 0 0 1.5px var(--bad),0 10px 28px rgba(0,0,0,.3)}
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid var(--grid);border-top-color:var(--accent);animation:sp .8s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.hright{display:flex;align-items:center;gap:8px}
+.sublink{border:0;background:none;padding:0 0 0 4px;color:var(--accent);font-size:12px;display:inline-flex;align-items:center;gap:3px;vertical-align:-2px}
+.sublink svg{width:12px;height:12px}
+body.syncing .sublink svg{animation:sp 1s linear infinite}
+header.top.scrolled .eyebrow{display:none}
+.srow select{max-width:58%}
+.banner{margin:10px 16px 0;padding:10px 12px;border-radius:12px;background:var(--chip);font-size:13px;color:var(--ink2)}
+.banner span{margin-top:8px}
+.banner span{display:flex;gap:6px}
+.atbl td b{white-space:nowrap}
+.atbl td:nth-child(2){white-space:nowrap}
+.builder{padding:12px}
+.bgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.bgrid label,.fl{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+.bgrid select,.bgrid input,.fl input{text-transform:none;letter-spacing:0;font-weight:500;font-size:13px;color:var(--ink);background:var(--chip);border:0;border-radius:8px;padding:8px 9px;width:100%;min-height:36px}
+.bgrid input[type=color]{padding:2px;height:36px}
+.filters{margin-top:12px;border-top:1px solid var(--grid);padding-top:10px}
+.filters summary{cursor:pointer;font-size:13px;font-weight:600}
+.filters summary span{font-weight:400;color:var(--muted)}
+.flbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin:12px 0 4px;display:flex;gap:8px;align-items:center}
+.linkbtn{border:0;background:none;color:var(--accent);font-size:11px;padding:0;text-transform:none;letter-spacing:0}
+.chips.wrap{flex-wrap:wrap;overflow:visible;padding:0}
+.chips.wrap .chip{min-height:30px;padding:5px 10px;font-size:12px}
+.tblwrap{overflow-x:auto}
+.atbl{width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums}
+.atbl th{font-size:11px;color:var(--muted);text-align:left;font-weight:600;padding:6px 6px 6px 0;border-bottom:1px solid var(--grid)}
+.atbl td{padding:7px 6px 7px 0;border-bottom:1px solid var(--grid);vertical-align:top}
+.atbl td.n,.atbl .n{color:var(--muted);font-size:11.5px}
+.donutwrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;padding:6px 0}
+.dtot{font-size:20px;font-weight:700;fill:var(--ink)}
+.dleg{flex:1;min-width:170px;font-size:12.5px}
+.dleg div{display:flex;align-items:center;gap:7px;padding:4px 0;border-bottom:1px solid var(--grid)}
+.dleg span{flex:1;color:var(--ink2)} .dleg b{font-weight:600} .dleg em{font-style:normal;color:var(--muted);width:36px;text-align:right}
+.heatscroll{overflow-x:auto}
+.reflab{font-size:9px;fill:var(--muted)}
+.sug h2.big{font-size:21px;margin:4px 0 4px;line-height:1.2}
+.sug.good h2.big{color:var(--good)} .sug.bad h2.big{color:var(--bad)} .sug.warn h2.big{color:var(--c-hike)}
+.sug ul{margin:10px 0 0;padding-left:18px;font-size:13px;color:var(--ink2)} .sug li{margin:4px 0}
+.tiles4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.tiles4>div{background:var(--chip);border-radius:10px;padding:8px}
+.tiles4 span{display:block;font-size:10px;color:var(--muted);line-height:1.2}
+.tiles4 b{font-size:16px;font-weight:700;display:block;margin-top:3px}
+h3.sub{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:16px 0 4px}
+.sum{font-size:13px;margin:10px 0 4px;color:var(--ink2)}
+.cgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 8px}
+.cpick{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--ink2)}
+.cpick input{width:40px;height:40px;border:0;border-radius:12px;padding:0;background:none;cursor:pointer}
+.cpick input::-webkit-color-swatch-wrapper{padding:0}.cpick input::-webkit-color-swatch{border:0;border-radius:10px}
+.sched{display:flex;flex-wrap:wrap;gap:6px}
+.sched span{background:var(--chip);border-radius:8px;padding:5px 9px;font-size:13px;font-weight:600}
+.steps{padding-left:18px;margin:6px 0} .steps li{margin:4px 0}
+.renbox{display:flex;gap:6px;margin-top:8px} .renbox input{flex:1;background:var(--chip);border:0;border-radius:8px;padding:8px}
+.cbtns{display:flex;gap:4px}
 </style>
 </head>
 <body>
+<div id="ptr"><span>Pull to sync</span></div><div id="toast" class="toast" role="status" aria-live="polite"></div>
 <div id="app">
   <header class="top" id="hdr">
     <div class="hrow"><div><div class="eyebrow" id="hdrSub"></div><h1 id="hdrTitle">Workouts</h1></div><div id="hdrRight"></div></div>
@@ -189,7 +261,7 @@ pre.schema{background:var(--chip);border-radius:8px;padding:10px;font-size:11.5p
 <script>
 'use strict';
 /* ---------------- utilities ---------------- */
-const APP_VERSION = '5 Nov 2026 · horizontal labels';
+const APP_VERSION = '10 Nov 2026 · Pro, Analysis, Custom';
 const DAY = 864e5;
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -236,6 +308,10 @@ const ICONS = {
   all:'<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>',
   other:'<circle cx="12" cy="12" r="8"/><path d="M8.5 12h7"/>',
   settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  refresh:'<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>',
+  pro:'<path d="M3 12h4l2.5-6 4 12 2.5-6H21"/>',
+  analysis:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/><path d="M7.8 12.8v-1.6M10.5 12.8V8.4M13.2 12.8v-3"/>',
+  custom:'<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><path d="M17 13.5v7M13.5 17h7"/>',
   up:'<path d="M6 15l6-6 6 6"/>', down:'<path d="M6 9l6 6 6-6"/>'
 };
 const icon = (k, sw=1.8) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||ICONS.other}</svg>`;
@@ -257,6 +333,9 @@ const GENERIC = ['duration','count','avg_dur','avg_hr','distance','calories'];
 const ALL_METRICS = ['count','duration','distance','calories','elevation','avg_hr'];
 function typeInfo(k){
   if (k === 'all') return {label:'All', title:'All workouts', metrics:ALL_METRICS, icon:'all', color:'var(--ink)'};
+  if (k === 'pro') return {label:'Pro', title:'Pro', icon:'pro', color:'var(--accent)', page:true};
+  if (k === 'analysis') return {label:'Analysis', title:'Analysis', icon:'analysis', color:'var(--accent)', page:true};
+  if (k === 'custom') return {label:'Custom', title:'My charts (Custom)', icon:'custom', color:'var(--accent)', page:true};
   const t = TYPES[k];
   if (t) return {...t, icon:k, color:`var(--c-${k})`};
   const lbl = k.replace(/[_-]+/g,' ').replace(/\b\w/g, c => c.toUpperCase());
@@ -304,7 +383,7 @@ function zoneOf(hr){ const p = hr / (S.maxHr || 190); let z = 0; ZONES.forEach((
 
 /* ---------------- settings & state ---------------- */
 const DEFAULTS = {navOrder:null, navOn:null, start:'last', startPeriod:'d7', units:'km', maxHr:190, theme:'auto',
-                  source:'sample', sheetUrl:'', allFilter:null, metric:{}, lastTab:null, compare:false, viewMode:'overview', graphsBy:'metric'};
+                  source:'sample', sheetUrl:'', allFilter:null, metric:{}, lastTab:null, compare:false, viewMode:'overview', graphsBy:'metric', palette:'neon', typeColors:{}, accent:'', lineColor:'', age:'', restHr:'', custom:[], analysis:null};
 const S = Object.assign({}, DEFAULTS, store.get('settings', {}));
 const save = () => store.set('settings', S);
 let ACTS = [];             // normalised activities, sorted ascending
@@ -334,6 +413,9 @@ function genSample(){
       hr:o.hr?Math.round(o.hr):null, maxHr:o.hr?Math.round(o.hr+between(12,24)):null, cal:Math.round(o.cal||0),
       elev:Math.round(o.elev||0), steps:Math.round(o.steps||0)};
     if (a.hr) a.zones = zonesFor(a.hr, a.duration);
+    a.sport = {run:'outdoor_running', walk:'walking', cycle:'outdoor_cycling', hike:'hiking', swim:'pool_swimming', strength:'strength_training', yoga:'yoga', hiit:'hiit'}[type];
+    a.elapsed = Math.round(a.duration * between(1.0, 1.08));
+    if (type === 'run') a.cadence = Math.round(between(164, 178)); else if (type === 'walk' || type === 'hike') a.cadence = Math.round(between(100, 118));
     out.push(a);
   };
   for (let d = new Date(start); d <= t; d = addDays(d,1)){
@@ -404,6 +486,10 @@ function num(v){ if (v == null || v === '') return null; if (typeof v === 'numbe
   const s = String(v).trim();
   if (/^\d+:\d{1,2}(:\d{1,2})?$/.test(s)){ const p = s.split(':').map(Number); return p.length === 3 ? p[0]*3600+p[1]*60+p[2] : p[0]*60+p[1]; }
   const n = parseFloat(s.replace(/,/g,'')); return isFinite(n) ? n : null; }
+const KNOWN_COLS = new Set(['start_time','start','start_date_local','start_date','date','datetime','timestamp','time','duration_s','duration_sec','moving_time','duration','elapsed_time','total_time',
+  'distance_m','distance','distance_meters','distance_km','id','trackid','track_id','activity_id','type','sport','sport_type','activity_type','activity','workout_type','avg_hr','average_heartrate','avg_heart_rate',
+  'average_hr','heart_rate_avg','avg_heartrate','max_hr','max_heartrate','max_heart_rate','calories','kcal','calorie','active_calories','elevation_gain_m','total_elevation_gain','elevation_gain','elev_gain',
+  'ascent','total_ascent','elevation','steps','total_steps','elapsed_s','total_time_s','sport_name','sport_code','avg_cadence','cadence','average_cadence','_load']);
 function normalise(rows){
   const out = []; let bad = 0;
   rows.forEach((r, i) => {
@@ -428,6 +514,15 @@ function normalise(rows){
       steps: num(pick(['steps','total_steps'])) || 0
     };
     if (z.some(x => x != null)) a.zones = z.map(x => x || 0);
+    const el = num(pick(['elapsed_s','elapsed_time','total_time_s'])); if (el) a.elapsed = el;
+    const sp = pick(['sport','sport_name']); if (sp != null) a.sport = String(sp);
+    const sc = num(pick(['sport_code'])); if (sc != null) a.sportCode = sc;
+    const cad = num(pick(['avg_cadence','cadence','average_cadence'])); if (cad) a.cadence = cad;
+    // any other numeric column becomes an extra measure in Analysis
+    for (const k in o){
+      if (KNOWN_COLS.has(k) || /^(hr_)?z(one)?_?\d$/.test(k)) continue;
+      if (!/^-?\d+(\.\d+)?$/.test(String(o[k]).trim())) continue; (a.x = a.x || {})[k] = +o[k];
+    }
     out.push(a);
   });
   out.sort((a,b) => a.start - b.start);
@@ -451,7 +546,7 @@ const deserial = arr => arr.map(a => ({...a, start:new Date(a.start)}));
 function setData(acts, info){ ACTS = acts; DATA_INFO = info; }
 function loadLocal(){
   const d = store.get('data', null);
-  if (d && d.acts){ setData(deserial(d.acts), {label:d.label || 'Imported data', at:d.at}); return true; }
+  if (d && d.acts){ setData(deserial(d.acts), {label:d.label || 'Imported data', at:d.at, synced:d.synced}); return true; }
   return false;
 }
 async function loadSheet(url){
@@ -541,14 +636,24 @@ function navCandidates(){
   const known = SLOT_ORDER.filter(k => c[k]).sort((a,b) => c[b]-c[a]);
   const extra = Object.keys(c).filter(k => !TYPES[k]).sort((a,b) => c[b]-c[a]);
   const absent = SLOT_ORDER.filter(k => !c[k]);
-  return ['all', ...known, ...extra, ...absent];
+  return ['all', 'pro', 'analysis', 'custom', ...known, ...extra, ...absent];
 }
 function ensureNav(){
   const cands = navCandidates();
   if (!S.navOrder){
     S.navOrder = cands.slice();
-    S.navOn = cands.filter(k => k === 'all' || presentTypes()[k]).slice(0, 5);
+    const present = cands.filter(k => presentTypes()[k]).slice(0, 3);
+    S.navOn = ['all', ...present, 'pro', 'analysis', 'custom'];
+    S.navV2 = true;
   } else {
+    if (!S.navV2){      // upgrade: add the new pages after "All" and switch them on
+      const i = Math.max(0, S.navOrder.indexOf('all') + 1);
+      const add = ['pro', 'analysis', 'custom'].filter(k => !S.navOrder.includes(k));
+      S.navOrder.splice(i, 0, ...add);
+      S.navOn = [...(S.navOn || []), ...add.filter(k => !(S.navOn || []).includes(k))];
+      S.navOn = S.navOrder.filter(k => S.navOn.includes(k));
+      S.navV2 = true;
+    }
     cands.forEach(k => { if (!S.navOrder.includes(k)) S.navOrder.push(k); });
   }
   if (!S.navOn || !S.navOn.length) S.navOn = ['all'];
@@ -576,11 +681,18 @@ function allSeries(){
   return ser;
 }
 
+function route(){
+  V.redraw = null;
+  if (V.tab === 'settings') return renderSettings();
+  if (V.tab === 'pro') return renderPro();
+  if (V.tab === 'analysis') return renderAnalysis();
+  if (V.tab === 'custom') return renderCustom();
+  renderWorkout();
+}
 function render(){
   renderNav();
   window.scrollTo({top:0});
-  if (V.tab === 'settings') return renderSettings();
-  renderWorkout();
+  route();
 }
 
 function renderWorkout(){
@@ -595,9 +707,9 @@ function renderWorkout(){
   const rangeList = V.sel != null ? bks[V.sel].list : bks.flatMap(b => b.list);
 
   $('#hdrTitle').textContent = ti.title;
-  $('#hdrSub').textContent = WD[new Date().getDay()] + ', ' + fmtDM(new Date()) + ' ' + new Date().getFullYear() + (DATA_INFO.label === 'Sample data' ? ' · Sample data' : '');
+  setHdrSub();
   const gm = S.viewMode === 'graphs';
-  $('#hdrRight').innerHTML = `<div class="miniseg" role="tablist" aria-label="View">${[['overview','Overview'],['graphs','Graphs']].map(([k,l]) => `<button data-vmode="${k}" class="${(gm ? 'graphs' : 'overview') === k ? 'on' : ''}">${l}</button>`).join('')}</div>`;
+  $('#hdrRight').innerHTML = `<div class="hright"><div class="miniseg" role="tablist" aria-label="View">${[['overview','Overview'],['graphs','Graphs']].map(([k,l]) => `<button data-vmode="${k}" class="${(gm ? 'graphs' : 'overview') === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>`;
 
   let h = '';
   if (tab === 'all'){
@@ -949,17 +1061,24 @@ function renderSettings(){
   $('#controls').innerHTML = '';
   $('#hdrSub').textContent = 'Workout tracker';
   $('#hdrRight').innerHTML = '';
+  setTimeout(async () => {      // show the latest GitHub run, if connected
+    if (!hasGH()) return;
+    try { const r = await lastRun(); const el = $('#lastrun'); if (r && el){ const t = new Date(r.updated_at || r.created_at);
+      el.innerHTML = `Data last synced: ${esc(syncedText().replace('Synced ', '') || '–')} · Last GitHub run: ${esc(fmtDay(t))} ${esc(t.toLocaleTimeString('en-IN', {hour:'numeric', minute:'2-digit'}))} (${r.status === 'completed' ? (r.conclusion === 'success' ? '✓ succeeded' : '✕ ' + esc(r.conclusion)) : esc(r.status)}, ${r.event === 'schedule' ? 'scheduled' : 'manual'})`; } } catch(e){}
+  }, 0);
   const c = presentTypes(), order = S.navOrder, onCount = S.navOn.length;
   let h = `<div class="set"><h3>Bottom bar</h3><div class="card">`;
   order.forEach((k, i) => {
     const ti = typeInfo(k), on = S.navOn.includes(k), cnt = k === 'all' ? ACTS.length : (c[k] || 0);
+    const sub = ti.page ? ({pro:'Sports-science insights', analysis:'Build any chart from your data', custom:`${(S.custom || []).length} pinned chart${(S.custom || []).length === 1 ? '' : 's'}`}[k]) : cnt ? cnt.toLocaleString()+' workouts' : 'No data yet';
     h += `<div class="srow"><div class="ico" style="background:${ti.color === 'var(--ink)' ? 'var(--chip-on)' : ti.color};color:${ti.color === 'var(--ink)' ? 'var(--chip-on-ink)' : '#fff'}">${icon(ti.icon,2)}</div>
-      <div class="grow"><div>${esc(ti.title)}</div><div class="n">${cnt ? cnt.toLocaleString()+' workouts' : 'No data yet'}</div></div>
+      <div class="grow"><div>${esc(ti.title)}</div><div class="n">${esc(sub)}</div></div>
       <button class="iconbtn" data-mv="${i}" data-dir="-1" ${i===0?'disabled':''} aria-label="Move up">${icon('up',2)}</button>
       <button class="iconbtn" data-mv="${i}" data-dir="1" ${i===order.length-1?'disabled':''} aria-label="Move down">${icon('down',2)}</button>
       <button class="switch ${on?'on':''}" data-navtog="${esc(k)}" aria-pressed="${on}" aria-label="Show ${esc(ti.label)} in bottom bar" ${on && onCount===1?'disabled':''}><span class="tr"></span></button></div>`;
   });
-  h += `</div><div class="note pad">Up to 5 tabs fit without scrolling. Settings always stays at the end.</div>`;
+  h += `</div><div class="note pad">About 6 tabs fit without scrolling; the bar scrolls sideways if you turn on more. Settings always stays at the end.</div>`;
+  h += syncSettingsHtml();
 
   h += `<h3>On launch</h3><div class="card">
     <div class="srow"><div class="grow">Open tab</div><select data-set="start"><option value="last" ${S.start==='last'?'selected':''}>Last viewed</option>${navTabs().map(k => `<option value="${esc(k)}" ${S.start===k?'selected':''}>${esc(typeInfo(k).title)}</option>`).join('')}</select></div>
@@ -968,12 +1087,12 @@ function renderSettings(){
 
   h += `<h3>Display</h3><div class="card">
     <div class="srow"><div class="grow">Units</div><div class="miniseg">${['km','mi'].map(u => `<button data-units="${u}" class="${S.units===u?'on':''}">${u}</button>`).join('')}</div></div>
-    <div class="srow"><div class="grow">Max heart rate<div class="n">Sets the HR zone boundaries</div></div><input type="number" min="120" max="230" value="${S.maxHr}" data-set="maxHr" style="width:84px"></div>
-    <div class="srow"><div class="grow">Theme</div><div class="miniseg">${['auto','light','dark'].map(u => `<button data-theme-set="${u}" class="${S.theme===u?'on':''}">${u[0].toUpperCase()+u.slice(1)}</button>`).join('')}</div></div>
+    <div class="srow"><div class="grow">Light or dark</div><div class="miniseg">${['auto','light','dark'].map(u => `<button data-theme-set="${u}" class="${S.theme===u?'on':''}">${u[0].toUpperCase()+u.slice(1)}</button>`).join('')}</div></div>
   </div>`;
+  h += colorsSettingsHtml() + profileSettingsHtml();
 
   const first = ACTS[0], last = ACTS[ACTS.length-1];
-  h += `<h3>Data</h3><div class="card">
+  h += `<h3>Other ways to load data</h3><div class="card">
     <div class="stack"><div class="lbl">${esc(DATA_INFO.label)}</div><div class="n">${ACTS.length.toLocaleString()} workouts${first ? ` · ${fmtDM(first.start)} ${first.start.getFullYear()} → ${fmtDM(last.start)} ${last.start.getFullYear()}` : ''}${DATA_INFO.at ? ' · loaded '+new Date(DATA_INFO.at).toLocaleString() : ''}</div></div>
     <div class="stack" style="border-top:1px solid var(--grid)"><div class="lbl">Import a file</div><div class="n">CSV or JSON, for example the export from your Python script. Replaces the current data.</div>
       <div class="btnrow"><label class="btn file primary">Choose file<input type="file" accept=".csv,.json,.txt,text/csv,application/json" id="fileIn"></label>${DATA_INFO.label !== 'Sample data' ? '<button class="btn" data-sample>Back to sample data</button>' : ''}</div></div>
@@ -1005,11 +1124,1153 @@ function afterDataChange(res, label){
   dataMsg(`Loaded ${res.acts.length.toLocaleString()} workouts${res.bad ? ` (${res.bad} rows skipped: missing start time or duration)` : ''}.`, 'ok');
 }
 
+/* =====================================================================
+   Generic chart engine — used by Analysis, Custom and Pro
+   ===================================================================== */
+const CAT_COLORS = ['var(--c-run)','var(--c-cycle)','var(--c-yoga)','var(--c-walk)','var(--c-swim)','var(--c-hike)','var(--c-strength)','var(--c-hiit)'];
+let GUID = 0;
+
+function tipFor(el){
+  let t = el.querySelector(':scope > .tip');
+  if (!t){ t = document.createElement('div'); t.className = 'tip'; t.hidden = true; el.appendChild(t); }
+  return t;
+}
+function showTipAt(el, html, cx, top, W){
+  const tip = tipFor(el); tip.innerHTML = html; tip.hidden = false;
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  tip.style.left = Math.min(Math.max(0, cx - tw/2), W - tw) + 'px';
+  tip.style.top = Math.max(-th + 10, top - th - 10) + 'px';
+}
+function bindTips(el, n, html, pos, W){
+  const tip = tipFor(el);
+  el.querySelectorAll('[data-gi]').forEach(r => {
+    const i = +r.dataset.gi;
+    r.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') showTipAt(el, html(i), ...pos(i), W); });
+    r.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') tip.hidden = true; });
+    r.addEventListener('click', () => {
+      if (!tip.hidden && tip.dataset.i === String(i)){ tip.hidden = true; tip.dataset.i = ''; return; }
+      showTipAt(el, html(i), ...pos(i), W); tip.dataset.i = String(i);
+    });
+  });
+}
+const tipRow = (k, v, color, line) => `<div class="r"><span class="k">${color ? (line ? `<i class="lnsw" style="background:${color}"></i>` : `<i class="sw" style="background:${color}"></i>`) : ''}${esc(k)}</span><b>${esc(v)}</b></div>`;
+
+/* Category charts: bar, grouped bar, stacked bar, line, area, and mixes.
+   c = {cats:[{lab,sub,title}], series:[{name,color,values,as:'bar'|'line'|'area',ownScale,fmt,full}],
+        stack, fmt, full, H, refLines:[{v,label}], labelLines, hi} */
+function renderCat(el, c){
+  if (!el) return;
+  const uid = ++GUID, n = c.cats.length;
+  const W = Math.max(260, el.clientWidth), H = c.H || 220, pb = 34, pl = 4, pr = 4;
+  const bars = c.series.filter(s => (s.as || 'bar') === 'bar');
+  const lines = c.series.filter(s => s.as === 'line' || s.as === 'area');
+  const shared = lines.filter(s => !s.ownScale);
+  // value range (bars stacked or not, plus shared lines)
+  let vmax = 0, vmin = 0;
+  const totals = c.cats.map((_, i) => bars.reduce((t, s) => t + (s.values[i] > 0 ? s.values[i] : 0), 0));
+  if (c.stack) vmax = Math.max(0, ...totals);
+  bars.forEach(s => s.values.forEach(v => { if (v != null){ if (!c.stack) vmax = Math.max(vmax, v); vmin = Math.min(vmin, v); } }));
+  shared.forEach(s => s.values.forEach(v => { if (v != null){ vmax = Math.max(vmax, v); vmin = Math.min(vmin, v); } }));
+  let zoomed = false;
+  if (!bars.length && c.zero !== true){
+    const vs = shared.flatMap(se => se.values).filter(v => v != null);
+    const lo = Math.min(...vs), hi = Math.max(...vs);
+    if (vs.length && lo > 0 && lo / hi > .4){ const pad = (hi - lo) * .25 || hi * .05; vmin = lo - pad; vmax = hi + pad; zoomed = true; }
+  }
+  (c.refLines || []).forEach(r => { vmax = Math.max(vmax, r.v); vmin = Math.min(vmin, r.v); });
+  if (vmax === vmin) vmax = vmin + 1;
+  const fmt = c.fmt || (v => compact(v)), full = c.full || fmt;
+  const slot = (W - pl - pr) / n;
+  // bar value labels: horizontal, shrink then stagger, else skip
+  const showBarLabels = c.labels !== false && bars.length && (c.stack || bars.length === 1);
+  const labelVals = c.cats.map((_, i) => c.stack ? (c.totals === false ? null : totals[i] || null) : (bars[0] ? bars[0].values[i] : null));
+  const labs = labelVals.map(v => v == null || (v === 0 && c.hideZero !== false) ? '' : fmt(v));
+  const longest = Math.max(1, ...labs.map(l => l.length));
+  const fs = Math.max(8, Math.min(10.5, (slot - 2) / (longest * .6)));
+  const fitsOne = longest * .6 * fs <= slot - 2, fitsTwo = longest * .6 * fs <= 2 * slot - 4;
+  const barLabelMode = !showBarLabels ? 'none' : fitsOne ? 'all' : fitsTwo ? 'stagger' : 'none';
+  const pt = 18 + (barLabelMode === 'stagger' ? fs + 3 : 0) + (lines.length && c.labelLines !== false ? 4 : 0);
+  const ph = H - pt - pb;
+  const y = v => pt + (vmax - v) / (vmax - vmin) * ph;
+  const y0 = zoomed ? pt + ph : y(0);
+  const hi = c.hi != null ? c.hi : n - 1;
+  let s = `<svg viewBox="0 0 ${W} ${H}" height="${H}" role="img"><defs>`;
+  c.series.forEach((se, si) => {
+    s += `<linearGradient id="gg${uid}_${si}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:${se.color}"/><stop offset="1" style="stop-color:${se.color};stop-opacity:var(--bar-fade)"/></linearGradient>`;
+    s += `<linearGradient id="ga${uid}_${si}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:${se.color};stop-opacity:.45"/><stop offset="1" style="stop-color:${se.color};stop-opacity:0"/></linearGradient>`;
+  });
+  s += `</defs>`;
+  (c.refLines || []).forEach(r => {
+    const yy = y(r.v);
+    s += `<line x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 3" opacity=".7"/>`;
+    if (r.label) s += `<text class="reflab" x="${W-pr-2}" y="${yy-3}" text-anchor="end">${esc(r.label)}</text>`;
+  });
+  s += `<line x1="${pl}" x2="${W-pr}" y1="${y0}" y2="${y0}" stroke="var(--axis)" stroke-width="1"/>`;
+  // bars
+  const nb = bars.length, groupW = Math.min(slot * .72, c.stack || nb === 1 ? 26 : 12 * nb + 4);
+  const bw = c.stack || nb <= 1 ? Math.max(3, Math.min(26, slot * .64)) : Math.max(2, (groupW - (nb - 1) * 2) / nb);
+  c.cats.forEach((cat, i) => {
+    const cx = pl + i * slot + slot / 2;
+    if (nb){
+      if (c.stack){
+        let acc = 0; const segs = [];
+        bars.forEach((se, si) => { const v = se.values[i]; if (v > 0){ segs.push({a:acc, b:acc + v, v, se, si}); acc += v; } });
+        const x = cx - bw / 2;
+        segs.forEach((g, gi) => {
+          const t = y(g.b), bot = y(g.a) - (gi > 0 ? 1.5 : 0), h = bot - t; if (h <= .5) return;
+          const st = `fill:url(#gg${uid}_${c.series.indexOf(g.se)});filter:drop-shadow(0 0 ${i === hi ? 'var(--glow-hi)' : 'var(--glow)'} ${g.se.color})`;
+          if (gi === segs.length - 1){ const r = Math.min(4, h, bw / 2); s += `<path d="M${x},${bot}V${t+r}Q${x},${t} ${x+r},${t}H${x+bw-r}Q${x+bw},${t} ${x+bw},${t+r}V${bot}Z" style="${st}"/>`; }
+          else s += `<rect x="${x}" y="${t}" width="${bw}" height="${h}" style="${st}"/>`;
+          if (segs.length > 1){ const lab = (g.se.fmt || fmt)(g.v), ifs = Math.min(9, (bw - 2) / (lab.length * .58));
+            if (ifs >= 7 && h >= ifs + 4) s += `<text class="inl" x="${cx}" y="${t + h/2 + ifs*.36}" text-anchor="middle" style="font-size:${ifs.toFixed(1)}px">${esc(lab)}</text>`; }
+        });
+      } else {
+        bars.forEach((se, bi) => {
+          const v = se.values[i]; if (v == null || v === 0) return;
+          const x = nb === 1 ? cx - bw / 2 : cx - groupW / 2 + bi * (bw + 2);
+          const t = Math.min(y(v), y0), h = Math.abs(y(v) - y0); if (h <= .5) return;
+          const neg = v < 0, r = Math.min(4, h, bw / 2);
+          const st = `fill:${neg ? se.color : `url(#gg${uid}_${c.series.indexOf(se)})`};opacity:${neg ? .75 : 1};filter:drop-shadow(0 0 ${i === hi ? 'var(--glow-hi)' : 'var(--glow)'} ${se.color})`;
+          s += neg ? `<path d="M${x},${t}V${t+h-r}Q${x},${t+h} ${x+r},${t+h}H${x+bw-r}Q${x+bw},${t+h} ${x+bw},${t+h-r}V${t}Z" style="${st}"/>`
+                   : `<path d="M${x},${t+h}V${t+r}Q${x},${t} ${x+r},${t}H${x+bw-r}Q${x+bw},${t} ${x+bw},${t+r}V${t+h}Z" style="${st}"/>`;
+        });
+      }
+      // label on top (or below for negatives)
+      if (barLabelMode !== 'none' && labs[i]){
+        const v = labelVals[i], lift = barLabelMode === 'stagger' && (n - 1 - i) % 2 === 1 ? fs + 2 : 0;
+        const ly = v < 0 ? y(v) + fs + 3 : y(v) - 5 - lift;
+        s += `<text class="vlabel${i === hi ? ' hi' : ''}" x="${cx}" y="${ly}" text-anchor="middle" style="font-size:${fs.toFixed(1)}px">${esc(labs[i])}</text>`;
+      }
+    }
+  });
+  // lines / areas
+  lines.forEach((se, li) => {
+    const vals = se.values, ok = vals.filter(v => v != null);
+    if (!ok.length) return;
+    let yy = y;
+    if (se.ownScale){ const mx = Math.max(...ok), mn = Math.min(0, ...ok); yy = v => pt + ph - ((v - mn) / ((mx - mn) || 1)) * ph * .7; }
+    const pts = vals.map((v, i) => v == null ? null : [pl + i * slot + slot / 2, yy(v)]);
+    const P = pts.filter(Boolean), d = smoothPath(P);
+    if (se.as === 'area' && P.length > 1) s += `<path d="${d}L${P[P.length-1][0]},${y0}L${P[0][0]},${y0}Z" style="fill:url(#ga${uid}_${c.series.indexOf(se)})"/>`;
+    s += `<path d="${d}" fill="none" style="stroke:${se.color};stroke-width:2;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 var(--glow) ${se.color})"/>`;
+    const lf = se.fmt || fmt;
+    const labelAll = c.labelLines !== false && c.lineLabels !== 'hi' && n <= 14 && lines.length <= 2;
+    pts.forEach((p, i) => {
+      if (!p) return;
+      const showDot = n <= 60 || i === hi;
+      if (showDot) s += `<circle cx="${p[0]}" cy="${p[1]}" r="${i === hi ? 4 : n > 30 ? 2 : 3}" style="fill:${se.color};stroke:var(--surface);stroke-width:1.5"/>`;
+      if (c.labelLines !== false && (labelAll || i === hi)){
+        const ly = li % 2 === 1 ? p[1] + 14 : p[1] - 8;
+        s += `<text class="ovlabel${i === hi ? ' hi' : ''}" x="${p[0]}" y="${ly}" text-anchor="middle" style="fill:${se.color === 'var(--line)' ? 'var(--ink)' : 'var(--ink)'}">${esc(lf(vals[i]))}</text>`;
+      }
+    });
+  });
+  // x labels (thinned to fit)
+  const lw = Math.max(...c.cats.map(k => String(k.lab).length)) * 5.6 + 6;
+  const step = Math.max(1, Math.ceil(lw / slot));
+  c.cats.forEach((cat, i) => {
+    if ((n - 1 - i) % step) return;
+    const cx = pl + i * slot + slot / 2;
+    s += `<text class="xl" x="${cx}" y="${H-pb+15}" text-anchor="middle" style="${i === n - 1 && c.boldLast !== false ? 'font-weight:700;fill:var(--ink)' : ''}">${esc(cat.lab)}</text>`;
+    if (cat.sub) s += `<text class="xs" x="${cx}" y="${H-pb+28}" text-anchor="middle">${esc(cat.sub)}</text>`;
+  });
+  c.cats.forEach((_, i) => { s += `<rect data-gi="${i}" x="${pl + i*slot}" y="0" width="${slot}" height="${H}" fill="transparent" style="cursor:pointer"/>`; });
+  s += `</svg>`;
+  el.innerHTML = s;
+  const html = i => {
+    let t = `<div class="t">${esc(c.cats[i].title || c.cats[i].lab)}</div>`;
+    if (c.stack && bars.length > 1) t += tipRow('Total', full(totals[i]));
+    c.series.forEach(se => { const v = se.values[i]; if (v != null && !(c.stack && !v)) t += tipRow(se.name, (se.full || full)(v), se.color, se.as === 'line' || se.as === 'area'); });
+    if (c.extraTip) t += c.extraTip(i);
+    return t;
+  };
+  const pos = i => { const top = c.stack ? y(totals[i] || 0) : Math.min(...c.series.map(se => se.values[i] != null && !se.ownScale ? y(Math.max(0, se.values[i])) : y0)); return [pl + i * slot + slot / 2, top]; };
+  bindTips(el, n, html, pos, W);
+}
+
+/* Scatter: p = {points:[{x,y,color,title}], xf, yf, xLabel, yLabel} */
+function renderScatter(el, p){
+  if (!el) return;
+  const W = Math.max(260, el.clientWidth), H = p.H || 260, pl = 40, pr = 10, pt = 12, pb = 34;
+  const xs = p.points.map(q => q.x), ys = p.points.map(q => q.y);
+  if (!xs.length){ el.innerHTML = `<div class="empty">No workouts have both values.</div>`; return; }
+  const pad = (a, b) => { const d = (b - a) || Math.abs(a) || 1; return [a - d * .06, b + d * .06]; };
+  const [x0, x1] = pad(Math.min(...xs), Math.max(...xs)), [y0, y1] = pad(Math.min(...ys), Math.max(...ys));
+  const X = v => pl + (v - x0) / (x1 - x0) * (W - pl - pr), Y = v => pt + (y1 - v) / (y1 - y0) * (H - pt - pb);
+  let s = `<svg viewBox="0 0 ${W} ${H}" height="${H}">`;
+  for (let k = 0; k <= 2; k++){
+    const xv = x0 + (x1 - x0) * (.08 + k * .42), yv = y0 + (y1 - y0) * (.08 + k * .42);
+    s += `<line x1="${pl}" x2="${W-pr}" y1="${Y(yv)}" y2="${Y(yv)}" stroke="var(--grid)"/>`;
+    s += `<text class="tick" x="${pl-5}" y="${Y(yv)+3}" text-anchor="end">${esc(p.yf(yv))}</text>`;
+    s += `<text class="tick" x="${X(xv)}" y="${H-pb+14}" text-anchor="middle">${esc(p.xf(xv))}</text>`;
+  }
+  s += `<text class="xs" x="${(pl + W - pr)/2}" y="${H-4}" text-anchor="middle">${esc(p.xLabel)}</text>`;
+  s += `<text class="xs" x="10" y="${(pt + H - pb)/2}" text-anchor="middle" transform="rotate(-90 10 ${(pt + H - pb)/2})">${esc(p.yLabel)}</text>`;
+  p.points.forEach((q, i) => {
+    s += `<circle data-gi="${i}" cx="${X(q.x)}" cy="${Y(q.y)}" r="${p.points.length > 300 ? 3 : 4.5}" style="fill:${q.color};fill-opacity:.8;stroke:var(--surface);stroke-width:1;cursor:pointer;filter:drop-shadow(0 0 var(--glow) ${q.color})"/>`;
+  });
+  s += `</svg>`;
+  el.innerHTML = s;
+  bindTips(el, p.points.length, i => { const q = p.points[i]; return `<div class="t">${esc(q.title)}</div>` + tipRow(p.xLabel, p.xf(q.x)) + tipRow(p.yLabel, p.yf(q.y)); },
+           i => [X(p.points[i].x), Y(p.points[i].y)], W);
+}
+
+/* Donut: d = {slices:[{name,color,value}], full, total} */
+function renderDonut(el, d){
+  if (!el) return;
+  const tot = d.slices.reduce((a, b) => a + b.value, 0);
+  if (!tot){ el.innerHTML = `<div class="empty">Nothing to show for this selection.</div>`; return; }
+  const R = 78, r = 50, C = 90; let a0 = -Math.PI / 2, s = `<svg viewBox="0 0 180 180" width="180" height="180" class="donut">`;
+  d.slices.forEach((sl, i) => {
+    const frac = sl.value / tot; if (frac <= 0) return;
+    const a1 = a0 + frac * Math.PI * 2 - (d.slices.length > 1 ? .025 : 0);
+    const large = a1 - a0 > Math.PI ? 1 : 0, P = (rad, a) => [C + rad * Math.cos(a), C + rad * Math.sin(a)];
+    const [x1, y1] = P(R, a0), [x2, y2] = P(R, a1), [x3, y3] = P(r, a1), [x4, y4] = P(r, a0);
+    s += frac >= .9999 ? `<circle cx="${C}" cy="${C}" r="${(R + r)/2}" fill="none" style="stroke:${sl.color};stroke-width:${R - r}"/>`
+      : `<path data-gi="${i}" d="M${x1},${y1}A${R},${R} 0 ${large} 1 ${x2},${y2}L${x3},${y3}A${r},${r} 0 ${large} 0 ${x4},${y4}Z" style="fill:${sl.color};cursor:pointer;filter:drop-shadow(0 0 var(--glow) ${sl.color})"/>`;
+    a0 += frac * Math.PI * 2;
+  });
+  s += `<text x="${C}" y="${C-2}" text-anchor="middle" class="dtot">${esc(d.short(tot))}</text><text x="${C}" y="${C+14}" text-anchor="middle" class="xs">${esc(d.unit || 'total')}</text></svg>`;
+  const legend = `<div class="dleg">${d.slices.map(sl => `<div><i class="sw" style="background:${sl.color}"></i><span>${esc(sl.name)}</span><b>${esc(d.full(sl.value))}</b><em>${Math.round(sl.value / tot * 100)}%</em></div>`).join('')}</div>`;
+  el.innerHTML = `<div class="donutwrap">${s}${legend}</div>`;
+}
+
+/* Calendar heatmap: h = {from, to, values: Map(dayKey -> v), full, color} */
+function renderHeat(el, h){
+  if (!el) return;
+  const start = new Date(h.from); start.setDate(start.getDate() - ((start.getDay() + 6) % 7));   // Monday
+  const days = Math.round((h.to - start) / DAY) + 1, weeks = Math.ceil(days / 7);
+  const W = Math.max(260, el.clientWidth), lab = 22, gap = 2;
+  const cell = Math.max(10, Math.min(16, Math.floor((W - lab - 14) / weeks) - gap));
+  const totalW = lab + weeks * (cell + gap) + 14, Hh = 16 + 7 * (cell + gap);
+  const vals = [...h.values.values()].filter(v => v > 0), mx = Math.max(1e-9, ...vals);
+  let s = `<svg viewBox="0 0 ${totalW} ${Hh}" width="${totalW}" height="${Hh}">`;
+  ['M','','W','','F','','S'].forEach((d, i) => { if (d) s += `<text class="xs" x="0" y="${16 + i*(cell+gap) + cell*.8}">${d}</text>`; });
+  let lastM = -1;
+  for (let i = 0; i < days; i++){
+    const d = addDays(start, i), w = Math.floor(i / 7), r = i % 7;
+    if (d < h.from || d > h.to) continue;
+    if (r === 0 && d.getMonth() !== lastM && d.getDate() <= 7){ lastM = d.getMonth(); s += `<text class="xs" x="${lab + w*(cell+gap)}" y="10">${MON[d.getMonth()]}</text>`; }
+    const v = h.values.get(dayKey(d)) || 0, op = v > 0 ? .25 + .75 * Math.sqrt(v / mx) : 0;
+    s += `<rect data-gi="${i}" x="${lab + w*(cell+gap)}" y="${16 + r*(cell+gap)}" width="${cell}" height="${cell}" rx="2" style="fill:${v > 0 ? h.color : 'var(--chip)'};fill-opacity:${v > 0 ? op.toFixed(2) : 1};cursor:pointer"/>`;
+  }
+  s += `</svg>`;
+  el.innerHTML = `<div class="heatscroll">${s}</div>`;
+  const sc = el.querySelector('.heatscroll'); sc.scrollLeft = sc.scrollWidth;
+  el.querySelectorAll('[data-gi]').forEach(rc => rc.addEventListener('click', () => {
+    const d = addDays(start, +rc.dataset.gi), v = h.values.get(dayKey(d)) || 0;
+    const t = tipFor(el); t.innerHTML = `<div class="t">${esc(fmtDay(d))}</div>` + tipRow(h.label, v ? h.full(v) : 'Rest day'); t.hidden = false;
+    t.style.left = '0px'; t.style.top = (Hh + 4) + 'px';
+  }));
+}
+function dayKey(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+
+function legendHtml(series){
+  return `<div class="legend">${series.map(se => `<span>${se.as === 'line' || se.as === 'area' ? `<i class="lnsw" style="background:${se.color}"></i>` : `<i class="sw" style="background:${se.color}"></i>`}${esc(se.name)}</span>`).join('')}</div>`;
+}
+
+/* =====================================================================
+   Analysis: measures (every column in the data), dimensions, filters
+   ===================================================================== */
+// Per-workout training load (Edwards TRIMP: minutes in each zone x zone number)
+function loadOf(a){
+  if (a._load != null) return a._load;
+  let L;
+  if (a.zones) L = a.zones.reduce((t, s, i) => t + s / 60 * (i + 1), 0);
+  else if (a.hr) L = a.duration / 60 * (zoneOf(a.hr) + 1);
+  else L = a.duration / 60 * 1.5;          // no heart rate: treat as light-moderate
+  return (a._load = L);
+}
+const durUnit = mx => mx < 7200 ? {u:'min', f:v => String(Math.round(v/60))} : {u:'h', f:v => (v/3600 >= 100 ? Math.round(v/3600) : +(v/3600).toFixed(1)).toString()};
+const distUnit = () => ({u:U().d, f:v => { const d = v / U().dm; return d >= 1000 ? compact(d) : d >= 100 ? String(Math.round(d)) : String(+d.toFixed(1)); }});
+const plain = (u, dp = 0) => () => ({u, f:v => dp ? (+v.toFixed(dp)).toString() : compact(Math.round(v))});
+// value: per-workout number (null = not recorded). ratio measures also give num/den for weighted averages.
+const AM = {
+  count:     {label:'Workouts', v:a => 1, hows:['sum'], unit:plain('')},
+  duration:  {label:'Moving time', v:a => a.duration, hows:['sum','avg','max','min'], unit:durUnit, full:fmtDur},
+  elapsed:   {label:'Total time (incl. pauses)', v:a => a.elapsed || null, hows:['sum','avg','max','min'], unit:durUnit, full:fmtDur},
+  distance:  {label:'Distance', v:a => a.distance > 0 ? a.distance : null, hows:['sum','avg','max','min'], unit:distUnit, full:v => fmtNum(v/U().dm, 2) + ' ' + U().d},
+  pace:      {label:'Pace', v:a => a.distance > 0 && a.duration ? a.duration / (a.distance / U().dm) : null, num:a => a.duration, den:a => a.distance / U().dm,
+              hows:['wavg','min','max'], lower:true, unit:() => ({u:'min/' + U().d, f:fmtMS}), full:v => fmtMS(v) + ' /' + U().d},
+  pace100:   {label:'Pace per 100 m', v:a => a.distance > 0 && a.duration ? a.duration / (a.distance / 100) : null, num:a => a.duration, den:a => a.distance / 100,
+              hows:['wavg','min','max'], lower:true, unit:() => ({u:'min/100m', f:fmtMS}), full:v => fmtMS(v) + ' /100m'},
+  speed:     {label:'Speed', v:a => a.distance > 0 && a.duration ? (a.distance / U().dm) / (a.duration / 3600) : null, num:a => a.distance / U().dm, den:a => a.duration / 3600,
+              hows:['wavg','max','min'], unit:() => ({u:U().sp, f:v => v.toFixed(1)})},
+  avg_hr:    {label:'Average heart rate', v:a => a.hr || null, num:a => a.hr * a.duration, den:a => a.duration, hows:['wavg','max','min'], unit:plain('bpm')},
+  max_hr:    {label:'Max heart rate', v:a => a.maxHr || null, hows:['max','avg','min'], unit:plain('bpm')},
+  calories:  {label:'Calories', v:a => a.cal || null, hows:['sum','avg','max'], unit:plain('kcal')},
+  elevation: {label:'Elevation gain', v:a => a.elev || null, hows:['sum','avg','max'], unit:() => ({u:U().e, f:v => compact(Math.round(v / U().em))})},
+  steps:     {label:'Steps', v:a => a.steps || null, hows:['sum','avg','max'], unit:plain('steps')},
+  cadence:   {label:'Cadence', v:a => a.cadence || null, num:a => a.cadence * a.duration, den:a => a.duration, hows:['wavg','max','min'], unit:plain('spm')},
+  zone1:     {label:'Time in zone 1', v:a => zoneSecs(a)[0], hows:['sum','avg'], unit:durUnit, full:fmtDur},
+  zone2:     {label:'Time in zone 2', v:a => zoneSecs(a)[1], hows:['sum','avg'], unit:durUnit, full:fmtDur},
+  zone3:     {label:'Time in zone 3', v:a => zoneSecs(a)[2], hows:['sum','avg'], unit:durUnit, full:fmtDur},
+  zone4:     {label:'Time in zone 4', v:a => zoneSecs(a)[3], hows:['sum','avg'], unit:durUnit, full:fmtDur},
+  zone5:     {label:'Time in zone 5', v:a => zoneSecs(a)[4], hows:['sum','avg'], unit:durUnit, full:fmtDur},
+  easy_share:{label:'Easy share (zone 1–2)', v:a => { const z = zoneSecs(a), t = z.reduce((x, y) => x + y, 0); return t ? (z[0] + z[1]) / t * 100 : null; },
+              num:a => { const z = zoneSecs(a); return z[0] + z[1]; }, den:a => zoneSecs(a).reduce((x, y) => x + y, 0), f100:true, hows:['wavg'], unit:() => ({u:'%', f:v => String(Math.round(v))})},
+  load:      {label:'Training load (TRIMP)', v:a => loadOf(a), hows:['sum','avg','max'], unit:plain('')},
+  efficiency:{label:'Aerobic efficiency', v:a => a.distance > 0 && a.hr ? (a.distance / (a.duration / 60)) / a.hr : null,
+              num:a => a.distance / (a.duration / 60), den:a => a.hr, hows:['wavg','max','min'], unit:() => ({u:'m/min per bpm', f:v => v.toFixed(2)})},
+  vam:       {label:'Climbing rate (VAM)', v:a => a.elev > 0 && a.duration ? a.elev / (a.duration / 3600) : null, num:a => a.elev, den:a => a.duration / 3600,
+              hows:['wavg','max'], unit:() => ({u:'m/h', f:v => String(Math.round(v))})},
+};
+function zoneSecs(a){
+  if (a.zones) return a.zones;
+  const z = [0,0,0,0,0]; if (a.hr) z[zoneOf(a.hr)] = a.duration; return z;
+}
+// Extra numeric columns from imported data get measures automatically
+function extraMeasures(){
+  const seen = {};
+  ACTS.forEach(a => { if (a.x) for (const k in a.x) seen[k] = (seen[k] || 0) + 1; });
+  Object.keys(seen).forEach(k => {
+    if (AM['x_' + k]) return;
+    const lbl = k.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    AM['x_' + k] = {label:lbl, v:a => a.x && a.x[k] != null ? a.x[k] : null, hows:['sum','avg','max','min'], unit:plain(''), extra:true};
+  });
+}
+const HOW_LABEL = {sum:'Total', avg:'Average per workout', wavg:'Overall average', max:'Highest', min:'Lowest'};
+function howLabel(mk, how){ const m = AM[mk]; if (m.lower && how === 'min') return 'Fastest'; if (m.lower && how === 'max') return 'Slowest'; return HOW_LABEL[how]; }
+function aggA(list, mk, how){
+  const m = AM[mk];
+  if (how === 'wavg'){
+    let n = 0, d = 0;
+    list.forEach(a => { if (m.v(a) == null) return; const dd = m.den(a); if (dd > 0){ n += m.num(a); d += dd; } });
+    return d > 0 ? n / d * (m.f100 ? 100 : 1) : null;
+  }
+  const vals = list.map(m.v).filter(v => v != null && isFinite(v));
+  if (how === 'sum') return mk === 'count' ? list.length : vals.reduce((a, b) => a + b, 0);
+  if (!vals.length) return null;
+  if (how === 'avg') return vals.reduce((a, b) => a + b, 0) / vals.length;
+  if (how === 'max') return Math.max(...vals);
+  if (how === 'min') return Math.min(...vals);
+  return null;
+}
+const fullA = (mk, v, mx) => { if (v == null) return '–'; const m = AM[mk]; if (m.full) return m.full(v); const u = m.unit(mx ?? v); return u.f(v) + (u.u ? ' ' + u.u : ''); };
+
+/* ---------- dimensions ---------- */
+const TOD = [['Morning',5,11],['Afternoon',11,17],['Evening',17,21],['Night',21,29]];
+const todOf = d => { const h = d.getHours() < 5 ? d.getHours() + 24 : d.getHours(); return TOD.findIndex(t => h >= t[1] && h < t[2]); };
+const monday = d => { const x = new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; };
+const DIST_BANDS = [[0,5,'< 5'],[5,10,'5–10'],[10,15,'10–15'],[15,21.1,'15–21'],[21.1,42.2,'21–42'],[42.2,1e9,'42+']];
+const DUR_BANDS = [[0,30,'< 30 min'],[30,60,'30–60 min'],[60,90,'1–1.5 h'],[90,120,'1.5–2 h'],[120,1e9,'2 h +']];
+const DIMS = {
+  day:     {label:'Day', time:'day'},
+  week:    {label:'Week (Mon–Sun)', time:'week'},
+  month:   {label:'Month', time:'month'},
+  quarter: {label:'Quarter', time:'quarter'},
+  year:    {label:'Year', time:'year'},
+  workout: {label:'Each workout'},
+  moy:     {label:'Month of year (Jan–Dec)', cats:() => MON.map((m, i) => ({k:i, lab:m})), key:a => a.start.getMonth()},
+  weekday: {label:'Weekday', cats:() => [1,2,3,4,5,6,0].map(i => ({k:i, lab:WD[i]})), key:a => a.start.getDay()},
+  hour:    {label:'Hour of day', cats:() => [...Array(24).keys()].map(h => ({k:h, lab:String(h), title:`${h}:00–${h}:59`})), key:a => a.start.getHours()},
+  tod:     {label:'Time of day', cats:() => TOD.map((t, i) => ({k:i, lab:t[0]})), key:a => todOf(a.start)},
+  type:    {label:'Workout type', cats:list => typeKeys(list).map(k => ({k, lab:typeInfo(k).label, color:typeInfo(k).color})), key:a => a.type},
+  sport:   {label:'Zepp sport', cats:list => [...new Set(list.map(a => a.sport || a.type))].sort().map(k => ({k, lab:prettySport(k)})), key:a => a.sport || a.type},
+  zone:    {label:'Zone of average HR', cats:() => ZONES.map((z, i) => ({k:i, lab:'Z' + (i + 1), title:'Zone ' + (i + 1) + ' · ' + z.n})), key:a => a.hr ? zoneOf(a.hr) : null},
+  distband:{label:'Distance band', cats:() => DIST_BANDS.map((b, i) => ({k:i, lab:b[2], title:b[2] + ' ' + U().d})), key:a => a.distance > 0 ? DIST_BANDS.findIndex(b => a.distance / U().dm >= b[0] && a.distance / U().dm < b[1]) : null},
+  durband: {label:'Duration band', cats:() => DUR_BANDS.map((b, i) => ({k:i, lab:b[2]})), key:a => DUR_BANDS.findIndex(b => a.duration / 60 >= b[0] && a.duration / 60 < b[1])},
+};
+const SPLITS = ['type','year','sport','weekday','tod','zone','distband','durband'];
+DIMS.year.key = a => a.start.getFullYear();
+const prettySport = s => String(s).replace(/^sport_/, 'Sport ').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+function typeKeys(list){ const c = {}; list.forEach(a => c[a.type] = 1); return [...SLOT_ORDER.filter(k => c[k]), ...Object.keys(c).filter(k => !TYPES[k]).sort()]; }
+
+/* ---------- filters ---------- */
+const PRESETS = [['all','All time'],['7d','Last 7 days'],['30d','Last 30 days'],['90d','Last 90 days'],['12m','Last 12 months'],['tw','This week'],['lw','Last week'],['tm','This month'],['lm','Last month'],['ty','This year'],['ly','Last year'],['custom','Custom dates']];
+function presetRange(f){
+  const t = today0(), tom = addDays(t, 1);
+  switch (f.preset){
+    case '7d': return [addDays(tom, -7), tom];
+    case '30d': return [addDays(tom, -30), tom];
+    case '90d': return [addDays(tom, -90), tom];
+    case '12m': return [new Date(t.getFullYear() - 1, t.getMonth(), t.getDate() + 1), tom];
+    case 'tw': return [monday(t), tom];
+    case 'lw': { const m = monday(t); return [addDays(m, -7), m]; }
+    case 'tm': return [new Date(t.getFullYear(), t.getMonth(), 1), tom];
+    case 'lm': return [new Date(t.getFullYear(), t.getMonth() - 1, 1), new Date(t.getFullYear(), t.getMonth(), 1)];
+    case 'ty': return [new Date(t.getFullYear(), 0, 1), tom];
+    case 'ly': return [new Date(t.getFullYear() - 1, 0, 1), new Date(t.getFullYear(), 0, 1)];
+    case 'custom': return [f.from ? new Date(f.from + 'T00:00') : null, f.to ? addDays(new Date(f.to + 'T00:00'), 1) : null];
+    default: return [null, null];
+  }
+}
+function applyFilters(f){
+  const [s, e] = presetRange(f);
+  return ACTS.filter(a =>
+    (!f.types || !f.types.length || f.types.includes(a.type)) &&
+    (!s || a.start >= s) && (!e || a.start < e) &&
+    (!f.years || !f.years.length || f.years.includes(a.start.getFullYear())) &&
+    (!f.months || !f.months.length || f.months.includes(a.start.getMonth())) &&
+    (!f.weekdays || !f.weekdays.length || f.weekdays.includes(a.start.getDay())) &&
+    (!f.tod || !f.tod.length || f.tod.includes(todOf(a.start))));
+}
+
+/* ---------- grouping ---------- */
+function timeCats(unit, list, f){
+  let [s, e] = presetRange(f);
+  if (!list.length && !s) return [];
+  s = s || new Date(Math.min(...list.map(a => +a.start)));
+  e = e || addDays(today0(), 1);
+  const cats = [], push = (st, en, lab, sub, title) => cats.push({st, en, lab, sub, title});
+  if (unit === 'day'){
+    let d = new Date(s); d.setHours(0,0,0,0);
+    for (; d < e; d = addDays(d, 1)) push(d, addDays(d, 1), String(d.getDate()), d.getDate() === 1 || !cats.length ? MON[d.getMonth()] : '', fmtDay(d));
+  } else if (unit === 'week'){
+    for (let d = monday(s); d < e; d = addDays(d, 7)) push(d, addDays(d, 7), fmtDM(d), '', `Week of ${fmtDM(d)} ${d.getFullYear()}`);
+  } else if (unit === 'month'){
+    for (let d = new Date(s.getFullYear(), s.getMonth(), 1); d < e; d = new Date(d.getFullYear(), d.getMonth() + 1, 1))
+      push(d, new Date(d.getFullYear(), d.getMonth() + 1, 1), MON[d.getMonth()], d.getMonth() === 0 || !cats.length ? "'" + String(d.getFullYear()).slice(2) : '', `${MON[d.getMonth()]} ${d.getFullYear()}`);
+  } else if (unit === 'quarter'){
+    for (let d = new Date(s.getFullYear(), Math.floor(s.getMonth() / 3) * 3, 1); d < e; d = new Date(d.getFullYear(), d.getMonth() + 3, 1)){
+      const q = Math.floor(d.getMonth() / 3) + 1; push(d, new Date(d.getFullYear(), d.getMonth() + 3, 1), 'Q' + q, "'" + String(d.getFullYear()).slice(2), `Q${q} ${d.getFullYear()}`);
+    }
+  } else {
+    for (let y = s.getFullYear(); y <= addDays(e, -1).getFullYear(); y++) push(new Date(y, 0, 1), new Date(y + 1, 0, 1), String(y), '', String(y));
+  }
+  return cats;
+}
+const MAX_CATS = 400;
+function groupList(by, list, f){
+  const D = DIMS[by];
+  if (D.time){
+    let cats = timeCats(D.time, list, f), note = '';
+    if (cats.length > MAX_CATS){ cats = cats.slice(-MAX_CATS); note = `Showing the last ${MAX_CATS} ${D.label.toLowerCase().split(' ')[0]}s. Narrow the dates or group by a longer period to see more.`; }
+    return {cats:cats.map(c => ({lab:c.lab, sub:c.sub, title:c.title, list:list.filter(a => a.start >= c.st && a.start < c.en)})), note};
+  }
+  if (by === 'workout'){
+    let l = list.slice().sort((a, b) => a.start - b.start), note = '';
+    if (l.length > 120){ l = l.slice(-120); note = 'Showing the latest 120 workouts. Narrow the filters to see others.'; }
+    return {cats:l.map(a => ({lab:fmtDM(a.start), sub:'', title:`${typeInfo(a.type).label} · ${fmtDay(a.start)}`, list:[a]})), note};
+  }
+  const cats = D.cats(list).map(c => ({...c, list:list.filter(a => D.key(a) === c.k)}));
+  return {cats:cats.filter(c => !['type','sport'].includes(by) || c.list.length), note:''};
+}
+function splitSeries(split, list){
+  const D = DIMS[split];
+  let keys;
+  if (split === 'year') keys = [...new Set(list.map(a => a.start.getFullYear()))].sort().map(y => ({k:y, lab:String(y)}));
+  else keys = D.cats(list);
+  keys = keys.filter(k => list.some(a => D.key(a) === k.k));
+  let other = null;
+  if (keys.length > 8){ other = keys.slice(7); keys = keys.slice(0, 7); }
+  const out = keys.map((k, i) => ({name:k.lab, color:k.color || (split === 'type' ? typeInfo(k.k).color : CAT_COLORS[i % 8]), test:a => D.key(a) === k.k}));
+  if (other){ const ks = other.map(o => o.k); out.push({name:'Other', color:'var(--c-other)', test:a => ks.includes(D.key(a))}); }
+  return out;
+}
+
+/* ---------- a chart config -> rendered card body ---------- */
+const CHART_TYPES = [['bar','Bar'],['stack','Stacked bar'],['group','Grouped bar'],['line','Line'],['area','Area'],['scatter','Scatter'],['donut','Donut'],['heat','Calendar heatmap'],['hist','Histogram'],['table','Table']];
+const COLOR_OPTS = [['auto','Automatic'],['accent','Accent'],...SLOT_ORDER.map(k => [k, TYPES[k].label + ' colour']),['custom','Custom…']];
+function defaultCfg(){ return {chart:'bar', by:'month', measure:'distance', how:'sum', split:'', measure2:'', how2:'', xm:'distance', bins:12, color:'auto', custom:'#00d0e2',
+  f:{preset:'12m', types:[], years:[], months:[], weekdays:[], tod:[], from:'', to:''}, title:''}; }
+function cfgColor(cfg){
+  if (cfg.color === 'accent') return 'var(--accent)';
+  if (cfg.color === 'custom') return cfg.custom || 'var(--accent)';
+  if (TYPES[cfg.color]) return `var(--c-${cfg.color})`;
+  const t = cfg.f.types || [];
+  return t.length === 1 ? typeInfo(t[0]).color : 'var(--accent)';
+}
+function fixHow(mk, how){ const h = AM[mk].hows; return h.includes(how) ? how : h[0]; }
+function autoTitle(cfg){
+  const m = AM[cfg.measure], how = howLabel(cfg.measure, fixHow(cfg.measure, cfg.how));
+  if (cfg.chart === 'scatter') return `${AM[cfg.xm].label} vs ${m.label}`;
+  if (cfg.chart === 'hist') return `${m.label} distribution`;
+  if (cfg.chart === 'heat') return `${m.label} calendar`;
+  const t = `${how === 'Total' ? '' : how + ' '}${how === 'Total' ? m.label : m.label.toLowerCase()} by ${DIMS[cfg.by].label.toLowerCase()}`;
+  return t.charAt(0).toUpperCase() + t.slice(1) + (cfg.split ? ` and ${DIMS[cfg.split].label.toLowerCase()}` : '');
+}
+function filterSummary(f){
+  const p = []; const pr = PRESETS.find(x => x[0] === f.preset);
+  p.push(f.preset === 'custom' ? `${f.from || '…'} → ${f.to || 'today'}` : pr ? pr[1] : 'All time');
+  if (f.types && f.types.length) p.push(f.types.map(k => typeInfo(k).label).join(', ')); else p.push('All workouts');
+  if (f.years && f.years.length) p.push(f.years.join(', '));
+  if (f.months && f.months.length) p.push(f.months.map(m => MON[m]).join(', '));
+  if (f.weekdays && f.weekdays.length) p.push(f.weekdays.map(d => WD[d]).join(', '));
+  if (f.tod && f.tod.length) p.push(f.tod.map(t => TOD[t][0]).join(', '));
+  return p.join(' · ');
+}
+// Builds the chart into `el` (and its legend/note into `foot`); returns the unit text for the heading
+function drawCfg(el, foot, cfg){
+  extraMeasures();
+  if (!AM[cfg.measure]) cfg.measure = 'distance';
+  const list = applyFilters(cfg.f), m = AM[cfg.measure], how = fixHow(cfg.measure, cfg.how);
+  if (foot) foot.innerHTML = '';
+  if (!list.length){ el.innerHTML = `<div class="empty">No workouts match these filters.</div>`; return ''; }
+  const color = cfgColor(cfg);
+  if (cfg.chart === 'scatter'){
+    const xm = AM[cfg.xm] || AM.distance, pts = list.map(a => ({x:xm.v(a), y:m.v(a), color:typeInfo(a.type).color, title:`${typeInfo(a.type).label} · ${fmtDay(a.start)}`})).filter(p => p.x != null && p.y != null);
+    const xu = xm.unit(Math.max(0, ...pts.map(p => p.x))), yu = m.unit(Math.max(0, ...pts.map(p => p.y)));
+    renderScatter(el, {points:pts, xf:xu.f, yf:yu.f, xLabel:xm.label + (xu.u ? ` (${xu.u})` : ''), yLabel:m.label + (yu.u ? ` (${yu.u})` : '')});
+    if (foot) foot.innerHTML = legendHtml(typeKeys(list).map(k => ({name:typeInfo(k).label, color:typeInfo(k).color})));
+    return '';
+  }
+  if (cfg.chart === 'hist'){
+    const vals = list.map(m.v).filter(v => v != null && isFinite(v));
+    if (!vals.length){ el.innerHTML = `<div class="empty">No workouts have this value.</div>`; return ''; }
+    const lo = Math.min(...vals), hi = Math.max(...vals), nb = Math.max(3, Math.min(30, +cfg.bins || 12)), w = (hi - lo) / nb || 1;
+    const u = m.unit(hi), counts = Array(nb).fill(0);
+    vals.forEach(v => counts[Math.min(nb - 1, Math.floor((v - lo) / w))]++);
+    const cats = counts.map((_, i) => ({lab:u.f(lo + w * i), title:`${u.f(lo + w * i)}–${u.f(lo + w * (i + 1))} ${u.u}`}));
+    renderCat(el, {cats, series:[{name:'Workouts', color, values:counts}], fmt:v => String(v), full:v => v + ' workouts', H:220, hi:-1, boldLast:false});
+    if (foot) foot.innerHTML = `<div class="note">Bars count workouts in each ${m.label.toLowerCase()} range (${u.u}).</div>`;
+    return '(workouts)';
+  }
+  if (cfg.chart === 'heat'){
+    const vals = new Map(); list.forEach(a => { const k = dayKey(a.start); vals.set(k, (vals.get(k) || 0)); });
+    const byDay = {}; list.forEach(a => (byDay[dayKey(a.start)] = byDay[dayKey(a.start)] || []).push(a));
+    for (const k in byDay) vals.set(k, aggA(byDay[k], cfg.measure, how) || 0);
+    let [s, e] = presetRange(cfg.f); s = s || new Date(Math.min(...list.map(a => +a.start))); e = e ? addDays(e, -1) : today0();
+    if ((e - s) / DAY > 371) s = addDays(e, -371);
+    const mx = Math.max(0, ...vals.values());
+    renderHeat(el, {from:s, to:e, values:vals, full:v => fullA(cfg.measure, v, mx), color, label:m.label});
+    return m.unit(mx).u ? `(${m.unit(mx).u})` : '';
+  }
+  const by = cfg.chart === 'donut' && DIMS[cfg.by].time ? 'type' : cfg.by;
+  const g = groupList(by, list, cfg.f);
+  if (cfg.chart === 'donut'){
+    const how2 = m.hows.includes('sum') ? 'sum' : how;
+    const sl = g.cats.map((c, i) => ({name:c.title || c.lab, color:c.color || CAT_COLORS[i % 8], value:aggA(c.list, cfg.measure, how2) || 0})).filter(x => x.value > 0).sort((a, b) => b.value - a.value);
+    const top = sl.slice(0, 7); if (sl.length > 7) top.push({name:'Other', color:'var(--c-other)', value:sl.slice(7).reduce((t, x) => t + x.value, 0)});
+    const mx = Math.max(0, ...top.map(x => x.value)), u = m.unit(mx);
+    renderDonut(el, {slices:top, full:v => fullA(cfg.measure, v, mx), short:v => u.f(v), unit:u.u || m.label.toLowerCase()});
+    if (foot && !m.hows.includes('sum')) foot.innerHTML = `<div class="note">${esc(m.label)} can't be added up, so slices show ${howLabel(cfg.measure, how2).toLowerCase()} per group.</div>`;
+    return u.u ? `(${u.u})` : '';
+  }
+  // category charts and table
+  let series;
+  const splitOn = cfg.split && cfg.split !== by && ['stack','group','line','area','table','bar'].includes(cfg.chart);
+  if (splitOn){
+    series = splitSeries(cfg.split, list).map(se => ({...se, values:g.cats.map(c => aggA(c.list.filter(se.test), cfg.measure, how))}))
+      .filter(se => se.values.some(v => v != null && v !== 0));
+    if (!series.length) series = [{name:m.label, color, values:g.cats.map(() => null)}];
+  } else series = [{name:m.label, color, values:g.cats.map(c => aggA(c.list, cfg.measure, how))}];
+  const all = series.flatMap(s => s.values).filter(v => v != null);
+  const mx = cfg.chart === 'stack' ? Math.max(0, ...g.cats.map((_, i) => series.reduce((t, s) => t + (s.values[i] || 0), 0))) : Math.max(0, ...all);
+  const u = m.unit(mx), full = v => fullA(cfg.measure, v, mx);
+  let overlay = null, ou = null;
+  if (cfg.measure2 && AM[cfg.measure2] && ['bar','stack','group'].includes(cfg.chart)){
+    const m2 = AM[cfg.measure2], h2 = fixHow(cfg.measure2, cfg.how2 || m2.hows[0]);
+    const v2 = g.cats.map(c => c.list.length ? aggA(c.list, cfg.measure2, h2) : null);
+    ou = m2.unit(Math.max(0, ...v2.filter(v => v != null)));
+    overlay = {name:`${howLabel(cfg.measure2, h2)} ${m2.label.toLowerCase()}`, color:'var(--line)', values:v2, as:'line', ownScale:true, fmt:ou.f, full:v => fullA(cfg.measure2, v)};
+  }
+  if (cfg.chart === 'table'){
+    el.innerHTML = `<div class="tblwrap"><table class="atbl"><tr><th>${esc(DIMS[by].label)}</th>${series.map(s => `<th>${esc(s.name)}</th>`).join('')}${overlay ? `<th>${esc(overlay.name)}</th>` : ''}<th>Workouts</th></tr>` +
+      g.cats.map((c, i) => `<tr><td>${esc(c.title || c.lab)}</td>${series.map(s => `<td>${esc(s.values[i] == null ? '–' : full(s.values[i]))}</td>`).join('')}${overlay ? `<td>${esc(overlay.values[i] == null ? '–' : overlay.full(overlay.values[i]))}</td>` : ''}<td>${c.list.length}</td></tr>`).reverse().join('') + `</table></div>`;
+  } else {
+    const kind = cfg.chart;
+    const ser = series.map(s => ({...s, as:kind === 'line' ? 'line' : kind === 'area' ? 'area' : 'bar'}));
+    if (overlay) ser.push(overlay);
+    renderCat(el, {cats:g.cats, series:ser, stack:kind === 'stack', fmt:u.f, full, H:230,
+      extraTip:i => tipRow('Workouts', String(g.cats[i].list.length))});
+    if (foot && (ser.length > 1)) foot.innerHTML = legendHtml(ser);
+  }
+  if (foot && g.note) foot.innerHTML += `<div class="note">${esc(g.note)}</div>`;
+  return `(${[u.u, ou && ou.u ? ou.u + ' line' : ''].filter(Boolean).join(' · ')})`.replace('()', '');
+}
+
+/* ---------- Analysis tab UI ---------- */
+function curCfg(){ if (!S.analysis) S.analysis = defaultCfg(); const c = S.analysis; c.f = Object.assign(defaultCfg().f, c.f || {}); return c; }
+function optionList(pairs, sel){ return pairs.map(([k, l]) => `<option value="${esc(k)}" ${String(k) === String(sel) ? 'selected' : ''}>${esc(l)}</option>`).join(''); }
+function chipGroup(name, items, selected){
+  return `<div class="chips wrap">${items.map(([k, l]) => `<button class="chip ${selected.includes(k) ? 'on' : ''}" data-af="${name}" data-v="${esc(k)}">${esc(l)}</button>`).join('')}</div>`;
+}
+function renderAnalysis(){
+  extraMeasures();
+  const cfg = curCfg(), m = AM[cfg.measure] || AM.distance;
+  cfg.how = fixHow(cfg.measure, cfg.how);
+  $('#hdrTitle').textContent = 'Analysis';
+  setHdrSub(); $('#hdrRight').innerHTML = refreshBtn(); $('#controls').innerHTML = '';
+  const editing = V.editIdx != null && S.custom && S.custom[V.editIdx];
+  const mOpts = Object.keys(AM).map(k => [k, AM[k].label]);
+  const t = cfg.chart, isCat = ['bar','stack','group','line','area','table'].includes(t);
+  const years = [...new Set(ACTS.map(a => a.start.getFullYear()))].sort();
+  const types = typeKeys(ACTS);
+  let h = '';
+  if (editing) h += `<div class="banner">Editing pinned chart <b>${esc(S.custom[V.editIdx].title || autoTitle(S.custom[V.editIdx]))}</b><span><button class="btn primary" data-asave>Save changes</button><button class="btn" data-acancel>Cancel</button></span></div>`;
+  h += `<section class="card builder">
+    <div class="bgrid">
+      <label>Chart<select data-ac="chart">${optionList(CHART_TYPES, t)}</select></label>
+      ${t === 'scatter' ? `<label>Across (x)<select data-ac="xm">${optionList(mOpts, cfg.xm)}</select></label>`
+        : ['heat','hist'].includes(t) ? '' : `<label>Group by<select data-ac="by">${optionList(Object.keys(DIMS).map(k => [k, DIMS[k].label]), cfg.by)}</select></label>`}
+      <label>${t === 'scatter' ? 'Up (y)' : 'Measure'}<select data-ac="measure">${optionList(mOpts, cfg.measure)}</select></label>
+      ${['scatter','hist'].includes(t) ? '' : `<label>How<select data-ac="how">${optionList(m.hows.map(x => [x, howLabel(cfg.measure, x)]), cfg.how)}</select></label>`}
+      ${isCat ? `<label>Split by<select data-ac="split"><option value="">None</option>${optionList(SPLITS.filter(k => k !== cfg.by).map(k => [k, DIMS[k].label]), cfg.split)}</select></label>` : ''}
+      ${['bar','stack','group'].includes(t) ? `<label>Line overlay<select data-ac="measure2"><option value="">None</option>${optionList(mOpts, cfg.measure2)}</select></label>` : ''}
+      ${['bar','stack','group'].includes(t) && cfg.measure2 ? `<label>Line how<select data-ac="how2">${optionList(AM[cfg.measure2].hows.map(x => [x, howLabel(cfg.measure2, x)]), fixHow(cfg.measure2, cfg.how2 || AM[cfg.measure2].hows[0]))}</select></label>` : ''}
+      ${t === 'hist' ? `<label>Bins<input type="number" min="3" max="30" value="${cfg.bins}" data-ac="bins"></label>` : ''}
+      ${cfg.split || ['scatter','donut'].includes(t) ? '' : `<label>Colour<select data-ac="color">${optionList(COLOR_OPTS, cfg.color)}</select></label>`}
+      ${cfg.color === 'custom' && !cfg.split ? `<label>Pick<input type="color" value="${esc(cfg.custom)}" data-ac="custom"></label>` : ''}
+    </div>
+    <details class="filters" ${V.filtersOpen ? 'open' : ''}><summary>Filters · <span>${esc(filterSummary(cfg.f))}</span></summary>
+      <div class="flbl">Dates</div><div class="bgrid"><label>Period<select data-af2="preset">${optionList(PRESETS, cfg.f.preset)}</select></label>
+      ${cfg.f.preset === 'custom' ? `<label>From<input type="date" value="${esc(cfg.f.from)}" data-af2="from"></label><label>To<input type="date" value="${esc(cfg.f.to)}" data-af2="to"></label>` : ''}</div>
+      <div class="flbl">Workouts <button class="linkbtn" data-afclear="types">all</button></div>${chipGroup('types', types.map(k => [k, typeInfo(k).label]), cfg.f.types)}
+      <div class="flbl">Years <button class="linkbtn" data-afclear="years">all</button></div>${chipGroup('years', years.map(y => [y, String(y)]), cfg.f.years)}
+      <div class="flbl">Months <button class="linkbtn" data-afclear="months">all</button></div>${chipGroup('months', MON.map((x, i) => [i, x]), cfg.f.months)}
+      <div class="flbl">Weekdays <button class="linkbtn" data-afclear="weekdays">all</button></div>${chipGroup('weekdays', [1,2,3,4,5,6,0].map(i => [i, WD[i]]), cfg.f.weekdays)}
+      <div class="flbl">Time of day <button class="linkbtn" data-afclear="tod">all</button></div>${chipGroup('tod', TOD.map((x, i) => [i, x[0]]), cfg.f.tod)}
+    </details>
+  </section>
+  <section class="card"><div class="ghead"><h2><span id="atitle">${esc(cfg.title || autoTitle(cfg))}</span> <span class="u" id="aunit"></span></h2></div>
+    <div class="meta">${esc(filterSummary(cfg.f))} · ${applyFilters(cfg.f).length} workouts</div>
+    <div class="chartwrap" id="achart"></div><div id="afoot"></div>
+    <div class="btnrow" style="margin-top:12px">${editing ? '' : `<button class="btn primary" data-apin>📌 Pin to Custom page</button>`}<button class="btn" data-areset>Reset</button></div>
+    <div id="apinmsg" class="msg"></div>
+  </section>`;
+  $('#main').innerHTML = h;
+  const unit = drawCfg($('#achart'), $('#afoot'), cfg);
+  $('#aunit').textContent = unit;
+  V.redraw = () => { const u = drawCfg($('#achart'), $('#afoot'), cfg); $('#aunit').textContent = u; };
+}
+
+/* ---------- Custom page ---------- */
+function renderCustom(){
+  $('#hdrTitle').textContent = 'My charts';
+  setHdrSub(); $('#hdrRight').innerHTML = refreshBtn(); $('#controls').innerHTML = '';
+  const list = S.custom || [];
+  let h = '';
+  if (!list.length) h += `<section class="card empty">No charts yet. Build one in <b>Analysis</b> and tap <b>📌 Pin to Custom page</b>.</section>`;
+  list.forEach((cfg, i) => {
+    h += `<section class="card gcard"><div class="ghead"><h2>${esc(cfg.title || autoTitle(cfg))} <span class="u" id="cu${i}"></span></h2>
+      <div class="cbtns"><button class="iconbtn" data-cmv="${i}" data-dir="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">${icon('up', 2)}</button><button class="iconbtn" data-cmv="${i}" data-dir="1" ${i === list.length - 1 ? 'disabled' : ''} aria-label="Move down">${icon('down', 2)}</button></div></div>
+      <div class="meta">${esc(filterSummary(cfg.f))}</div><div class="chartwrap" id="cc${i}"></div><div id="cf${i}"></div>
+      <div class="btnrow" style="margin-top:10px"><button class="btn" data-cedit="${i}">Edit</button><button class="btn" data-cren="${i}">Rename</button><button class="btn" data-cdel="${i}">Remove</button></div>
+      <div class="renbox" id="cr${i}" hidden><input type="text" value="${esc(cfg.title || autoTitle(cfg))}" maxlength="80"><button class="btn primary" data-crensave="${i}">Save</button></div></section>`;
+  });
+  h += `<details class="card"><summary class="lbl" style="cursor:pointer">Move these charts to another phone</summary>
+    <div class="n" style="margin:8px 0">Copy this code, then paste it on the other device under the same section and press Load.</div>
+    <textarea id="cexport" readonly>${esc(list.length ? btoa(unescape(encodeURIComponent(JSON.stringify(list)))) : '')}</textarea>
+    <div class="btnrow"><button class="btn" data-ccopy>Copy code</button></div>
+    <textarea id="cimport" placeholder="Paste a code here" style="margin-top:10px"></textarea>
+    <div class="btnrow"><button class="btn primary" data-cimport>Load charts</button></div><div id="cmsg" class="msg"></div></details>`;
+  $('#main').innerHTML = h;
+  V.redraw = () => list.forEach((cfg, i) => { const u = drawCfg($('#cc' + i), $('#cf' + i), cfg); const e = $('#cu' + i); if (e) e.textContent = u; });
+  V.redraw();
+}
+
+/* =====================================================================
+   Pro: sports-science views (options 1–15)
+   ===================================================================== */
+const dayIdx = d => Math.round((today0() - (() => { const x = new Date(d); x.setHours(0,0,0,0); return x; })()) / DAY);   // 0 = today
+function dailyLoadArray(days){
+  const arr = new Array(days).fill(0);       // arr[days-1] = today
+  ACTS.forEach(a => { const i = days - 1 - dayIdx(a.start); if (i >= 0 && i < days) arr[i] += loadOf(a); });
+  return arr;
+}
+function proModel(){
+  const t = today0();
+  const first = ACTS.length ? ACTS[0].start : t;
+  const span = Math.max(1, Math.round((t - new Date(first.getFullYear(), first.getMonth(), first.getDate())) / DAY) + 1);
+  const L = dailyLoadArray(span);
+  // Fitness (CTL, 42-day), fatigue (ATL, 7-day), form = yesterday's fitness - yesterday's fatigue
+  const ctl = [], atl = [], form = [];
+  let c = 0, a = 0;
+  L.forEach((x, i) => { form.push(c - a); c += (x - c) / 42; a += (x - a) / 7; ctl.push(c); atl.push(a); });
+  // Acute:chronic (rolling averages)
+  const acwr = L.map((_, i) => {
+    if (i < 27) return null;
+    const ac = L.slice(i - 6, i + 1).reduce((p, q) => p + q, 0) / 7, ch = L.slice(i - 27, i + 1).reduce((p, q) => p + q, 0) / 28;
+    return ch > 0 ? ac / ch : null;
+  });
+  return {L, ctl, atl, form, acwr, span};
+}
+// rolling 7-day blocks ending today (same as the Weeks view)
+function blocks(n){
+  const tom = addDays(today0(), 1), out = [];
+  for (let k = n - 1; k >= 0; k--){ const e = addDays(tom, -7 * k), s = addDays(e, -7); out.push({s, e, lab:fmtDM(s), sub:fmtDM(addDays(e, -1)), title:`${fmtDM(s)} – ${fmtDM(addDays(e, -1))}`, list:ACTS.filter(x => x.start >= s && x.start < e)}); }
+  return out;
+}
+const zoneTotals = list => list.reduce((z, a) => { zoneSecs(a).forEach((s, i) => z[i] += s); return z; }, [0,0,0,0,0]);
+
+/* ---- running: VDOT (Jack Daniels), predictions, paces ---- */
+function vdotOf(dm, tmin){
+  const v = dm / tmin;
+  const vo2 = -4.60 + 0.182258 * v + 0.000104 * v * v;
+  const pct = 0.8 + 0.1894393 * Math.exp(-0.012778 * tmin) + 0.2989558 * Math.exp(-0.1932605 * tmin);
+  return vo2 / pct;
+}
+function timeFor(dm, vdot){   // minutes, by bisection (VDOT falls as time rises)
+  let lo = dm / 1000 * 1.5, hi = dm / 1000 * 20;
+  for (let k = 0; k < 60; k++){ const mid = (lo + hi) / 2; if (vdotOf(dm, mid) > vdot) lo = mid; else hi = mid; }
+  return (lo + hi) / 2;
+}
+const velAt = vo2 => (-0.182258 + Math.sqrt(0.182258 ** 2 + 4 * 0.000104 * (vo2 + 4.60))) / (2 * 0.000104);   // m/min
+const paceFromV = v => U().dm / v * 60;   // seconds per km/mi
+function fmtHMS(min){ const s = Math.round(min * 60), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return (h ? h + ':' + String(m).padStart(2, '0') : m) + ':' + String(x).padStart(2, '0'); }
+function runFitness(){
+  const since = addDays(today0(), -180);
+  const runs = ACTS.filter(a => a.type === 'run' && a.distance >= 3000 && a.duration > 0 && a.start >= since);
+  if (!runs.length) return null;
+  let best = null;
+  runs.forEach(r => { const v = vdotOf(r.distance, r.duration / 60); if (!best || v > best.v) best = {v, r}; });
+  const races = [['5K', 5000], ['10K', 10000], ['Half marathon', 21097.5], ['Marathon', 42195]];
+  const pred = races.map(([n, d]) => ({n, d, vdot:timeFor(d, best.v), riegel:best.r.duration / 60 * Math.pow(d / best.r.distance, 1.06)}));
+  const V = best.v, mar = pred[3].vdot;
+  const paces = [
+    ['Easy', `${fmtMS(paceFromV(velAt(V * .74)))}–${fmtMS(paceFromV(velAt(V * .59)))}`, 'Most of your running; conversational'],
+    ['Marathon', fmtMS(paceFromV(42195 / mar)), 'Steady long efforts'],
+    ['Threshold', fmtMS(paceFromV(velAt(V * .88))), '20–40 min tempo, or 5–10 min repeats'],
+    ['Interval', fmtMS(paceFromV(velAt(V * .98))), '3–5 min repeats with equal recovery'],
+    ['Repetition', fmtMS(paceFromV(velAt(V * .98)) - 15 * U().dm / 1000), '200–400 m fast repeats, full recovery'],
+  ];
+  return {best, pred, paces, n:runs.length};
+}
+
+/* ---- personal records & streaks ---- */
+function streaks(){
+  const days = new Set(ACTS.map(a => dayKey(a.start)));
+  let longest = 0, run = 0, prev = null, longestEnd = null;
+  [...days].sort().forEach(k => {
+    const d = new Date(k + 'T00:00');
+    run = prev && Math.round((d - prev) / DAY) === 1 ? run + 1 : 1; prev = d;
+    if (run > longest){ longest = run; longestEnd = d; }
+  });
+  let cur = 0, d = today0();
+  if (!days.has(dayKey(d))) d = addDays(d, -1);           // today not done yet: count to yesterday
+  while (days.has(dayKey(d))){ cur++; d = addDays(d, -1); }
+  const wk = blocks(12), active = wk.map(b => new Set(b.list.map(a => dayKey(a.start))).size);
+  return {longest, longestEnd, cur, perWeek:active.reduce((p, q) => p + q, 0) / wk.length, days};
+}
+function records(){
+  const u = U(), out = [];
+  const runs = ACTS.filter(a => a.type === 'run');
+  const maxBy = (l, f) => l.reduce((b, a) => (f(a) != null && (!b || f(a) > f(b))) ? a : b, null);
+  const minBy = (l, f) => l.reduce((b, a) => (f(a) != null && (!b || f(a) < f(b))) ? a : b, null);
+  const when = a => fmtDay(a.start) + (a.start.getFullYear() !== new Date().getFullYear() ? '' : '');
+  let r = maxBy(runs, a => a.distance || null); if (r) out.push(['Longest run', fmtNum(r.distance / u.dm, 2) + ' ' + u.d, when(r)]);
+  [[5000, '5 km'], [10000, '10 km'], [21097, 'half marathon']].forEach(([d, l]) => {
+    const p = minBy(runs.filter(a => a.distance >= d), a => a.duration / (a.distance / u.dm));
+    if (p) out.push([`Fastest average pace, ${l}+`, fmtMS(p.duration / (p.distance / u.dm)) + ' /' + u.d, `${fmtNum(p.distance / u.dm, 1)} ${u.d} · ${when(p)}`]);
+  });
+  r = maxBy(ACTS, a => a.duration); if (r) out.push(['Longest workout', fmtDur(r.duration), `${typeInfo(r.type).label} · ${when(r)}`]);
+  r = maxBy(ACTS, a => a.elev || null); if (r) out.push(['Most elevation gain', fmtNum(r.elev / u.em) + ' ' + u.e, `${typeInfo(r.type).label} · ${when(r)}`]);
+  r = maxBy(ACTS, a => loadOf(a)); if (r) out.push(['Hardest workout (load)', fmtNum(loadOf(r)), `${typeInfo(r.type).label} · ${when(r)}`]);
+  // biggest calendar week and month
+  const wk = {}, mo = {};
+  ACTS.forEach(a => { const w = dayKey(monday(a.start)), m = a.start.getFullYear() + '-' + a.start.getMonth();
+    wk[w] = wk[w] || {run:0, time:0, n:0}; mo[m] = mo[m] || {run:0, time:0};
+    if (a.type === 'run'){ wk[w].run += a.distance; mo[m].run += a.distance; }
+    wk[w].time += a.duration; wk[w].n++; mo[m].time += a.duration; });
+  const top = (o, f) => Object.entries(o).sort((x, y) => f(y[1]) - f(x[1]))[0];
+  let w = top(wk, v => v.run); if (w && w[1].run) out.push(['Biggest running week', fmtNum(w[1].run / u.dm, 1) + ' ' + u.d, 'Week of ' + fmtDM(new Date(w[0] + 'T00:00')) + ' ' + w[0].slice(0, 4)]);
+  w = top(wk, v => v.time); if (w) out.push(['Most training in a week', fmtDur(w[1].time), 'Week of ' + fmtDM(new Date(w[0] + 'T00:00')) + ' ' + w[0].slice(0, 4)]);
+  w = top(wk, v => v.n); if (w) out.push(['Most workouts in a week', String(w[1].n), 'Week of ' + fmtDM(new Date(w[0] + 'T00:00')) + ' ' + w[0].slice(0, 4)]);
+  const m = top(mo, v => v.run); if (m && m[1].run){ const [yy, mm] = m[0].split('-'); out.push(['Biggest running month', fmtNum(m[1].run / u.dm, 1) + ' ' + u.d, MON[+mm] + ' ' + yy]); }
+  const st = streaks(); if (st.longest) out.push(['Longest streak', st.longest + ' days', 'ending ' + fmtDay(st.longestEnd)]);
+  return out;
+}
+
+/* ---- today's suggestion ---- */
+function suggestion(pm){
+  const n = pm.L.length, i = n - 1;
+  const recent = ACTS.filter(a => a.start >= addDays(today0(), -28));
+  const form = pm.form[i], ratio = pm.acwr[i];
+  const z14 = zoneTotals(ACTS.filter(a => a.start >= addDays(today0(), -13))), zt = z14.reduce((p, q) => p + q, 0);
+  const easy = zt ? (z14[0] + z14[1]) / zt * 100 : null;
+  const hard = ACTS.filter(a => { const z = zoneSecs(a); return z[3] + z[4] >= 600; }).pop();
+  const sinceHard = hard ? dayIdx(hard.start) : null;
+  const bl = blocks(2), r0 = bl[0].list.filter(a => a.type === 'run').reduce((p, a) => p + a.distance, 0), r1 = bl[1].list.filter(a => a.type === 'run').reduce((p, a) => p + a.distance, 0);
+  const ramp = r0 > 0 && r1 > 0 ? (r1 - r0) / r0 * 100 : null;
+  const reasons = []; let level = 'steady', head;
+  if (!recent.length){ level = 'easy'; head = 'Ease back in'; reasons.push('No workouts in the last 4 weeks, so start with short, easy sessions and build over 2–3 weeks.'); }
+  else {
+    if (ratio != null && ratio > 1.5){ level = 'rest'; reasons.push(`Your last 7 days were ${ratio.toFixed(2)}× your 4-week average. Above 1.5 is the high-risk zone for injury.`); }
+    else if (ratio != null && ratio > 1.3){ level = level === 'rest' ? level : 'easy'; reasons.push(`Load is climbing fast (ratio ${ratio.toFixed(2)}; 0.8–1.3 is the usual safe band).`); }
+    if (form < -30){ level = 'rest'; reasons.push(`Form is ${Math.round(form)}: you're carrying a lot of fatigue.`); }
+    else if (form < -10){ if (level === 'steady') level = 'easy'; reasons.push(`Form is ${Math.round(form)}: productive training, but you're tired.`); }
+    if (easy != null && easy < 70){ if (level === 'steady' || level === 'quality') level = 'easy'; reasons.push(`Only ${Math.round(easy)}% of your time in the last 14 days was easy (zone 1–2). Around 80% is the usual target.`); }
+    if (ramp != null && ramp > 10) reasons.push(`Running distance is up ${Math.round(ramp)}% on the previous 7 days. More than about 10% at a time raises injury risk.`);
+    if (level === 'steady' && form >= -10 && (ratio == null || ratio <= 1.3) && (sinceHard == null || sinceHard >= 3)){
+      level = 'quality'; reasons.push(sinceHard == null ? 'You\'re fresh and haven\'t logged a hard session yet.' : `You're fresh, and your last hard session was ${sinceHard} days ago.`);
+    }
+    if (ratio != null && ratio < 0.8) reasons.push(`Load is below your usual (ratio ${ratio.toFixed(2)}), so there's room to build gradually.`);
+  }
+  head = head || {rest:'Rest or very easy today', easy:'Keep it easy today', quality:'Good day for a hard session', steady:'Carry on as planned'}[level];
+  const tip = {rest:'A rest day, a walk, or 20–30 min very easy.', easy:'Easy effort in zone 1–2, e.g. an easy run or ride.', quality:'Intervals, a tempo run, or a hill session; keep the rest of the week easy.', steady:'A normal session at easy to moderate effort.'}[level];
+  return {level, head, tip, reasons, form, ratio, easy, sinceHard};
+}
+
+/* ---- render ---- */
+function proCard(title, unitId, body, note){ return `<section class="card gcard"><div class="ghead"><h2>${esc(title)} <span class="u" ${unitId ? `id="${unitId}"` : ''}></span></h2></div>${body}${note ? `<div class="note">${note}</div>` : ''}</section>`; }
+function renderPro(){
+  $('#hdrTitle').textContent = 'Pro';
+  setHdrSub(); $('#hdrRight').innerHTML = refreshBtn(); $('#controls').innerHTML = '';
+  if (!ACTS.length){ $('#main').innerHTML = `<section class="card empty">No workouts yet.</section>`; return; }
+  const pm = proModel(), sg = suggestion(pm), u = U();
+  const missing = [!S.age && 'age', !S.restHr && 'resting heart rate'].filter(Boolean);
+  let h = '';
+  if (missing.length) h += `<div class="banner">Add your ${missing.join(' and ')} in <b>Settings → Profile</b> for better heart-rate zones.</div>`;
+  // 15. today's suggestion
+  const chip = {rest:'bad', easy:'warn', quality:'good', steady:'neutral'}[sg.level];
+  h += `<section class="card sug ${chip}"><div class="eyebrow">Today's suggestion</div><h2 class="big">${esc(sg.head)}</h2><div class="n">${esc(sg.tip)}</div>
+    <ul>${sg.reasons.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
+    <div class="tiles4">
+      <div><span>Form</span><b>${fmtNum(sg.form)}</b></div>
+      <div><span>Injury-risk ratio</span><b>${sg.ratio == null ? '–' : sg.ratio.toFixed(2)}</b></div>
+      <div><span>Easy share, 14 d</span><b>${sg.easy == null ? '–' : Math.round(sg.easy) + '%'}</b></div>
+      <div><span>Since hard session</span><b>${sg.sinceHard == null ? '–' : sg.sinceHard + ' d'}</b></div></div>
+    <div class="note">Rule-based guidance from your recorded load and heart rate, not medical advice. Listen to your body.</div></section>`;
+  // 2. fitness / fatigue / form
+  h += proCard('Fitness, fatigue and form', 'pu_pmc', `<div class="meta">Last 90 days</div><div class="chartwrap" id="p_pmc"></div><div id="p_pmc_l"></div>`,
+    'Load per workout = minutes in each heart-rate zone × the zone number (Edwards TRIMP). <b>Fitness</b> is your 42-day average daily load, <b>fatigue</b> your 7-day average, <b>form</b> = fitness − fatigue. Form around −10 to −30 means productive training; below −30, very tired; above +10, fresh.');
+  // 3. injury-risk ratio
+  h += proCard('Injury-risk ratio', '', `<div class="meta">Last 7 days' load ÷ your 4-week average · last 12 weeks</div><div class="chartwrap" id="p_acwr"></div>`,
+    '0.8–1.3 is the usual safe band. Above 1.5 means a sudden spike, linked to higher injury risk.');
+  // 4. monotony and strain
+  h += proCard('Monotony and strain', 'pu_mono', `<div class="meta">Rolling 7-day blocks ending today</div><div class="chartwrap" id="p_mono"></div><div id="p_mono_l"></div>`,
+    'Monotony = average daily load ÷ its standard deviation over the 7 days (Foster). Above 2 means every day was equally hard, which is linked to staleness and illness. Strain = weekly load × monotony.');
+  // 6. 80/20
+  h += proCard('80/20 intensity balance', '(% of time)', `<div class="meta">Time in zones, all workouts with heart rate · rolling 7-day blocks</div><div class="chartwrap" id="p_8020"></div><div id="p_8020_l"></div>`,
+    'Endurance athletes typically spend about 80% of training time easy (zone 1–2) and about 20% moderate to hard. Uses your watch\'s zones, or the zone of your average heart rate when a workout has no zone breakdown.');
+  // 5. weekly increase check
+  h += proCard('Weekly running increase', 'pu_ramp', `<div class="meta">Running distance per 7-day block</div><div class="chartwrap" id="p_ramp"></div><div id="p_ramp_l"></div>`,
+    'Flags blocks where running distance rose by more than 10% on the block before.');
+  // 8 & 9. running fitness
+  const rf = runFitness();
+  h += proCard('Running fitness and race predictions', '', rf ? `
+    <div class="tiles4"><div><span>VDOT</span><b>${rf.best.v.toFixed(1)}</b></div><div style="grid-column:span 3"><span>From your best run in the last 6 months</span><b style="font-size:13px">${fmtNum(rf.best.r.distance / u.dm, 2)} ${u.d} in ${fmtDur(rf.best.r.duration)} · ${fmtDay(rf.best.r.start)}</b></div></div>
+    <table class="atbl" style="margin-top:10px"><tr><th>Race</th><th>Predicted (VDOT)</th><th>Riegel</th><th>Pace</th></tr>
+    ${rf.pred.map(p => `<tr><td>${p.n}</td><td>${fmtHMS(p.vdot)}</td><td>${fmtHMS(p.riegel)}</td><td>${fmtMS(p.vdot * 60 / (p.d / u.dm))} /${u.d}</td></tr>`).join('')}</table>
+    <h3 class="sub">Training paces (per ${u.d})</h3>
+    <table class="atbl">${rf.paces.map(p => `<tr><td><b>${p[0]}</b></td><td>${p[1]}</td><td class="n">${p[2]}</td></tr>`).join('')}</table>` : '<div class="empty">Needs a run of at least 3 km in the last 6 months.</div>',
+    'VDOT is Jack Daniels\' running-fitness score, worked out from the distance and time of your best recent run. Training runs are rarely all-out, so predictions are conservative; a race or time trial gives the truest number. Riegel\'s formula (T₂ = T₁ × (D₂/D₁)^1.06) is a second estimate from the same run.');
+  // 10. aerobic efficiency
+  h += proCard('Aerobic efficiency', 'pu_ef', `<div class="meta">Runs of 3 km+ with heart rate · by month</div><div class="chartwrap" id="p_ef"></div><div id="p_ef_n"></div>`,
+    'Metres per minute for every beat per minute of heart rate. Rising means you run faster at the same heart rate, so your aerobic fitness is improving. Heat, hills and fatigue lower it.');
+  // 11. records
+  h += proCard('Personal records', '', `<table class="atbl">${records().map(r => `<tr><td>${esc(r[0])}</td><td><b>${esc(r[1])}</b></td><td class="n">${esc(r[2])}</td></tr>`).join('')}</table>`);
+  // 12 & 13. hiking
+  const hikes = ACTS.filter(a => a.type === 'hike' && a.distance > 0 && a.duration > 0);
+  h += proCard('Hiking and climbing', '', hikes.length ? `<div class="meta">Climbing rate (VAM) per hike, latest 15</div><div class="chartwrap" id="p_vam"></div><div id="p_hike"></div>` : '<div class="empty">No hikes yet.</div>',
+    'VAM = metres climbed per hour of moving time. Naismith\'s rule predicts 1 hour per 5 km plus 1 hour per 600 m of ascent; comparing it with your actual time shows how quick you are on the hill.');
+  // 14. calendar & streaks
+  const st = streaks();
+  h += proCard('Activity calendar', '', `<div class="tiles4"><div><span>Current streak</span><b>${st.cur} d</b></div><div><span>Longest streak</span><b>${st.longest} d</b></div><div><span>Active days / week</span><b>${st.perWeek.toFixed(1)}</b></div><div><span>Days with workouts</span><b>${st.days.size}</b></div></div>
+    <div class="meta" style="margin-top:10px">Last 12 months · darker = more training load</div><div class="chartwrap" id="p_cal"></div>`);
+  // 7. heart-rate zone setup
+  const tan = S.age ? Math.round(208 - 0.7 * S.age) : null;
+  const obs = Math.max(0, ...ACTS.filter(a => a.start >= addDays(today0(), -365) && a.maxHr).map(a => a.maxHr)) || null;
+  const rest = +S.restHr || null, mx = +S.maxHr || 190;
+  h += proCard('Heart-rate zone setup', '', `
+    <table class="atbl"><tr><td>Max HR in use</td><td><b>${mx} bpm</b></td><td></td></tr>
+    <tr><td>From your age (Tanaka: 208 − 0.7 × age)</td><td>${tan ? tan + ' bpm' : '–'}</td><td>${tan && tan !== mx ? `<button class="btn" data-usemax="${tan}">Use</button>` : ''}</td></tr>
+    <tr><td>Highest recorded, last 12 months</td><td>${obs ? obs + ' bpm' : '–'}</td><td>${obs && obs !== mx ? `<button class="btn" data-usemax="${obs}">Use</button>` : ''}</td></tr>
+    <tr><td>Resting HR</td><td>${rest ? rest + ' bpm' : '–'}</td><td></td></tr></table>
+    <h3 class="sub">${rest ? 'Zones from heart-rate reserve (Karvonen)' : 'Zones as % of max HR'}</h3>
+    <table class="atbl">${ZONES.map((z, i) => { const lo = z.lo, hi = i < 4 ? ZONES[i + 1].lo : 1;
+      const f = p => Math.round(rest ? rest + p * (mx - rest) : p * mx);
+      return `<tr><td><b>Z${i + 1}</b> ${z.n}</td><td>${f(lo)}–${i < 4 ? f(hi) - 1 : mx} bpm</td><td class="n">${Math.round(lo * 100)}–${Math.round(hi * 100)}%</td></tr>`; }).join('')}</table>`,
+    'The highest heart rate your watch has recorded is often the best guide if you\'ve done hard efforts; the age formula can be off by 10 bpm or more. Your watch\'s own zone times (in the Sheet) use the zones set in the Zepp app.');
+  $('#main').innerHTML = h;
+
+  V.redraw = () => {
+    const n = pm.L.length, last = k => Math.max(0, n - k);
+    // PMC, last 90 days
+    const d90 = [...Array(Math.min(90, n)).keys()].map(k => addDays(today0(), -(Math.min(90, n) - 1 - k)));
+    const sl = arr => arr.slice(last(90));
+    const pcats = d90.map(d => ({lab:d.getDate() === 1 || d === d90[0] ? MON[d.getMonth()] : String(d.getDate()), title:fmtDay(d)}));
+    const pser = [{name:'Form', color:'var(--c-walk)', values:sl(pm.form).map(v => Math.round(v)), as:'bar'},
+                  {name:'Fitness', color:'var(--accent)', values:sl(pm.ctl).map(v => +v.toFixed(1)), as:'line'},
+                  {name:'Fatigue', color:'var(--c-yoga)', values:sl(pm.atl).map(v => +v.toFixed(1)), as:'line'}];
+    renderCat($('#p_pmc'), {cats:pcats, series:pser, fmt:v => String(Math.round(v)), H:230, labels:false});
+    $('#p_pmc_l').innerHTML = legendHtml(pser);
+    // ACWR, last 84 days
+    const a84 = sl(pm.acwr).slice(-84), dd = d90.slice(-a84.length);
+    renderCat($('#p_acwr'), {cats:dd.map(d => ({lab:d.getDate() === 1 ? MON[d.getMonth()] : String(d.getDate()), title:fmtDay(d)})),
+      series:[{name:'Ratio', color:'var(--accent)', values:a84.map(v => v == null ? null : +v.toFixed(2)), as:'line'}],
+      refLines:[{v:0.8, label:'0.8'}, {v:1.3, label:'1.3'}, {v:1.5, label:'1.5 high risk'}], fmt:v => v.toFixed(2), H:200});
+    // monotony & strain
+    const bk = blocks(12), dl = dailyLoadArray(84);
+    const mono = bk.map((b, i) => { const d = dl.slice(i * 7, i * 7 + 7), mean = d.reduce((p, q) => p + q, 0) / 7, sd = Math.sqrt(d.reduce((p, q) => p + (q - mean) ** 2, 0) / 7);
+      return {load:d.reduce((p, q) => p + q, 0), mono:sd > 0 ? mean / sd : null}; });
+    const mser = [{name:'Weekly load', color:'var(--c-strength)', values:mono.map(m => Math.round(m.load))},
+                  {name:'Monotony', color:'var(--line)', values:mono.map(m => m.mono == null ? null : +m.mono.toFixed(2)), as:'line', ownScale:true, fmt:v => v.toFixed(1)}];
+    renderCat($('#p_mono'), {cats:bk, series:mser, fmt:v => compact(v), H:220, lineLabels:'hi', extraTip:i => tipRow('Strain', mono[i].mono ? compact(Math.round(mono[i].load * mono[i].mono)) : '–')});
+    $('#p_mono_l').innerHTML = legendHtml(mser);
+    // 80/20
+    const zs = bk.map(b => zoneTotals(b.list)), pct = (z, i) => { const t = z.reduce((p, q) => p + q, 0); return t ? Math.round(i(z) / t * 100) : null; };
+    const zser = [{name:'Easy (Z1–2)', color:'var(--c-walk)', values:zs.map(z => pct(z, x => x[0] + x[1]))},
+                  {name:'Moderate (Z3)', color:'var(--c-hike)', values:zs.map(z => pct(z, x => x[2]))},
+                  {name:'Hard (Z4–5)', color:'var(--c-hiit)', values:zs.map(z => pct(z, x => x[3] + x[4]))}];
+    renderCat($('#p_8020'), {cats:bk, series:zser, stack:true, totals:false, fmt:v => String(v), full:v => v + '%', refLines:[{v:80, label:'80%'}], H:230});
+    $('#p_8020_l').innerHTML = legendHtml(zser);
+    // weekly ramp
+    const rk = bk.map(b => b.list.filter(a => a.type === 'run').reduce((p, a) => p + a.distance, 0));
+    const ru = distUnit();
+    renderCat($('#p_ramp'), {cats:bk, series:[{name:'Running distance', color:'var(--c-run)', values:rk}], fmt:ru.f, full:v => ru.f(v) + ' ' + ru.u, H:200,
+      extraTip:i => i && rk[i - 1] ? tipRow('Change', (rk[i] >= rk[i - 1] ? '+' : '') + Math.round((rk[i] - rk[i - 1]) / rk[i - 1] * 100) + '%') : ''});
+    $('#pu_ramp').textContent = `(${ru.u})`;
+    const flags = rk.map((v, i) => i && rk[i - 1] > 0 && v > rk[i - 1] * 1.1 ? `${bk[i].title}: +${Math.round((v - rk[i - 1]) / rk[i - 1] * 100)}%` : null).filter(Boolean);
+    $('#p_ramp_l').innerHTML = `<div class="note">${flags.length ? '⚠ Jumps over 10%: ' + flags.map(esc).join(' · ') : '✓ No jumps over 10% in these 12 blocks.'}</div>`;
+    // efficiency by month
+    const months = [...Array(12).keys()].map(k => new Date(today0().getFullYear(), today0().getMonth() - 11 + k, 1));
+    const ev = months.map(m => aggA(ACTS.filter(a => a.type === 'run' && a.distance >= 3000 && a.hr && a.start >= m && a.start < new Date(m.getFullYear(), m.getMonth() + 1, 1)), 'efficiency', 'wavg'));
+    renderCat($('#p_ef'), {cats:months.map(m => ({lab:MON[m.getMonth()], sub:m.getMonth() === 0 ? "'" + String(m.getFullYear()).slice(2) : '', title:MON[m.getMonth()] + ' ' + m.getFullYear()})),
+      series:[{name:'Efficiency', color:'var(--c-run)', values:ev.map(v => v == null ? null : +v.toFixed(2)), as:'area'}], fmt:v => v.toFixed(2), H:200});
+    const evs = ev.filter(v => v != null);
+    $('#p_ef_n').innerHTML = evs.length >= 4 ? `<div class="note">${(() => { const a = evs.slice(-3).reduce((p, q) => p + q, 0) / Math.min(3, evs.slice(-3).length), b = evs.slice(0, 3).reduce((p, q) => p + q, 0) / Math.min(3, evs.slice(0, 3).length), c = (a - b) / b * 100;
+      return `Last 3 months vs the first 3 shown: ${c >= 0 ? '▲' : '▼'} ${Math.abs(c).toFixed(1)}%`; })()}</div>` : '';
+    $('#pu_ef').textContent = '(m/min per bpm)';
+    // hiking
+    if (hikes.length){
+      const hk = hikes.slice(-15);
+      renderCat($('#p_vam'), {cats:hk.map(a => ({lab:fmtDM(a.start), title:fmtDay(a.start)})), series:[{name:'VAM', color:'var(--c-hike)', values:hk.map(a => a.elev > 0 ? Math.round(a.elev / (a.duration / 3600)) : null)}],
+        fmt:v => String(v), full:v => v + ' m/h', H:200, extraTip:i => tipRow('Climb', fmtNum(hk[i].elev) + ' m') + tipRow('Distance', fmtNum(hk[i].distance / u.dm, 1) + ' ' + u.d)});
+      const rows = hikes.slice(-8).reverse().map(a => { const pred = a.distance / 1000 / 5 + (a.elev || 0) / 600, act = a.duration / 3600; return {a, pred, act, r:act / pred}; });
+      const avg = rows.reduce((p, q) => p + q.r, 0) / rows.length;
+      $('#p_hike').innerHTML = `<div class="sum">Recent hikes take you <b>${Math.abs(Math.round((avg - 1) * 100))}% ${avg >= 1 ? 'longer' : 'less time'}</b> than Naismith's rule predicts.</div>
+        <table class="atbl"><tr><th>Hike</th><th>Climb</th><th>Naismith</th><th>You</th></tr>${rows.map(x => `<tr><td>${fmtDM(x.a.start)} ${x.a.start.getFullYear()}<div class="n">${fmtNum(x.a.distance / u.dm, 1)} ${u.d}</div></td><td>${fmtNum(x.a.elev || 0)} m</td><td>${fmtDur(x.pred * 3600)}</td><td><b>${fmtDur(x.a.duration)}</b></td></tr>`).join('')}</table>`;
+    }
+    // calendar
+    const vals = new Map(); ACTS.forEach(a => vals.set(dayKey(a.start), (vals.get(dayKey(a.start)) || 0) + loadOf(a)));
+    renderHeat($('#p_cal'), {from:addDays(today0(), -364), to:today0(), values:vals, full:v => 'load ' + Math.round(v), color:'var(--accent)', label:'Training'});
+  };
+  V.redraw();
+}
+
+/* =====================================================================
+   Header helpers, GitHub sync (pull-to-refresh), colour themes
+   ===================================================================== */
+function syncedText(){
+  const t = DATA_INFO.synced ? new Date(DATA_INFO.synced) : null;
+  if (!t || isNaN(t)) return '';
+  const today = dayKey(new Date()) === dayKey(t), yest = dayKey(addDays(new Date(), -1)) === dayKey(t);
+  const hm = t.toLocaleTimeString('en-IN', {hour:'numeric', minute:'2-digit'});
+  return 'Synced ' + (today ? hm : yest ? 'yesterday ' + hm : fmtDM(t) + ' ' + hm);
+}
+function setHdrSub(){
+  const d = new Date();
+  $('#hdrSub').innerHTML = esc([WD[d.getDay()] + ', ' + fmtDM(d), DATA_INFO.label === 'Sample data' ? 'Sample data' : syncedText()].filter(Boolean).join(' · '))
+    + ` <button class="sublink" data-refresh aria-label="Sync now">${icon('refresh', 2.2)}<span>Sync</span></button>`;
+}
+const refreshBtn = () => '';
+
+/* ---------- GitHub: start the sync, wait for it, load the fresh data ---------- */
+const GH = () => Object.assign({repo:'', token:'', branch:'main', workflow:'sync.yml', path:'data/workouts.json'}, S.gh || {});
+const hasGH = () => !!(GH().repo && GH().token);
+async function ghFetch(path, opts = {}){
+  const g = GH();
+  let r;
+  try {
+    r = await fetch(`https://api.github.com/repos/${g.repo}${path}`, {method:opts.method || 'GET', cache:'no-store', body:opts.body,
+      headers:{'Authorization':'Bearer ' + g.token, 'Accept':opts.accept || 'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28'}});
+  } catch(e){ throw new Error('Can\'t reach GitHub (offline, or blocked in this preview).'); }
+  if (r.status === 401) throw new Error('GitHub rejected the token (wrong or expired). Make a new one in Settings → Sync.');
+  if (r.status === 403) throw new Error('The token lacks permission. It needs Actions: Read and write, and Contents: Read on ' + g.repo + '.');
+  if (r.status === 404) throw new Error(opts.notFound || 'Not found on GitHub. Check the repository name in Settings → Sync.');
+  return r;
+}
+async function loadGitHubData(){
+  const g = GH();
+  const r = await ghFetch(`/contents/${g.path}?ref=${encodeURIComponent(g.branch)}`, {accept:'application/vnd.github.raw+json',
+    notFound:'No data file in the repository yet. Update the sync workflow (see the update notes), then run a sync once.'});
+  if (!r.ok) throw new Error('GitHub error ' + r.status);
+  const text = await r.text();
+  const res = parseAny(text);
+  let synced = null; try { synced = JSON.parse(text).generated_at || null; } catch(e){}
+  const info = {label:'GitHub · ' + g.repo, at:Date.now(), synced};
+  store.set('data', {acts:serial(res.acts), label:info.label, at:info.at, synced});
+  setData(res.acts, info);
+  return res;
+}
+async function startSync(onStep){
+  const g = GH(), t0 = Date.now();
+  onStep('Starting the Zepp sync…');
+  const r = await ghFetch(`/actions/workflows/${g.workflow}/dispatches`, {method:'POST', body:JSON.stringify({ref:g.branch}),
+    notFound:`Couldn't find the workflow ${g.workflow} in ${g.repo}.`});
+  if (r.status !== 204) throw new Error('GitHub didn\'t start the sync (error ' + r.status + ').');
+  let run = null;
+  for (let k = 0; k < 60; k++){              // up to ~4 minutes
+    await new Promise(res => setTimeout(res, k < 3 ? 2500 : 4000));
+    const q = await ghFetch(`/actions/workflows/${g.workflow}/runs?event=workflow_dispatch&per_page=5`);
+    const j = await q.json();
+    run = (j.workflow_runs || []).find(x => new Date(x.created_at) >= t0 - 60000) || run;
+    if (!run){ onStep('Waiting for GitHub to pick it up…'); continue; }
+    if (run.status !== 'completed'){ onStep(run.status === 'queued' ? 'Queued on GitHub…' : 'Fetching from Zepp…'); continue; }
+    if (run.conclusion !== 'success') throw new Error('The sync failed on GitHub. Open zepp-sync → Actions to see why.');
+    return run;
+  }
+  throw new Error('The sync is taking unusually long. It may still finish; pull again in a minute.');
+}
+async function lastRun(){
+  const g = GH(), r = await ghFetch(`/actions/workflows/${g.workflow}/runs?per_page=1`);
+  const j = await r.json(); return (j.workflow_runs || [])[0] || null;
+}
+
+/* ---------- refresh (pull-down, the ↻ button, or "Sync now") ---------- */
+function toast(msg, cls, keep){
+  let t = $('#toast'); clearTimeout(V.toastT);
+  t.className = 'toast show ' + (cls || ''); t.innerHTML = msg;
+  if (!keep) V.toastT = setTimeout(() => t.className = 'toast', 3800);
+}
+async function doRefresh(){
+  if (V.refreshing) return;
+  V.refreshing = true; document.body.classList.add('syncing');
+  const before = new Set(ACTS.map(a => a.id));
+  try {
+    if (hasGH()){
+      await startSync(m => toast(`<span class="spin"></span>${esc(m)}`, '', true));
+      toast(`<span class="spin"></span>Loading new data…`, '', true);
+      await loadGitHubData();
+    } else if (S.sheetUrl){
+      toast(`<span class="spin"></span>Reloading the Sheet…`, '', true);
+      await loadSheet(S.sheetUrl);
+    } else { toast('Add a data source in Settings → Sync and data.', 'err'); return; }
+    const added = ACTS.filter(a => !before.has(a.id)).length;
+    ensureNav(); rerender();
+    toast(added ? `✓ ${added} new workout${added > 1 ? 's' : ''}` : (hasGH() ? '✓ Up to date' : '✓ Reloaded. Connect GitHub in Settings to fetch from Zepp.'), 'ok');
+  } catch(e){ toast(esc(e.message), 'err'); }
+  finally { V.refreshing = false; document.body.classList.remove('syncing'); }
+}
+function rerender(){ const y = window.scrollY; renderNav(); route(); window.scrollTo({top:y}); }
+
+/* pull-to-refresh gesture */
+(function(){
+  let y0 = null, pulling = false, armed = false;
+  const ind = () => $('#ptr');
+  window.addEventListener('touchstart', e => { if (window.scrollY <= 0 && !V.refreshing && e.touches.length === 1){ y0 = e.touches[0].clientY; pulling = false; armed = false; } else y0 = null; }, {passive:true});
+  window.addEventListener('touchmove', e => {
+    if (y0 == null) return;
+    const dy = e.touches[0].clientY - y0;
+    if (dy <= 0 || window.scrollY > 0){ if (pulling){ ind().style.transform = ''; ind().classList.remove('on'); } pulling = false; return; }
+    pulling = true;
+    const h = Math.min(90, dy * .45); armed = h > 62;
+    ind().classList.add('on'); ind().style.transform = `translateY(${h}px)`;
+    ind().querySelector('span').textContent = armed ? 'Release to sync' : 'Pull to sync';
+    ind().classList.toggle('armed', armed);
+  }, {passive:true});
+  window.addEventListener('touchend', () => {
+    if (pulling){ ind().style.transform = ''; ind().classList.remove('on', 'armed'); if (armed) doRefresh(); }
+    y0 = null; pulling = false; armed = false;
+  }, {passive:true});
+})();
+
+/* ---------- colour themes ---------- */
+const THEMES = {
+  neon:    {label:'Neon', note:'Default'},
+  classic: {label:'Classic', c:{run:'#2a78d6', cycle:'#eb6834', yoga:'#e87ba4', walk:'#1baf7a', swim:'#008300', hike:'#eda100', strength:'#6250d6', hiit:'#e34948'}, accent:'#2a78d6'},
+  pastel:  {label:'Pastel', c:{run:'#6fa8f0', cycle:'#f0a173', yoga:'#ee9cc2', walk:'#79cf98', swim:'#8f9ff5', hike:'#e8c463', strength:'#b29af0', hiit:'#ef8585'}, accent:'#6fa8f0'},
+  ocean:   {label:'Ocean', c:{run:'#00a6c8', cycle:'#ff8a3d', yoga:'#c86bff', walk:'#2ec4a0', swim:'#3d6bff', hike:'#e0b000', strength:'#7a5cff', hiit:'#ff4f7b'}, accent:'#00a6c8'},
+  vivid:   {label:'High contrast', c:{run:'#0095ff', cycle:'#ff6a00', yoga:'#ff2d95', walk:'#00c060', swim:'#5b4bff', hike:'#f5c400', strength:'#a53dff', hiit:'#ff2a2a'}, accent:'#0095ff'},
+  mono:    {label:'Mono', c:{run:'#0bb5d0', cycle:'#0a8fa6', yoga:'#5fd3e4', walk:'#076d7e', swim:'#8fe3ef', hike:'#0a7f93', strength:'#36c4da', hiit:'#055866'}, accent:'#0bb5d0'},
+};
+function applyColors(){
+  const st = document.documentElement.style, th = THEMES[S.palette] || THEMES.neon;
+  ['run','cycle','yoga','walk','swim','hike','strength','hiit'].forEach(k => {
+    const v = (S.typeColors || {})[k] || (th.c ? th.c[k] : '');
+    if (v) st.setProperty('--c-' + k, v); else st.removeProperty('--c-' + k);
+  });
+  const acc = S.accent || th.accent || '';
+  if (acc) st.setProperty('--accent', acc); else st.removeProperty('--accent');
+  if (S.lineColor) st.setProperty('--line', S.lineColor); else st.removeProperty('--line');
+}
+function colorsSettingsHtml(){
+  const th = THEMES[S.palette] ? S.palette : 'neon';
+  const cs = getComputedStyle(document.documentElement);
+  const hex = v => { v = (v || '').trim(); if (/^#[0-9a-f]{6}$/i.test(v)) return v; const m = v.match(/\d+/g); return m ? '#' + m.slice(0, 3).map(x => (+x).toString(16).padStart(2, '0')).join('') : '#888888'; };
+  return `<h3>Colours</h3><div class="card">
+    <div class="stack"><div class="lbl">Theme</div><div class="chips wrap" style="padding:0">${Object.keys(THEMES).map(k => `<button class="chip ${th === k ? 'on' : ''}" data-palette="${k}">${THEMES[k].label}</button>`).join('')}</div></div>
+    <div class="stack" style="border-top:1px solid var(--grid)"><div class="lbl">Workout colours</div><div class="cgrid">
+      ${SLOT_ORDER.map(k => `<label class="cpick"><input type="color" value="${hex(cs.getPropertyValue('--c-' + k))}" data-tcolor="${k}"><span>${TYPES[k].label}</span></label>`).join('')}</div></div>
+    <div class="stack" style="border-top:1px solid var(--grid)"><div class="cgrid">
+      <label class="cpick"><input type="color" value="${hex(cs.getPropertyValue('--accent'))}" data-accent><span>Accent</span></label>
+      <label class="cpick"><input type="color" value="${hex(S.lineColor || cs.getPropertyValue('--ink'))}" data-linecolor><span>Line overlay</span></label></div>
+      <div class="btnrow"><button class="btn" data-colorsreset>Reset colours</button></div></div>
+    <div class="note" style="padding:0 0 10px">Neon, Classic and High contrast keep neighbouring colours distinguishable for colour-blind viewers. Pastel and Mono are softer and rely more on the legends.</div>
+  </div>`;
+}
+
+/* ---------- Settings: profile, sync & schedule ---------- */
+const SCHEDULE = [['6:17 AM', '47 0 * * *'], ['9:30 AM', '0 4 * * *'], ['6:17 PM', '47 12 * * *'], ['9:30 PM', '0 16 * * *']];
+function profileSettingsHtml(){
+  return `<h3>Profile (for Pro)</h3><div class="card">
+    <div class="srow"><div class="grow">Age</div><input type="number" min="10" max="100" value="${S.age || ''}" data-set="age" style="width:84px" placeholder="–"></div>
+    <div class="srow"><div class="grow">Resting heart rate<div class="n">Lowest you see on waking, in bpm</div></div><input type="number" min="30" max="110" value="${S.restHr || ''}" data-set="restHr" style="width:84px" placeholder="–"></div>
+    <div class="srow"><div class="grow">Max heart rate<div class="n">Sets zone boundaries. Pro suggests values.</div></div><input type="number" min="120" max="230" value="${S.maxHr}" data-set="maxHr" style="width:84px"></div>
+  </div>`;
+}
+function syncSettingsHtml(){
+  const g = GH();
+  return `<h3>Sync with Zepp</h3><div class="card">
+    <div class="stack"><div class="lbl">Automatic syncs (India time)</div>
+      <div class="sched">${SCHEDULE.map(s => `<span>${s[0]}</span>`).join('')}</div>
+      <div class="n">Run by GitHub from your zepp-sync repository. GitHub often starts these late, sometimes by hours. Pull down on any screen to sync right away.</div>
+      <div id="lastrun" class="n">${DATA_INFO.synced ? 'Data last synced: ' + esc(syncedText().replace('Synced ', '')) : ''}</div></div>
+    <div class="stack" style="border-top:1px solid var(--grid)"><div class="lbl">Pull-to-refresh connection</div>
+      <div class="n">Lets this app start a Zepp sync and load the result straight away. Saved only in this browser.</div>
+      <label class="fl">Repository<input type="text" id="ghRepo" value="${esc(g.repo)}" placeholder="your-name/zepp-sync" autocapitalize="off" spellcheck="false"></label>
+      <label class="fl">Token<input type="password" id="ghToken" value="${esc(g.token)}" placeholder="github_pat_…" autocomplete="off"></label>
+      <div class="btnrow"><button class="btn primary" data-ghsave>Save and test</button>${hasGH() ? '<button class="btn" data-refresh>Sync now</button><button class="btn" data-ghforget>Remove</button>' : ''}</div>
+      <div id="ghMsg" class="msg"></div>
+      <details><summary class="n" style="cursor:pointer">How to make the token</summary><ol class="n steps">
+        <li>On GitHub: your picture → <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token</b>.</li>
+        <li>Name it, set the longest expiry, and under <b>Repository access</b> pick <b>Only select repositories → zepp-sync</b>.</li>
+        <li><b>Permissions → Repository permissions</b>: <b>Actions: Read and write</b>, <b>Contents: Read-only</b>.</li>
+        <li>Generate, copy it, paste it above. It can only start this sync and read its data.</li></ol></details>
+    </div></div>`;
+}
+
 /* ---------------- events ---------------- */
 document.addEventListener('click', async e => {
   const b = e.target.closest('button, [data-i]'); if (!b) return;
   const d = b.dataset;
-  if (d.tab){ if (d.tab !== V.tab){ V.tab = d.tab; V.sel = null; V.listLimit = 25; if (d.tab !== 'settings'){ S.lastTab = d.tab; save(); } render(); } return; }
+
+  // ---- refresh / sync ----
+  if ('refresh' in d){ doRefresh(); return; }
+  if ('ghsave' in d){
+    S.gh = Object.assign(GH(), {repo:$('#ghRepo').value.trim().replace(/^https?:\/\/github\.com\//, '').replace(/\/$/, ''), token:$('#ghToken').value.trim()}); save();
+    const msg = $('#ghMsg'); msg.className = 'msg'; msg.textContent = 'Checking…';
+    try { const r = await lastRun(); msg.textContent = 'Connected. Loading data…';
+      try { const res = await loadGitHubData(); S.source = 'github'; save(); ensureNav(); renderNav(); renderSettings();
+        const m2 = $('#ghMsg'); m2.className = 'msg ok'; m2.textContent = `Connected · loaded ${res.acts.length} workouts. Pull down on any screen to sync.`; }
+      catch(err){ msg.className = 'msg err'; msg.textContent = 'Connected to GitHub, but: ' + err.message; } }
+    catch(err){ msg.className = 'msg err'; msg.textContent = err.message; }
+    return;
+  }
+  if ('ghforget' in d){ S.gh = Object.assign(GH(), {token:''}); save(); renderSettings(); return; }
+  // ---- colours ----
+  if (d.palette){ S.palette = d.palette; S.typeColors = {}; S.accent = ''; save(); applyColors(); renderSettings(); return; }
+  if ('colorsreset' in d){ S.palette = 'neon'; S.typeColors = {}; S.accent = ''; S.lineColor = ''; save(); applyColors(); renderSettings(); return; }
+  // ---- pro ----
+  if (d.usemax){ S.maxHr = +d.usemax; ACTS.forEach(a => delete a._load); save(); renderPro(); toast('Max heart rate set to ' + d.usemax + ' bpm', 'ok'); return; }
+  // ---- analysis ----
+  if (d.af){
+    const c = curCfg(), arr = c.f[d.af] || [], v = d.af === 'types' ? d.v : +d.v;
+    c.f[d.af] = arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
+    V.filtersOpen = true; save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return;
+  }
+  if (d.afclear){ curCfg().f[d.afclear] = []; V.filtersOpen = true; save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return; }
+  if ('apin' in d){
+    const c = structuredClone(curCfg()); c.title = c.title || autoTitle(c);
+    S.custom = [...(S.custom || []), c]; save(); renderNav();
+    const m = $('#apinmsg'); m.className = 'msg ok';
+    m.textContent = S.navOn.includes('custom') ? 'Pinned. It\'s on your Custom page.' : 'Pinned. Turn on "Custom" in Settings → Bottom bar to see your charts.';
+    return;
+  }
+  if ('areset' in d){ S.analysis = defaultCfg(); save(); renderAnalysis(); return; }
+  if ('asave' in d){ const c = structuredClone(curCfg()); S.custom[V.editIdx] = c; S.analysis = V.prevAnalysis || defaultCfg(); V.editIdx = null; save(); V.tab = 'custom'; render(); toast('Chart updated', 'ok'); return; }
+  if ('acancel' in d){ S.analysis = V.prevAnalysis || defaultCfg(); V.editIdx = null; save(); V.tab = 'custom'; render(); return; }
+  // ---- custom page ----
+  if (d.cmv != null){ const i = +d.cmv, j = i + +d.dir, o = S.custom; [o[i], o[j]] = [o[j], o[i]]; save(); const y = window.scrollY; renderCustom(); window.scrollTo({top:y}); return; }
+  if (d.cedit != null){ V.prevAnalysis = structuredClone(curCfg()); S.analysis = structuredClone(S.custom[+d.cedit]); V.editIdx = +d.cedit; V.filtersOpen = false; V.tab = 'analysis'; render(); return; }
+  if (d.cren != null){ const box = $('#cr' + d.cren); box.hidden = !box.hidden; if (!box.hidden) box.querySelector('input').focus(); return; }
+  if (d.crensave != null){ const i = +d.crensave, v = $('#cr' + i).querySelector('input').value.trim(); S.custom[i].title = v; save(); const y = window.scrollY; renderCustom(); window.scrollTo({top:y}); return; }
+  if (d.cdel != null){
+    if (b.dataset.armed){ S.custom.splice(+d.cdel, 1); save(); renderNav(); const y = window.scrollY; renderCustom(); window.scrollTo({top:y}); return; }
+    b.dataset.armed = '1'; b.textContent = 'Tap again to remove'; b.classList.add('primary'); setTimeout(() => { if (b.isConnected){ delete b.dataset.armed; b.textContent = 'Remove'; b.classList.remove('primary'); } }, 3000); return;
+  }
+  if ('ccopy' in d){ try { await navigator.clipboard.writeText($('#cexport').value); b.textContent = 'Copied'; } catch(err){ $('#cexport').select(); b.textContent = 'Select and copy the code above'; } return; }
+  if ('cimport' in d){
+    const m = $('#cmsg');
+    try { const arr = JSON.parse(decodeURIComponent(escape(atob($('#cimport').value.trim()))));
+      if (!Array.isArray(arr) || !arr.every(x => x && x.measure && x.f)) throw new Error('bad');
+      S.custom = [...(S.custom || []), ...arr]; save(); renderNav(); renderCustom(); toast(`Added ${arr.length} chart${arr.length > 1 ? 's' : ''}`, 'ok'); }
+    catch(err){ m.className = 'msg err'; m.textContent = 'That code didn\'t work. Copy it again from the other device.'; }
+    return;
+  }
+  if (d.tab){ if (d.tab !== V.tab){ if (V.tab === 'analysis' && V.editIdx != null){ S.analysis = V.prevAnalysis || S.analysis; V.editIdx = null; } V.tab = d.tab; V.sel = null; V.listLimit = 25; if (d.tab !== 'settings'){ S.lastTab = d.tab; save(); } render(); } return; }
   if (d.period){ V.period = d.period; V.sel = null; V.listLimit = 25; renderWorkout(); return; }
   if ('compare' in d){ S.compare = !S.compare; V.sel = null; save(); renderWorkout(); return; }
   if (d.metric || d.gmetric){
@@ -1056,10 +2317,24 @@ document.addEventListener('click', async e => {
   }
   if ('unsheet' in d){ S.sheetUrl = ''; if (S.source === 'sheet') S.source = 'local'; save(); renderSettings(); return; }
   if ('copyschema' in d){ try { await navigator.clipboard.writeText(SCHEMA.split('\n')[0]); b.textContent = 'Copied'; } catch(err){ b.textContent = 'Copy blocked – select the text above'; } return; }
-  if ('reset' in d){ const keep = {source:S.source, sheetUrl:S.sheetUrl}; Object.keys(S).forEach(k => delete S[k]); Object.assign(S, structuredClone(DEFAULTS), keep); ensureNav(); save(); applyTheme(); V.tab = 'settings'; render(); return; }
+  if ('reset' in d){ const keep = {source:S.source, sheetUrl:S.sheetUrl, gh:S.gh, custom:S.custom}; Object.keys(S).forEach(k => delete S[k]); Object.assign(S, structuredClone(DEFAULTS), keep); ensureNav(); save(); applyTheme(); V.tab = 'settings'; render(); return; }
 });
 document.addEventListener('change', e => {
   const t = e.target;
+  if (t.dataset.ac){
+    const c = curCfg(), k = t.dataset.ac; let v = t.value;
+    if (k === 'bins') v = Math.max(3, Math.min(30, parseInt(v) || 12));
+    c[k] = v;
+    if (k === 'measure') c.how = fixHow(c.measure, c.how);
+    if (k === 'measure2') c.how2 = v ? AM[v].hows[0] : '';
+    if (k === 'by' && c.split === v) c.split = '';
+    if (k === 'chart' && v === 'stack' && !c.split) c.split = 'type';
+    if (k === 'chart' && v === 'scatter' && c.xm === c.measure){ c.xm = 'distance'; c.measure = c.measure === 'distance' ? 'pace' : c.measure; c.how = fixHow(c.measure, c.how); }
+    c.title = '';
+    save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return;
+  }
+  if (t.dataset.af2){ const c = curCfg(); c.f[t.dataset.af2] = t.value; V.filtersOpen = true; save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return; }
+
   if (t.id === 'fileIn' && t.files[0]){
     const f = t.files[0];
     f.text().then(txt => { const res = parseAny(txt); const label = 'File: ' + f.name; setData(res.acts, {label, at:Date.now()}); afterDataChange(res, label); })
@@ -1068,30 +2343,45 @@ document.addEventListener('change', e => {
   }
   if (t.dataset.set){
     const k = t.dataset.set; let v = t.value;
-    if (k === 'maxHr'){ v = Math.min(230, Math.max(120, parseInt(v) || 190)); t.value = v; }
+    if (k === 'maxHr'){ v = Math.min(230, Math.max(120, parseInt(v) || 190)); t.value = v; ACTS.forEach(a => delete a._load); }
+    if (k === 'age' || k === 'restHr'){ v = parseInt(v) || ''; t.value = v; }
     S[k] = v; save();
   }
 });
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset.tcolor){ S.typeColors = Object.assign({}, S.typeColors, {[t.dataset.tcolor]: t.value}); applyColors(); save(); }
+  else if ('accent' in t.dataset){ S.accent = t.value; applyColors(); save(); }
+  else if ('linecolor' in t.dataset){ S.lineColor = t.value; applyColors(); save(); }
+});
+document.addEventListener('toggle', e => { if (e.target.classList && e.target.classList.contains('filters')) V.filtersOpen = e.target.open; }, true);
 let compactHdr = false;
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
   if (!compactHdr && y > 60){ compactHdr = true; $('#hdr').classList.add('scrolled'); }
   else if (compactHdr && y < 8){ compactHdr = false; $('#hdr').classList.remove('scrolled'); }
 }, {passive:true});
-let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (V.tab !== 'settings') drawAll(); }, 120); });
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (V.redraw) V.redraw(); else if (V.tab !== 'settings') drawAll(); }, 120); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && V.sel != null){ V.sel = null; renderWorkout(); } });
+
+/* installable app: offline helper (only when hosted, e.g. on GitHub Pages) */
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+  try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch(e){}
+}
 
 /* ---------------- boot ---------------- */
 (async function boot(){
-  applyTheme();
+  applyTheme(); applyColors();
   if (S.source === 'sample' || !loadLocal()) { setData(genSample(), {label:'Sample data'}); if (S.source !== 'sample'){ S.source = 'sample'; } }
   ensureNav(); save();
   const tabs = navTabs();
   V.tab = S.start === 'last' ? (tabs.includes(S.lastTab) ? S.lastTab : tabs[0]) : (tabs.includes(S.start) ? S.start : tabs[0]);
   V.period = S.startPeriod || 'd7';
   render();
-  if (S.source === 'sheet' && S.sheetUrl){
-    try { await loadSheet(S.sheetUrl); ensureNav(); render(); } catch(err){ /* keep cached copy */ }
+  if (hasGH()){
+    try { await loadGitHubData(); S.source = 'github'; save(); ensureNav(); rerender(); } catch(err){ toast(esc(err.message), 'err'); }
+  } else if (S.source === 'sheet' && S.sheetUrl){
+    try { await loadSheet(S.sheetUrl); ensureNav(); rerender(); } catch(err){ /* keep cached copy */ }
   }
 })();
 </script>
