@@ -245,10 +245,79 @@ h3.sub{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--
 .steps{padding-left:18px;margin:6px 0} .steps li{margin:4px 0}
 .renbox{display:flex;gap:6px;margin-top:8px} .renbox input{flex:1;background:var(--chip);border:0;border-radius:8px;padding:8px}
 .cbtns{display:flex;gap:4px}
+
+/* pivot */
+.pv{padding:10px 12px}
+.well{display:grid;grid-template-columns:62px 1fr;gap:8px;align-items:start;padding:7px 0;border-top:1px solid var(--grid)}
+.well:first-child{border-top:0}
+.wl{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;color:var(--muted);padding-top:8px}
+.wc{display:flex;flex-wrap:wrap;gap:6px}
+.pchip{border:0;border-radius:9px;background:var(--chip);color:var(--ink);font-size:12.5px;padding:7px 10px;text-align:left;box-shadow:inset 0 0 0 1px var(--border)}
+.pchip span{color:var(--muted)}
+.wadd{border:1px dashed var(--axis);background:none;color:var(--accent);border-radius:9px;font-size:12.5px;padding:6px 10px}
+.pvtools{display:flex;justify-content:space-between;padding-top:8px;border-top:1px solid var(--grid)}
+.pvtools .linkbtn{font-size:12px}.pvtools .linkbtn:disabled{color:var(--muted);opacity:.5}
+.pvbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0 2px}
+.pvbar select{background:var(--chip);border:0;border-radius:8px;padding:7px 8px;font-size:12.5px;color:var(--ink)}
+.pvwrap{overflow:auto;max-height:70vh;margin-top:6px;border-radius:10px;box-shadow:inset 0 0 0 1px var(--grid)}
+.pvt{border-collapse:separate;border-spacing:0;font-size:12.5px;font-variant-numeric:tabular-nums;min-width:100%}
+.pvt th,.pvt td{padding:7px 10px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}
+.pvt thead th{position:sticky;top:0;background:var(--surface);z-index:2;font-size:11px;color:var(--muted);font-weight:600;cursor:pointer}
+.pvt thead tr:nth-child(2) th{top:29px}
+.pvt th.ch{text-align:center;color:var(--ink2)}
+.pvt .rh{position:sticky;left:0;background:var(--surface);text-align:left;z-index:1;max-width:46vw;overflow:hidden;text-overflow:ellipsis}
+.pvt thead .rh{z-index:3}
+.pvt td.tot,.pvt th.tot{font-weight:650}
+.pvt tr.pvgt td{font-weight:700;border-top:2px solid var(--axis);background:var(--chip)}
+.pvt tr.pvgt td.rh{background:var(--chip)}
+.pvt .sw{margin-right:6px}
+/* bottom sheet */
+#sheet{position:fixed;inset:0;z-index:40;pointer-events:none}
+#sheet .sback{position:absolute;inset:0;background:rgba(0,0,0,.45);opacity:0;transition:opacity .2s}
+#sheet .spanel{position:absolute;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;max-height:78vh;overflow:auto;background:var(--surface);border-radius:18px 18px 0 0;padding:10px 16px calc(20px + env(safe-area-inset-bottom));transform:translateY(105%);transition:transform .22s ease;box-shadow:0 -10px 30px rgba(0,0,0,.35)}
+#sheet:not(.open) .spanel{visibility:hidden;transition:transform .22s ease,visibility 0s .22s}
+#sheet.open{pointer-events:auto}#sheet.open .sback{opacity:1}#sheet.open .spanel{transform:none}
+.sgrab{width:40px;height:4px;border-radius:2px;background:var(--axis);margin:0 auto 6px}
+.sx{position:absolute;right:10px;top:8px;border:0;background:var(--chip);border-radius:50%;width:30px;height:30px;color:var(--ink2)}
+.sbody h3{margin:4px 0 8px;font-size:17px}
+.sgl{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;color:var(--muted);margin:12px 0 4px}
+.sitem{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 4px;border-bottom:1px solid var(--grid);font-size:14px;color:var(--ink);cursor:pointer;list-style:none}
+.sitem.on{color:var(--accent);font-weight:650}.sitem.on::after{content:" ✓"}
+.sitem.danger{color:var(--bad)}
+details>summary.sitem::-webkit-details-marker{display:none}
+.scheck{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid var(--grid);font-size:14px}
+.scheck input{width:18px;height:18px;accent-color:var(--accent)}
+.scheck span{flex:1}.scheck em{font-style:normal;color:var(--muted);font-size:12px}
+body.noscroll{overflow:hidden}
+
+/* pro insights */
+.ghead .ibtn,.ibtn{flex:none;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--axis);background:none;color:var(--ink2);font:italic 700 12px Georgia,serif;display:inline-flex;align-items:center;justify-content:center;padding:0;vertical-align:middle;margin-left:4px}
+h3.sub .ibtn{width:18px;height:18px;font-size:10px}
+.insight{margin:8px 0 2px;padding:9px 11px;border-radius:10px;background:color-mix(in srgb,var(--accent) 10%,transparent);font-size:13px;color:var(--ink2);line-height:1.45}
+.insight:empty{display:none}
+.insight b{color:var(--ink)}
+.tiles4>button{background:var(--chip);border-radius:10px;padding:8px;border:0;text-align:left;color:inherit;cursor:pointer}
+.lvl{margin-top:8px}
+.lrow{display:block;width:100%;text-align:left;border:0;background:none;color:inherit;padding:10px 0;border-top:1px solid var(--grid);cursor:pointer}
+.lrow:first-child{border-top:0}
+.lt{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.lt span{font-size:13px;color:var(--ink2)} .lt b{font-size:16px}
+.ln{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4}
+.badge{display:inline-block;margin-top:5px;font-size:11px;font-weight:650;padding:3px 8px;border-radius:999px;background:var(--chip);color:var(--ink2)}
+.badge.good{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.badge.ok{background:color-mix(in srgb,var(--c-hike) 18%,transparent);color:var(--c-hike)}
+.badge.low{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.lgbtn{border:0;background:none;color:var(--ink2);font-size:12px;display:inline-flex;align-items:center;gap:5px;padding:2px 0;cursor:pointer}
+p.ex{font-size:14px;line-height:1.5;color:var(--ink2);margin:0 0 6px}
+.extbl td{white-space:normal !important;font-size:13px;line-height:1.4}
+.extbl td:first-child{width:34%;padding-right:10px}
+.extbl td b{white-space:normal}
+.you{font-size:14px;line-height:1.5;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--accent) 10%,transparent)}
 </style>
 </head>
 <body>
 <div id="ptr"><span>Pull to sync</span></div><div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="sheet"><div class="sback" data-sclose></div><div class="spanel" role="dialog"><div class="sgrab"></div><button class="sx" data-sclose aria-label="Close">✕</button><div class="sbody"></div></div></div>
 <div id="app">
   <header class="top" id="hdr">
     <div class="hrow"><div><div class="eyebrow" id="hdrSub"></div><h1 id="hdrTitle">Workouts</h1></div><div id="hdrRight"></div></div>
@@ -261,7 +330,7 @@ h3.sub{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--
 <script>
 'use strict';
 /* ---------------- utilities ---------------- */
-const APP_VERSION = '10 Nov 2026 · Pro, Analysis, Custom';
+const APP_VERSION = '17 Nov 2026 · Pivot analysis, Pro insights';
 const DAY = 864e5;
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -383,7 +452,7 @@ function zoneOf(hr){ const p = hr / (S.maxHr || 190); let z = 0; ZONES.forEach((
 
 /* ---------------- settings & state ---------------- */
 const DEFAULTS = {navOrder:null, navOn:null, start:'last', startPeriod:'d7', units:'km', maxHr:190, theme:'auto',
-                  source:'sample', sheetUrl:'', allFilter:null, metric:{}, lastTab:null, compare:false, viewMode:'overview', graphsBy:'metric', palette:'neon', typeColors:{}, accent:'', lineColor:'', age:'', restHr:'', custom:[], analysis:null};
+                  source:'sample', sheetUrl:'', allFilter:null, metric:{}, lastTab:null, compare:false, viewMode:'overview', graphsBy:'metric', palette:'neon', typeColors:{}, accent:'', lineColor:'', age:'', sex:'', restHr:'', custom:[], analysis:null};
 const S = Object.assign({}, DEFAULTS, store.get('settings', {}));
 const save = () => store.set('settings', S);
 let ACTS = [];             // normalised activities, sorted ascending
@@ -1559,185 +1628,406 @@ function splitSeries(split, list){
   return out;
 }
 
-/* ---------- a chart config -> rendered card body ---------- */
-const CHART_TYPES = [['bar','Bar'],['stack','Stacked bar'],['group','Grouped bar'],['line','Line'],['area','Area'],['scatter','Scatter'],['donut','Donut'],['heat','Calendar heatmap'],['hist','Histogram'],['table','Table']];
-const COLOR_OPTS = [['auto','Automatic'],['accent','Accent'],...SLOT_ORDER.map(k => [k, TYPES[k].label + ' colour']),['custom','Custom…']];
-function defaultCfg(){ return {chart:'bar', by:'month', measure:'distance', how:'sum', split:'', measure2:'', how2:'', xm:'distance', bins:12, color:'auto', custom:'#00d0e2',
-  f:{preset:'12m', types:[], years:[], months:[], weekdays:[], tod:[], from:'', to:''}, title:''}; }
-function cfgColor(cfg){
-  if (cfg.color === 'accent') return 'var(--accent)';
-  if (cfg.color === 'custom') return cfg.custom || 'var(--accent)';
-  if (TYPES[cfg.color]) return `var(--c-${cfg.color})`;
-  const t = cfg.f.types || [];
-  return t.length === 1 ? typeInfo(t[0]).color : 'var(--accent)';
-}
+/* =====================================================================
+   Pivot table (Excel-style): Filters · Rows · Columns · Values
+   ===================================================================== */
+const pad2 = n => String(n).padStart(2, '0');
 function fixHow(mk, how){ const h = AM[mk].hows; return h.includes(how) ? how : h[0]; }
-function autoTitle(cfg){
-  const m = AM[cfg.measure], how = howLabel(cfg.measure, fixHow(cfg.measure, cfg.how));
-  if (cfg.chart === 'scatter') return `${AM[cfg.xm].label} vs ${m.label}`;
-  if (cfg.chart === 'hist') return `${m.label} distribution`;
-  if (cfg.chart === 'heat') return `${m.label} calendar`;
-  const t = `${how === 'Total' ? '' : how + ' '}${how === 'Total' ? m.label : m.label.toLowerCase()} by ${DIMS[cfg.by].label.toLowerCase()}`;
-  return t.charAt(0).toUpperCase() + t.slice(1) + (cfg.split ? ` and ${DIMS[cfg.split].label.toLowerCase()}` : '');
+const TIME_DIMS = ['day','week','month','quarter','year'];
+// one category value per workout, for any dimension
+function dimVal(dim, a){
+  const d = a.start;
+  switch (dim){
+    case 'day': return dayKey(d);
+    case 'week': return dayKey(monday(d));
+    case 'month': return d.getFullYear() + '-' + pad2(d.getMonth() + 1);
+    case 'quarter': return d.getFullYear() + '-Q' + (Math.floor(d.getMonth() / 3) + 1);
+    case 'year': return d.getFullYear();
+    case 'workout': return a.id;
+    default: return DIMS[dim].key(a);
+  }
 }
-function filterSummary(f){
-  const p = []; const pr = PRESETS.find(x => x[0] === f.preset);
-  p.push(f.preset === 'custom' ? `${f.from || '…'} → ${f.to || 'today'}` : pr ? pr[1] : 'All time');
-  if (f.types && f.types.length) p.push(f.types.map(k => typeInfo(k).label).join(', ')); else p.push('All workouts');
-  if (f.years && f.years.length) p.push(f.years.join(', '));
-  if (f.months && f.months.length) p.push(f.months.map(m => MON[m]).join(', '));
-  if (f.weekdays && f.weekdays.length) p.push(f.weekdays.map(d => WD[d]).join(', '));
-  if (f.tod && f.tod.length) p.push(f.tod.map(t => TOD[t][0]).join(', '));
-  return p.join(' · ');
+function dimLabel(dim, k, short){
+  if (k == null) return '(none)';
+  switch (dim){
+    case 'day': { const d = new Date(k + 'T00:00'); return short ? fmtDM(d) : fmtDay(d); }
+    case 'week': { const d = new Date(k + 'T00:00'); return (short ? '' : 'Week of ') + fmtDM(d) + (short ? '' : ' ' + d.getFullYear()); }
+    case 'month': { const [y, m] = k.split('-'); return MON[+m - 1] + ' ' + (short ? "'" + y.slice(2) : y); }
+    case 'quarter': { const [y, q] = k.split('-'); return q + ' ' + (short ? "'" + y.slice(2) : y); }
+    case 'year': return String(k);
+    case 'type': return typeInfo(k).label;
+    case 'sport': return prettySport(k);
+    case 'weekday': return WD[k];
+    case 'moy': return MON[k];
+    case 'hour': return short ? String(k) : `${k}:00–${k}:59`;
+    case 'tod': return TOD[k] ? TOD[k][0] : '?';
+    case 'zone': return 'Z' + (k + 1) + (short ? '' : ' · ' + ZONES[k].n);
+    case 'distband': return DIST_BANDS[k][2] + ' ' + U().d;
+    case 'durband': return DUR_BANDS[k][2];
+    default: return String(k);
+  }
 }
-// Builds the chart into `el` (and its legend/note into `foot`); returns the unit text for the heading
-function drawCfg(el, foot, cfg){
-  extraMeasures();
-  if (!AM[cfg.measure]) cfg.measure = 'distance';
-  const list = applyFilters(cfg.f), m = AM[cfg.measure], how = fixHow(cfg.measure, cfg.how);
-  if (foot) foot.innerHTML = '';
-  if (!list.length){ el.innerHTML = `<div class="empty">No workouts match these filters.</div>`; return ''; }
-  const color = cfgColor(cfg);
-  if (cfg.chart === 'scatter'){
-    const xm = AM[cfg.xm] || AM.distance, pts = list.map(a => ({x:xm.v(a), y:m.v(a), color:typeInfo(a.type).color, title:`${typeInfo(a.type).label} · ${fmtDay(a.start)}`})).filter(p => p.x != null && p.y != null);
-    const xu = xm.unit(Math.max(0, ...pts.map(p => p.x))), yu = m.unit(Math.max(0, ...pts.map(p => p.y)));
-    renderScatter(el, {points:pts, xf:xu.f, yf:yu.f, xLabel:xm.label + (xu.u ? ` (${xu.u})` : ''), yLabel:m.label + (yu.u ? ` (${yu.u})` : '')});
-    if (foot) foot.innerHTML = legendHtml(typeKeys(list).map(k => ({name:typeInfo(k).label, color:typeInfo(k).color})));
-    return '';
-  }
-  if (cfg.chart === 'hist'){
-    const vals = list.map(m.v).filter(v => v != null && isFinite(v));
-    if (!vals.length){ el.innerHTML = `<div class="empty">No workouts have this value.</div>`; return ''; }
-    const lo = Math.min(...vals), hi = Math.max(...vals), nb = Math.max(3, Math.min(30, +cfg.bins || 12)), w = (hi - lo) / nb || 1;
-    const u = m.unit(hi), counts = Array(nb).fill(0);
-    vals.forEach(v => counts[Math.min(nb - 1, Math.floor((v - lo) / w))]++);
-    const cats = counts.map((_, i) => ({lab:u.f(lo + w * i), title:`${u.f(lo + w * i)}–${u.f(lo + w * (i + 1))} ${u.u}`}));
-    renderCat(el, {cats, series:[{name:'Workouts', color, values:counts}], fmt:v => String(v), full:v => v + ' workouts', H:220, hi:-1, boldLast:false});
-    if (foot) foot.innerHTML = `<div class="note">Bars count workouts in each ${m.label.toLowerCase()} range (${u.u}).</div>`;
-    return '(workouts)';
-  }
-  if (cfg.chart === 'heat'){
-    const vals = new Map(); list.forEach(a => { const k = dayKey(a.start); vals.set(k, (vals.get(k) || 0)); });
-    const byDay = {}; list.forEach(a => (byDay[dayKey(a.start)] = byDay[dayKey(a.start)] || []).push(a));
-    for (const k in byDay) vals.set(k, aggA(byDay[k], cfg.measure, how) || 0);
-    let [s, e] = presetRange(cfg.f); s = s || new Date(Math.min(...list.map(a => +a.start))); e = e ? addDays(e, -1) : today0();
-    if ((e - s) / DAY > 371) s = addDays(e, -371);
-    const mx = Math.max(0, ...vals.values());
-    renderHeat(el, {from:s, to:e, values:vals, full:v => fullA(cfg.measure, v, mx), color, label:m.label});
-    return m.unit(mx).u ? `(${m.unit(mx).u})` : '';
-  }
-  const by = cfg.chart === 'donut' && DIMS[cfg.by].time ? 'type' : cfg.by;
-  const g = groupList(by, list, cfg.f);
-  if (cfg.chart === 'donut'){
-    const how2 = m.hows.includes('sum') ? 'sum' : how;
-    const sl = g.cats.map((c, i) => ({name:c.title || c.lab, color:c.color || CAT_COLORS[i % 8], value:aggA(c.list, cfg.measure, how2) || 0})).filter(x => x.value > 0).sort((a, b) => b.value - a.value);
-    const top = sl.slice(0, 7); if (sl.length > 7) top.push({name:'Other', color:'var(--c-other)', value:sl.slice(7).reduce((t, x) => t + x.value, 0)});
-    const mx = Math.max(0, ...top.map(x => x.value)), u = m.unit(mx);
-    renderDonut(el, {slices:top, full:v => fullA(cfg.measure, v, mx), short:v => u.f(v), unit:u.u || m.label.toLowerCase()});
-    if (foot && !m.hows.includes('sum')) foot.innerHTML = `<div class="note">${esc(m.label)} can't be added up, so slices show ${howLabel(cfg.measure, how2).toLowerCase()} per group.</div>`;
-    return u.u ? `(${u.u})` : '';
-  }
-  // category charts and table
-  let series;
-  const splitOn = cfg.split && cfg.split !== by && ['stack','group','line','area','table','bar'].includes(cfg.chart);
-  if (splitOn){
-    series = splitSeries(cfg.split, list).map(se => ({...se, values:g.cats.map(c => aggA(c.list.filter(se.test), cfg.measure, how))}))
-      .filter(se => se.values.some(v => v != null && v !== 0));
-    if (!series.length) series = [{name:m.label, color, values:g.cats.map(() => null)}];
-  } else series = [{name:m.label, color, values:g.cats.map(c => aggA(c.list, cfg.measure, how))}];
-  const all = series.flatMap(s => s.values).filter(v => v != null);
-  const mx = cfg.chart === 'stack' ? Math.max(0, ...g.cats.map((_, i) => series.reduce((t, s) => t + (s.values[i] || 0), 0))) : Math.max(0, ...all);
-  const u = m.unit(mx), full = v => fullA(cfg.measure, v, mx);
-  let overlay = null, ou = null;
-  if (cfg.measure2 && AM[cfg.measure2] && ['bar','stack','group'].includes(cfg.chart)){
-    const m2 = AM[cfg.measure2], h2 = fixHow(cfg.measure2, cfg.how2 || m2.hows[0]);
-    const v2 = g.cats.map(c => c.list.length ? aggA(c.list, cfg.measure2, h2) : null);
-    ou = m2.unit(Math.max(0, ...v2.filter(v => v != null)));
-    overlay = {name:`${howLabel(cfg.measure2, h2)} ${m2.label.toLowerCase()}`, color:'var(--line)', values:v2, as:'line', ownScale:true, fmt:ou.f, full:v => fullA(cfg.measure2, v)};
-  }
-  if (cfg.chart === 'table'){
-    el.innerHTML = `<div class="tblwrap"><table class="atbl"><tr><th>${esc(DIMS[by].label)}</th>${series.map(s => `<th>${esc(s.name)}</th>`).join('')}${overlay ? `<th>${esc(overlay.name)}</th>` : ''}<th>Workouts</th></tr>` +
-      g.cats.map((c, i) => `<tr><td>${esc(c.title || c.lab)}</td>${series.map(s => `<td>${esc(s.values[i] == null ? '–' : full(s.values[i]))}</td>`).join('')}${overlay ? `<td>${esc(overlay.values[i] == null ? '–' : overlay.full(overlay.values[i]))}</td>` : ''}<td>${c.list.length}</td></tr>`).reverse().join('') + `</table></div>`;
-  } else {
-    const kind = cfg.chart;
-    const ser = series.map(s => ({...s, as:kind === 'line' ? 'line' : kind === 'area' ? 'area' : 'bar'}));
-    if (overlay) ser.push(overlay);
-    renderCat(el, {cats:g.cats, series:ser, stack:kind === 'stack', fmt:u.f, full, H:230,
-      extraTip:i => tipRow('Workouts', String(g.cats[i].list.length))});
-    if (foot && (ser.length > 1)) foot.innerHTML = legendHtml(ser);
-  }
-  if (foot && g.note) foot.innerHTML += `<div class="note">${esc(g.note)}</div>`;
-  return `(${[u.u, ou && ou.u ? ou.u + ' line' : ''].filter(Boolean).join(' · ')})`.replace('()', '');
+function dimColor(dim, k, i){ return dim === 'type' ? typeInfo(k).color : CAT_COLORS[i % 8]; }
+function sortKeys(dim, keys){
+  if (dim === 'type'){ const o = [...SLOT_ORDER]; return keys.sort((a, b) => ((o.indexOf(a) + 99) % 99) - ((o.indexOf(b) + 99) % 99) || String(a).localeCompare(b)); }
+  if (dim === 'weekday') return keys.sort((a, b) => ((a + 6) % 7) - ((b + 6) % 7));
+  return keys.sort((a, b) => typeof a === 'number' && typeof b === 'number' ? a - b : String(a).localeCompare(String(b)));
+}
+// which fields can go where
+const DIM_GROUPS = [
+  ['Dates', ['day','week','month','quarter','year','moy','weekday','hour','tod']],
+  ['Workout', ['type','sport','workout','zone','distband','durband']],
+];
+const FILTER_DIMS = ['type','sport','year','moy','weekday','tod','hour','zone','distband','durband'];
+DIMS.quarter.label = 'Quarter';
+
+/* numeric filters are typed in friendly units */
+function numConv(mk){
+  const u = U();
+  if (['distance'].includes(mk)) return {u:u.d, to:v => v / u.dm, from:v => v * u.dm};
+  if (['duration','elapsed','zone1','zone2','zone3','zone4','zone5'].includes(mk)) return {u:'min', to:v => v / 60, from:v => v * 60};
+  if (mk === 'pace') return {u:'min/' + u.d + ' (m:ss)', to:v => v, from:v => v, mmss:true};
+  if (mk === 'pace100') return {u:'min/100m (m:ss)', to:v => v, from:v => v, mmss:true};
+  if (mk === 'elevation') return {u:u.e, to:v => v / u.em, from:v => v * u.em};
+  const un = AM[mk].unit(1).u; return {u:un, to:v => v, from:v => v};
 }
 
-/* ---------- Analysis tab UI ---------- */
-function curCfg(){ if (!S.analysis) S.analysis = defaultCfg(); const c = S.analysis; c.f = Object.assign(defaultCfg().f, c.f || {}); return c; }
-function optionList(pairs, sel){ return pairs.map(([k, l]) => `<option value="${esc(k)}" ${String(k) === String(sel) ? 'selected' : ''}>${esc(l)}</option>`).join(''); }
-function chipGroup(name, items, selected){
-  return `<div class="chips wrap">${items.map(([k, l]) => `<button class="chip ${selected.includes(k) ? 'on' : ''}" data-af="${name}" data-v="${esc(k)}">${esc(l)}</button>`).join('')}</div>`;
+/* ---------- config ---------- */
+function defaultPivot(){ return {rows:'month', cols:'', vals:[{m:'distance', how:'sum'}, {m:'count', how:'sum'}],
+  filters:[{f:'date', preset:'all'}], view:'chart', chart:'bar', showAs:'value', sort:null, title:''}; }
+function toPivot(c){            // upgrade charts saved by the earlier Analysis builder
+  if (!c || c.rows !== undefined) return c;
+  const p = defaultPivot(); const f = c.f || {};
+  p.title = c.title || '';
+  p.filters = [{f:'date', preset:f.preset || 'all', from:f.from || '', to:f.to || ''}];
+  [['types','type'],['years','year'],['months','moy'],['weekdays','weekday'],['tod','tod']].forEach(([o, n]) => { if (f[o] && f[o].length) p.filters.push({f:n, in:f[o].slice()}); });
+  p.vals = [{m:c.measure || 'distance', how:c.how || 'sum'}];
+  if (c.measure2) p.vals.push({m:c.measure2, how:c.how2 || AM[c.measure2].hows[0]});
+  p.rows = c.by || 'month'; p.cols = c.split && c.split !== c.by ? c.split : '';
+  p.chart = ['bar','stack','group','line','area','donut'].includes(c.chart) ? c.chart : 'bar';
+  if (c.chart === 'table') p.view = 'table';
+  if (c.chart === 'scatter'){ p.rows = 'workout'; p.cols = ''; p.vals = [{m:c.xm || 'distance', how:'sum'}, {m:c.measure, how:AM[c.measure].hows[0]}]; p.chart = 'scatter'; }
+  if (c.chart === 'heat'){ p.rows = 'day'; p.chart = 'heat'; }
+  if (c.chart === 'hist'){ p.rows = 'distband'; p.vals = [{m:'count', how:'sum'}]; }
+  return p;
 }
+function curPivot(){
+  if (!S.analysis || S.analysis.rows === undefined) S.analysis = S.analysis ? toPivot(S.analysis) : defaultPivot();
+  const p = S.analysis;
+  if (!p.filters.some(x => x.f === 'date')) p.filters.unshift({f:'date', preset:'all'});
+  p.vals = p.vals.filter(v => AM[v.m]); if (!p.vals.length) p.vals = [{m:'count', how:'sum'}];
+  p.vals.forEach(v => v.how = fixHow(v.m, v.how));
+  return p;
+}
+const valName = v => `${howLabel(v.m, v.how)} ${AM[v.m].label.toLowerCase()}`.replace(/^Total workouts$/, 'Workouts');
+
+/* ---------- filtering ---------- */
+function pivotList(p){
+  const date = p.filters.find(x => x.f === 'date') || {preset:'all'};
+  const [s, e] = presetRange(date);
+  return ACTS.filter(a => {
+    if (s && a.start < s) return false;
+    if (e && a.start >= e) return false;
+    for (const f of p.filters){
+      if (f.f === 'date') continue;
+      if (f.in){ if (f.in.length && !f.in.includes(dimVal(f.f, a))) return false; continue; }
+      if (f.f.startsWith('m:')){
+        const m = AM[f.f.slice(2)]; if (!m) continue; const v = m.v(a);
+        if ((f.min !== '' && f.min != null) || (f.max !== '' && f.max != null)){
+          if (v == null) return false;
+          if (f.min !== '' && f.min != null && v < f.min) return false;
+          if (f.max !== '' && f.max != null && v > f.max) return false;
+        }
+      }
+    }
+    return true;
+  });
+}
+function filterText(f){
+  if (f.f === 'date'){ const pr = PRESETS.find(x => x[0] === f.preset); return f.preset === 'custom' ? `${f.from || '…'} → ${f.to || 'today'}` : (pr ? pr[1] : 'All time'); }
+  if (f.in){ const nm = DIMS[f.f].label; if (!f.in.length) return nm + ': all';
+    const ls = f.in.map(k => dimLabel(f.f, k, true)); return nm + ': ' + (ls.length > 3 ? ls.slice(0, 3).join(', ') + ` +${ls.length - 3}` : ls.join(', ')); }
+  if (f.f.startsWith('m:')){ const mk = f.f.slice(2), c = numConv(mk), fm = v => c.mmss ? fmtMS(v) : (+c.to(v).toFixed(2)).toString();
+    const lo = f.min !== '' && f.min != null, hi = f.max !== '' && f.max != null;
+    return AM[mk].label + ': ' + (lo && hi ? `${fm(f.min)}–${fm(f.max)}` : lo ? `≥ ${fm(f.min)}` : hi ? `≤ ${fm(f.max)}` : 'any') + ' ' + c.u.replace(' (m:ss)', ''); }
+  return f.f;
+}
+const pivotSummary = p => p.filters.map(filterText).join(' · ');
+
+/* ---------- compute ---------- */
+function computePivot(p){
+  const list = pivotList(p);
+  const date = p.filters.find(x => x.f === 'date') || {preset:'all'};
+  // rows: time dims are continuous (empty periods kept), others are the values present
+  let rows, note = '';
+  if (TIME_DIMS.includes(p.rows)){
+    const g = groupList(p.rows, list, date); note = g.note;
+    rows = g.cats.map(c => ({k:c.list.length ? dimVal(p.rows, c.list[0]) : c.title, lab:c.lab, sub:c.sub, title:c.title, list:c.list}));
+  } else if (p.rows === 'workout'){
+    const g = groupList('workout', list, date); note = g.note;
+    rows = g.cats.map(c => ({k:c.list[0].id, lab:c.lab, title:c.title, list:c.list, a:c.list[0]}));
+  } else {
+    const by = {}; list.forEach(a => { const k = dimVal(p.rows, a); if (k == null) return; (by[k] = by[k] || []).push(a); });
+    const keys = p.rows === 'zone' || p.rows === 'distband' || p.rows === 'durband' || p.rows === 'weekday' || p.rows === 'moy' || p.rows === 'tod' || p.rows === 'hour'
+      ? DIMS[p.rows].cats(list).map(c => c.k) : sortKeys(p.rows, Object.keys(by).map(k => isNaN(+k) ? k : +k));
+    rows = keys.map(k => ({k, lab:dimLabel(p.rows, k, true), title:dimLabel(p.rows, k), list:by[k] || [], color:p.rows === 'type' ? typeInfo(k).color : null}));
+  }
+  // columns: values present, max 8 (+ Other)
+  let cols = null;
+  if (p.cols){
+    const cnt = {}; list.forEach(a => { const k = dimVal(p.cols, a); if (k != null) cnt[k] = (cnt[k] || 0) + 1; });
+    let keys = sortKeys(p.cols, Object.keys(cnt).map(k => isNaN(+k) ? k : +k));
+    let other = null;
+    if (keys.length > 8){ const top = keys.slice().sort((a, b) => cnt[b] - cnt[a]).slice(0, 7); other = keys.filter(k => !top.includes(k)); keys = keys.filter(k => top.includes(k)); }
+    cols = keys.map((k, i) => ({k, lab:dimLabel(p.cols, k, true), color:dimColor(p.cols, k, i), test:a => dimVal(p.cols, a) === k}));
+    if (other) cols.push({k:'__other', lab:'Other', color:'var(--c-other)', test:a => other.includes(dimVal(p.cols, a))});
+  }
+  const cell = (l, v) => aggA(l, v.m, v.how);
+  const data = rows.map(r => ({
+    cells: cols ? cols.map(c => { const l = r.list.filter(c.test); return p.vals.map(v => l.length ? cell(l, v) : null); }) : [p.vals.map(v => r.list.length ? cell(r.list, v) : (v.how === 'sum' ? 0 : null))],
+    total: p.vals.map(v => r.list.length ? cell(r.list, v) : (v.how === 'sum' ? 0 : null)),
+  }));
+  const colTotals = cols ? cols.map(c => { const l = list.filter(c.test); return p.vals.map(v => l.length ? cell(l, v) : null); }) : null;
+  const grand = p.vals.map(v => list.length ? cell(list, v) : null);
+  return {list, rows, cols, data, colTotals, grand, note};
+}
+const canPct = v => v.how === 'sum';
+
+/* ---------- table ---------- */
+function pivotTableHtml(p, R){
+  const vals = p.vals, many = vals.length > 1, showAs = p.showAs || 'value';
+  const units = vals.map(v => AM[v.m].unit(Math.abs(R.grand[vals.indexOf(v)] || 0)));
+  const fmtV = (vi, x, rowTot, colTot) => {
+    if (x == null) return '–';
+    const v = vals[vi];
+    if (showAs !== 'value' && canPct(v)){
+      const base = showAs === 'grand' ? R.grand[vi] : showAs === 'row' ? rowTot : colTot;
+      return base ? (x / base * 100).toFixed(1) + '%' : '–';
+    }
+    if (AM[v.m].full) return AM[v.m].full(x);
+    const u = AM[v.m].unit(Math.abs(x)); return u.f(x) + (u.u && !many && !R.cols ? '' : u.u ? ' ' + u.u : '');
+  };
+  // order of rows
+  let idx = R.rows.map((_, i) => i);
+  const s = p.sort || {k:'label', dir:TIME_DIMS.includes(p.rows) || p.rows === 'workout' ? -1 : 1};
+  if (s.k === 'label'){ if (s.dir < 0) idx.reverse(); }
+  else {
+    const [kind, ci, vi] = s.k.split(':').map((x, i) => i ? +x : x);
+    const get = i => kind === 't' ? R.data[i].total[vi] : R.data[i].cells[ci][vi];
+    idx.sort((a, b) => ((get(a) ?? -Infinity) - (get(b) ?? -Infinity)) * s.dir);
+  }
+  const lim = V.pvAll ? idx.length : Math.min(idx.length, 100);
+  const arrow = k => p.sort && p.sort.k === k ? (p.sort.dir > 0 ? ' ▲' : ' ▼') : '';
+  const unitTxt = vi => showAs !== 'value' && canPct(vals[vi]) ? '%' : (units[vi].u || '');
+  let h = `<div class="pvwrap"><table class="pvt"><thead>`;
+  if (R.cols){
+    if (many){
+      h += `<tr><th class="rh" rowspan="2" data-psort="label">${esc(DIMS[p.rows].label)}${arrow('label')}</th>${R.cols.map(c => `<th colspan="${vals.length}" class="ch"><i class="sw" style="background:${c.color}"></i>${esc(c.lab)}</th>`).join('')}<th colspan="${vals.length}" class="ch tot">Total</th></tr>`;
+      h += `<tr>${[...R.cols, {}].map((c, ci) => vals.map((v, vi) => { const k = ci < R.cols.length ? `c:${ci}:${vi}` : `t:0:${vi}`; return `<th data-psort="${k}">${esc(valName(v))}${arrow(k)}</th>`; }).join('')).join('')}</tr>`;
+    } else {
+      h += `<tr><th class="rh" data-psort="label">${esc(DIMS[p.rows].label)}${arrow('label')}</th>${R.cols.map((c, ci) => `<th class="ch" data-psort="c:${ci}:0"><i class="sw" style="background:${c.color}"></i>${esc(c.lab)}${arrow('c:' + ci + ':0')}</th>`).join('')}<th class="ch tot" data-psort="t:0:0">Total${arrow('t:0:0')}</th></tr>`;
+    }
+  } else {
+    h += `<tr><th class="rh" data-psort="label">${esc(DIMS[p.rows].label)}${arrow('label')}</th>${vals.map((v, vi) => `<th data-psort="t:0:${vi}">${esc(valName(v))}${unitTxt(vi) ? ` <span class="u">(${esc(unitTxt(vi))})</span>` : ''}${arrow('t:0:' + vi)}</th>`).join('')}</tr>`;
+  }
+  h += `</thead><tbody>`;
+  for (let n = 0; n < lim; n++){
+    const i = idx[n], r = R.rows[i], d = R.data[i];
+    const lab = r.color ? `<i class="sw" style="background:${r.color}"></i>${esc(r.title)}` : esc(r.title);
+    if (R.cols){
+      h += `<tr><td class="rh">${lab}</td>${R.cols.map((c, ci) => vals.map((v, vi) => `<td>${esc(fmtV(vi, d.cells[ci][vi], d.total[vi], R.colTotals[ci][vi]))}</td>`).join('')).join('')}${vals.map((v, vi) => `<td class="tot">${esc(fmtV(vi, d.total[vi], d.total[vi], R.grand[vi]))}</td>`).join('')}</tr>`;
+    } else h += `<tr><td class="rh">${lab}</td>${vals.map((v, vi) => `<td>${esc(fmtV(vi, d.total[vi], d.total[vi], R.grand[vi]))}</td>`).join('')}</tr>`;
+  }
+  // grand total row
+  h += `<tr class="pvgt"><td class="rh">Grand total</td>`;
+  if (R.cols) h += R.cols.map((c, ci) => vals.map((v, vi) => `<td>${esc(fmtV(vi, R.colTotals[ci][vi], R.grand[vi], R.colTotals[ci][vi]))}</td>`).join('')).join('');
+  h += vals.map((v, vi) => `<td class="tot">${esc(fmtV(vi, R.grand[vi], R.grand[vi], R.grand[vi]))}</td>`).join('') + `</tr>`;
+  h += `</tbody></table></div>`;
+  if (idx.length > lim) h += `<button class="more" data-pvall>Show all ${idx.length} rows</button>`;
+  return h;
+}
+
+/* ---------- chart ---------- */
+const PCHARTS = [['bar','Bar'],['stack','Stacked bar'],['group','Grouped bar'],['line','Line'],['area','Area'],['donut','Donut'],['scatter','Scatter'],['heat','Calendar']];
+function drawPivot(el, foot, p){
+  extraMeasures();
+  const R = computePivot(p);
+  if (foot) foot.innerHTML = '';
+  if (!R.list.length){ el.innerHTML = `<div class="empty">No workouts match these filters.</div>`; return ''; }
+  if (p.view === 'table'){ el.innerHTML = pivotTableHtml(p, R); if (foot && R.note) foot.innerHTML = `<div class="note">${esc(R.note)}</div>`; return ''; }
+  const v0 = p.vals[0], m0 = AM[v0.m], showPct = (p.showAs || 'value') !== 'value' && canPct(v0);
+  const chart = p.chart || 'bar';
+  const notes = [];
+  let ou = null;
+  // value transform for "show as %"
+  const pct = (x, i, ci) => {
+    if (!showPct || x == null) return x;
+    const base = p.showAs === 'grand' ? R.grand[0] : p.showAs === 'row' ? R.data[i].total[0] : R.cols ? R.colTotals[ci][0] : R.grand[0];
+    return base ? x / base * 100 : null;
+  };
+  const yu = showPct ? {u:'%', f:v => (+v.toFixed(1)).toString()} : m0.unit(Math.max(0, ...R.data.flatMap(d => R.cols ? d.cells.map(c => c[0]) : [d.total[0]]).filter(x => x != null)));
+  const full = v => showPct ? v.toFixed(1) + '%' : fullA(v0.m, v);
+  if (chart === 'donut'){
+    const sl = R.rows.map((r, i) => ({name:r.title, color:r.color || CAT_COLORS[i % 8], value:Math.max(0, pct(R.data[i].total[0], i, 0) || 0)})).filter(x => x.value > 0).sort((a, b) => b.value - a.value);
+    const top = sl.slice(0, 7); if (sl.length > 7) top.push({name:'Other', color:'var(--c-other)', value:sl.slice(7).reduce((t, x) => t + x.value, 0)});
+    renderDonut(el, {slices:top, full, short:yu.f, unit:yu.u || m0.label.toLowerCase()});
+    if (!canPct(v0)) notes.push(`${m0.label} (${howLabel(v0.m, v0.how).toLowerCase()}) doesn't add up, so slice sizes compare groups but the centre total isn't meaningful.`);
+  } else if (chart === 'scatter'){
+    if (p.vals.length < 2){ el.innerHTML = `<div class="empty">Scatter needs two values. Add a second value under Values.</div>`; return ''; }
+    const v1 = p.vals[1], xm = AM[v0.m], ym = AM[v1.m];
+    const pts = R.rows.map((r, i) => ({x:R.data[i].total[0], y:R.data[i].total[1], color:r.a ? typeInfo(r.a.type).color : (r.color || 'var(--accent)'), title:r.title})).filter(q => q.x != null && q.y != null);
+    const xu = xm.unit(Math.max(0, ...pts.map(q => q.x))), yu2 = ym.unit(Math.max(0, ...pts.map(q => q.y)));
+    renderScatter(el, {points:pts, xf:xu.f, yf:yu2.f, xLabel:valName(v0) + (xu.u ? ` (${xu.u})` : ''), yLabel:valName(v1) + (yu2.u ? ` (${yu2.u})` : '')});
+    if (p.rows === 'workout') { const ks = typeKeys(R.list); if (ks.length > 1 && foot) foot.innerHTML = legendHtml(ks.map(k => ({name:typeInfo(k).label, color:typeInfo(k).color}))); }
+    return '';
+  } else if (chart === 'heat'){
+    if (p.rows !== 'day'){ el.innerHTML = `<div class="empty">The calendar needs Rows = Day.</div>`; return ''; }
+    const vals = new Map(); R.rows.forEach((r, i) => { if (r.list.length) vals.set(dayKey(r.list[0].start), R.data[i].total[0] || 0); });
+    const ds = R.list.map(a => +a.start), date = p.filters.find(x => x.f === 'date') || {};
+    let [s, e] = presetRange(date); s = s || new Date(Math.min(...ds)); e = e ? addDays(e, -1) : today0(); if ((e - s) / DAY > 371) s = addDays(e, -371);
+    const mx = Math.max(0, ...vals.values());
+    renderHeat(el, {from:s, to:e, values:vals, full:v => fullA(v0.m, v, mx), color:'var(--accent)', label:valName(v0)});
+    if ((e - s) / DAY >= 371) notes.push('The calendar shows up to the latest 12 months.');
+  } else {
+    const kind = chart;
+    let series;
+    if (R.cols){
+      series = R.cols.map((c, ci) => ({name:c.lab, color:c.color, values:R.data.map((d, i) => pct(d.cells[ci][0], i, ci)), as:kind === 'line' ? 'line' : kind === 'area' ? 'area' : 'bar'}))
+        .filter(se => se.values.some(x => x != null && x !== 0));
+    } else {
+      const col = p.rows === 'type' ? null : 'var(--accent)';
+      series = [{name:valName(v0), color:col || 'var(--accent)', values:R.data.map((d, i) => pct(d.total[0], i, 0)), as:kind === 'line' ? 'line' : kind === 'area' ? 'area' : 'bar'}];
+    }
+    // a second value becomes a line on its own scale
+    if (p.vals.length > 1){
+      const v1 = p.vals[1], vv = R.data.map((d, i) => R.rows[i].list.length ? d.total[1] : null);
+      ou = AM[v1.m].unit(Math.max(0, ...vv.filter(x => x != null)));
+      series.push({name:valName(v1), color:'var(--line)', values:vv, as:'line', ownScale:true, fmt:ou.f, full:x => fullA(v1.m, x)});
+      if (p.vals.length > 2) notes.push(`The chart shows the first two values; switch to Table to see all ${p.vals.length}.`);
+    }
+    const stack = kind === 'stack' && !!R.cols;
+    const cats = R.rows.map(r => ({lab:r.lab, sub:r.sub, title:r.title}));
+    // per-category colours when rows are workout types and there is one series
+    if (!R.cols && p.rows === 'type' && series[0].as === 'bar'){
+      // draw as stacked single-colour-per-row bars: one series per type with a value only in its own row
+      const own = R.rows.map((r, i) => ({name:r.title, color:r.color, values:R.rows.map((_, j) => j === i ? series[0].values[i] : null), as:'bar'}));
+      renderCat(el, {cats, series:[...own, ...series.slice(1)], stack:true, fmt:yu.f, full, H:230, hi:-1, boldLast:false, extraTip:i => tipRow('Workouts', String(R.rows[i].list.length))});
+    } else {
+      renderCat(el, {cats, series, stack, fmt:yu.f, full, H:230, hi:TIME_DIMS.includes(p.rows) ? undefined : -1, boldLast:TIME_DIMS.includes(p.rows),
+        extraTip:i => tipRow('Workouts', String(R.rows[i].list.length))});
+    }
+    if (foot && series.length > 1) foot.innerHTML = legendHtml(series);
+  }
+  if (foot){ if (R.note) notes.push(R.note); if (notes.length) foot.innerHTML += notes.map(n => `<div class="note">${esc(n)}</div>`).join(''); }
+  return `(${[yu.u, ou && ou.u ? ou.u + ' line' : ''].filter(Boolean).join(' · ')})`.replace('()', '');
+}
+function pivotTitle(p){
+  if (p.title) return p.title;
+  const v = p.vals.map(valName);
+  const t = `${v.slice(0, 2).join(' & ')} by ${DIMS[p.rows].label.toLowerCase()}${p.cols ? ' and ' + DIMS[p.cols].label.toLowerCase() : ''}`;
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
+/* ---------- Analysis tab: field wells ---------- */
+function optionList(pairs, sel){ return pairs.map(([k, l]) => `<option value="${esc(k)}" ${String(k) === String(sel) ? 'selected' : ''}>${esc(l)}</option>`).join(''); }
 function renderAnalysis(){
   extraMeasures();
-  const cfg = curCfg(), m = AM[cfg.measure] || AM.distance;
-  cfg.how = fixHow(cfg.measure, cfg.how);
+  const p = curPivot();
   $('#hdrTitle').textContent = 'Analysis';
-  setHdrSub(); $('#hdrRight').innerHTML = refreshBtn(); $('#controls').innerHTML = '';
+  setHdrSub(); $('#hdrRight').innerHTML = ''; $('#controls').innerHTML = '';
   const editing = V.editIdx != null && S.custom && S.custom[V.editIdx];
-  const mOpts = Object.keys(AM).map(k => [k, AM[k].label]);
-  const t = cfg.chart, isCat = ['bar','stack','group','line','area','table'].includes(t);
-  const years = [...new Set(ACTS.map(a => a.start.getFullYear()))].sort();
-  const types = typeKeys(ACTS);
+  const chip = (k, label, sub) => `<button class="pchip" data-pchip="${k}">${esc(label)}${sub ? ` <span>${esc(sub)}</span>` : ''} ▾</button>`;
   let h = '';
-  if (editing) h += `<div class="banner">Editing pinned chart <b>${esc(S.custom[V.editIdx].title || autoTitle(S.custom[V.editIdx]))}</b><span><button class="btn primary" data-asave>Save changes</button><button class="btn" data-acancel>Cancel</button></span></div>`;
-  h += `<section class="card builder">
-    <div class="bgrid">
-      <label>Chart<select data-ac="chart">${optionList(CHART_TYPES, t)}</select></label>
-      ${t === 'scatter' ? `<label>Across (x)<select data-ac="xm">${optionList(mOpts, cfg.xm)}</select></label>`
-        : ['heat','hist'].includes(t) ? '' : `<label>Group by<select data-ac="by">${optionList(Object.keys(DIMS).map(k => [k, DIMS[k].label]), cfg.by)}</select></label>`}
-      <label>${t === 'scatter' ? 'Up (y)' : 'Measure'}<select data-ac="measure">${optionList(mOpts, cfg.measure)}</select></label>
-      ${['scatter','hist'].includes(t) ? '' : `<label>How<select data-ac="how">${optionList(m.hows.map(x => [x, howLabel(cfg.measure, x)]), cfg.how)}</select></label>`}
-      ${isCat ? `<label>Split by<select data-ac="split"><option value="">None</option>${optionList(SPLITS.filter(k => k !== cfg.by).map(k => [k, DIMS[k].label]), cfg.split)}</select></label>` : ''}
-      ${['bar','stack','group'].includes(t) ? `<label>Line overlay<select data-ac="measure2"><option value="">None</option>${optionList(mOpts, cfg.measure2)}</select></label>` : ''}
-      ${['bar','stack','group'].includes(t) && cfg.measure2 ? `<label>Line how<select data-ac="how2">${optionList(AM[cfg.measure2].hows.map(x => [x, howLabel(cfg.measure2, x)]), fixHow(cfg.measure2, cfg.how2 || AM[cfg.measure2].hows[0]))}</select></label>` : ''}
-      ${t === 'hist' ? `<label>Bins<input type="number" min="3" max="30" value="${cfg.bins}" data-ac="bins"></label>` : ''}
-      ${cfg.split || ['scatter','donut'].includes(t) ? '' : `<label>Colour<select data-ac="color">${optionList(COLOR_OPTS, cfg.color)}</select></label>`}
-      ${cfg.color === 'custom' && !cfg.split ? `<label>Pick<input type="color" value="${esc(cfg.custom)}" data-ac="custom"></label>` : ''}
-    </div>
-    <details class="filters" ${V.filtersOpen ? 'open' : ''}><summary>Filters · <span>${esc(filterSummary(cfg.f))}</span></summary>
-      <div class="flbl">Dates</div><div class="bgrid"><label>Period<select data-af2="preset">${optionList(PRESETS, cfg.f.preset)}</select></label>
-      ${cfg.f.preset === 'custom' ? `<label>From<input type="date" value="${esc(cfg.f.from)}" data-af2="from"></label><label>To<input type="date" value="${esc(cfg.f.to)}" data-af2="to"></label>` : ''}</div>
-      <div class="flbl">Workouts <button class="linkbtn" data-afclear="types">all</button></div>${chipGroup('types', types.map(k => [k, typeInfo(k).label]), cfg.f.types)}
-      <div class="flbl">Years <button class="linkbtn" data-afclear="years">all</button></div>${chipGroup('years', years.map(y => [y, String(y)]), cfg.f.years)}
-      <div class="flbl">Months <button class="linkbtn" data-afclear="months">all</button></div>${chipGroup('months', MON.map((x, i) => [i, x]), cfg.f.months)}
-      <div class="flbl">Weekdays <button class="linkbtn" data-afclear="weekdays">all</button></div>${chipGroup('weekdays', [1,2,3,4,5,6,0].map(i => [i, WD[i]]), cfg.f.weekdays)}
-      <div class="flbl">Time of day <button class="linkbtn" data-afclear="tod">all</button></div>${chipGroup('tod', TOD.map((x, i) => [i, x[0]]), cfg.f.tod)}
-    </details>
+  if (editing) h += `<div class="banner">Editing pinned chart <b>${esc(pivotTitle(S.custom[V.editIdx]))}</b><span><button class="btn primary" data-asave>Save changes</button><button class="btn" data-acancel>Cancel</button></span></div>`;
+  h += `<section class="card pv">
+    <div class="well"><div class="wl">Filters</div><div class="wc">${p.filters.map((f, i) => chip('filter:' + i, filterText(f))).join('')}<button class="wadd" data-padd="filter">+ Filter</button></div></div>
+    <div class="well"><div class="wl">Rows</div><div class="wc">${chip('rows', DIMS[p.rows].label)}</div></div>
+    <div class="well"><div class="wl">Columns</div><div class="wc">${p.cols ? chip('cols', DIMS[p.cols].label) : `<button class="wadd" data-padd="cols">+ Column</button>`}</div></div>
+    <div class="well"><div class="wl">Values</div><div class="wc">${p.vals.map((v, i) => chip('val:' + i, valName(v))).join('')}${p.vals.length < 4 ? `<button class="wadd" data-padd="val">+ Value</button>` : ''}</div></div>
+    <div class="pvtools"><button class="linkbtn" data-pswap ${p.cols ? '' : 'disabled'}>⇄ Swap rows and columns</button><button class="linkbtn" data-areset>Reset</button></div>
   </section>
-  <section class="card"><div class="ghead"><h2><span id="atitle">${esc(cfg.title || autoTitle(cfg))}</span> <span class="u" id="aunit"></span></h2></div>
-    <div class="meta">${esc(filterSummary(cfg.f))} · ${applyFilters(cfg.f).length} workouts</div>
+  <section class="card"><div class="ghead"><h2><span>${esc(pivotTitle(p))}</span> <span class="u" id="aunit"></span></h2></div>
+    <div class="meta">${esc(pivotSummary(p))} · ${pivotList(p).length} workouts</div>
+    <div class="pvbar"><div class="miniseg">${[['chart','Chart'],['table','Table']].map(([k, l]) => `<button data-pview="${k}" class="${p.view === k ? 'on' : ''}">${l}</button>`).join('')}</div>
+      ${p.view === 'chart' ? `<select data-pchart>${optionList(PCHARTS, p.chart)}</select>` : ''}
+      <select data-pshow title="Show values as">${optionList([['value','Show values'],['grand','% of grand total'],['row','% of row total'],...(p.cols ? [['col','% of column total']] : [])], p.showAs || 'value')}</select></div>
     <div class="chartwrap" id="achart"></div><div id="afoot"></div>
-    <div class="btnrow" style="margin-top:12px">${editing ? '' : `<button class="btn primary" data-apin>📌 Pin to Custom page</button>`}<button class="btn" data-areset>Reset</button></div>
+    <div class="btnrow" style="margin-top:12px">${editing ? '' : `<button class="btn primary" data-apin>📌 Pin to Custom page</button>`}<button class="btn" data-pren>Rename</button></div>
+    <div class="renbox" id="arename" hidden><input type="text" value="${esc(pivotTitle(p))}" maxlength="80"><button class="btn primary" data-prensave>Save</button></div>
     <div id="apinmsg" class="msg"></div>
   </section>`;
   $('#main').innerHTML = h;
-  const unit = drawCfg($('#achart'), $('#afoot'), cfg);
+  const unit = drawPivot($('#achart'), $('#afoot'), p);
   $('#aunit').textContent = unit;
-  V.redraw = () => { const u = drawCfg($('#achart'), $('#afoot'), cfg); $('#aunit').textContent = u; };
+  V.redraw = () => { $('#aunit').textContent = drawPivot($('#achart'), $('#afoot'), p); };
+}
+
+/* ---------- bottom sheet ---------- */
+function openSheet(html){
+  const sh = $('#sheet'); sh.querySelector('.sbody').innerHTML = html; sh.classList.add('open'); document.body.classList.add('noscroll');
+}
+function closeSheet(){ $('#sheet').classList.remove('open'); document.body.classList.remove('noscroll'); V.sheet = null; }
+function dimListHtml(action, exclude){
+  return DIM_GROUPS.map(([g, ks]) => `<div class="sgl">${g}</div>` + ks.filter(k => !exclude.includes(k)).map(k => `<button class="sitem" data-${action}="${k}">${esc(DIMS[k].label)}</button>`).join('')).join('');
+}
+function measureListHtml(action){
+  const groups = [['Totals and counts', ['count','duration','elapsed','distance','calories','elevation','steps','load']],
+    ['Speed and pace', ['pace','pace100','speed','efficiency','vam','cadence']],
+    ['Heart rate', ['avg_hr','max_hr','easy_share','zone1','zone2','zone3','zone4','zone5']]];
+  const extra = Object.keys(AM).filter(k => AM[k].extra);
+  if (extra.length) groups.push(['Other columns in your data', extra]);
+  return groups.map(([g, ks]) => `<div class="sgl">${g}</div>` + ks.filter(k => AM[k]).map(k => `<button class="sitem" data-${action}="${k}">${esc(AM[k].label)}</button>`).join('')).join('');
+}
+function sheetFor(kind){
+  const p = curPivot(); V.sheet = kind;
+  if (kind === 'add:rows' || kind === 'rows') return openSheet(`<h3>${kind === 'rows' ? 'Change rows' : 'Rows'}</h3>${dimListHtml('psetrows', [p.rows])}`);
+  if (kind === 'add:cols' || kind === 'cols') return openSheet(`<h3>Columns</h3>${p.cols ? `<button class="sitem danger" data-psetcols="">Remove columns</button>` : ''}${dimListHtml('psetcols', [p.rows, p.cols, 'workout', 'day'])}`);
+  if (kind === 'add:val') return openSheet(`<h3>Add a value</h3>${measureListHtml('paddval')}`);
+  if (kind.startsWith('val:')){
+    const i = +kind.slice(4), v = p.vals[i], m = AM[v.m];
+    return openSheet(`<h3>${esc(m.label)}</h3><div class="sgl">Summarise by</div>${m.hows.map(hw => `<button class="sitem ${hw === v.how ? 'on' : ''}" data-phow="${hw}" data-i="${i}">${esc(howLabel(v.m, hw))}</button>`).join('')}
+      <div class="sgl">Change to</div><details><summary class="sitem">Pick another value…</summary>${measureListHtml('pchval').replace(/data-pchval="/g, `data-vi="${i}" data-pchval="`)}</details>
+      <div class="btnrow" style="margin-top:12px">${i > 0 ? `<button class="btn" data-pvmove="${i}" data-dir="-1">Move left</button>` : ''}${i < p.vals.length - 1 ? `<button class="btn" data-pvmove="${i}" data-dir="1">Move right</button>` : ''}${p.vals.length > 1 ? `<button class="btn" data-pvdel="${i}">Remove</button>` : ''}</div>`);
+  }
+  if (kind === 'add:filter'){
+    const used = p.filters.map(f => f.f);
+    return openSheet(`<h3>Add a filter</h3><div class="sgl">Pick values</div>${FILTER_DIMS.filter(k => !used.includes(k)).map(k => `<button class="sitem" data-paddfilt="${k}">${esc(DIMS[k].label)}</button>`).join('')}
+      <div class="sgl">Number ranges</div>${Object.keys(AM).filter(k => k !== 'count' && !used.includes('m:' + k)).map(k => `<button class="sitem" data-paddfilt="m:${k}">${esc(AM[k].label)}</button>`).join('')}`);
+  }
+  if (kind.startsWith('filter:')){
+    const i = +kind.slice(7), f = p.filters[i];
+    if (f.f === 'date') return openSheet(`<h3>Dates</h3>${PRESETS.map(([k, l]) => `<button class="sitem ${f.preset === k ? 'on' : ''}" data-pdate="${k}" data-i="${i}">${esc(l)}</button>`).join('')}
+      ${f.preset === 'custom' ? `<div class="bgrid" style="margin-top:8px"><label>From<input type="date" value="${esc(f.from || '')}" data-pdatefrom="${i}"></label><label>To<input type="date" value="${esc(f.to || '')}" data-pdateto="${i}"></label></div>` : ''}`);
+    if (f.in){
+      const cnt = {}; const base = pivotList(Object.assign({}, p, {filters:p.filters.filter((_, j) => j !== i)}));
+      base.forEach(a => { const k = dimVal(f.f, a); if (k != null) cnt[k] = (cnt[k] || 0) + 1; });
+      const keys = ['zone','distband','durband','weekday','moy','tod','hour'].includes(f.f) ? DIMS[f.f].cats(base).map(c => c.k) : sortKeys(f.f, Object.keys(cnt).map(k => isNaN(+k) ? k : +k));
+      return openSheet(`<h3>${esc(DIMS[f.f].label)}</h3><div class="n" style="margin-bottom:6px">Tick the values to include. None ticked = all.</div>
+        <div class="btnrow" style="margin-bottom:6px"><button class="btn" data-pfall="${i}">Select all</button><button class="btn" data-pfnone="${i}">Clear</button><button class="btn" data-pfdel="${i}">Remove filter</button></div>
+        ${keys.map(k => `<label class="scheck"><input type="checkbox" data-pfin="${i}" value="${esc(k)}" ${f.in.includes(k) ? 'checked' : ''}><span>${esc(dimLabel(f.f, k))}</span><em>${cnt[k] || 0}</em></label>`).join('')}`);
+    }
+    const mk = f.f.slice(2), c = numConv(mk), vals = ACTS.map(AM[mk].v).filter(x => x != null);
+    const show = x => x === '' || x == null ? '' : c.mmss ? fmtMS(x) : (+c.to(x).toFixed(2)).toString();
+    return openSheet(`<h3>${esc(AM[mk].label)}</h3><div class="n">In ${esc(c.u)}. Your workouts range from ${esc(show(Math.min(...vals)))} to ${esc(show(Math.max(...vals)))}. Leave a box empty for no limit.</div>
+      <div class="bgrid" style="margin-top:10px"><label>At least<input type="text" inputmode="decimal" value="${esc(show(f.min))}" id="pfmin"></label><label>At most<input type="text" inputmode="decimal" value="${esc(show(f.max))}" id="pfmax"></label></div>
+      <div class="btnrow" style="margin-top:10px"><button class="btn primary" data-pfnum="${i}">Apply</button><button class="btn" data-pfdel="${i}">Remove filter</button></div>`);
+  }
 }
 
 /* ---------- Custom page ---------- */
 function renderCustom(){
   $('#hdrTitle').textContent = 'My charts';
-  setHdrSub(); $('#hdrRight').innerHTML = refreshBtn(); $('#controls').innerHTML = '';
-  const list = S.custom || [];
+  setHdrSub(); $('#hdrRight').innerHTML = ''; $('#controls').innerHTML = '';
+  S.custom = (S.custom || []).map(toPivot);
+  const list = S.custom;
   let h = '';
   if (!list.length) h += `<section class="card empty">No charts yet. Build one in <b>Analysis</b> and tap <b>📌 Pin to Custom page</b>.</section>`;
   list.forEach((cfg, i) => {
-    h += `<section class="card gcard"><div class="ghead"><h2>${esc(cfg.title || autoTitle(cfg))} <span class="u" id="cu${i}"></span></h2>
+    h += `<section class="card gcard"><div class="ghead"><h2>${esc(pivotTitle(cfg))} <span class="u" id="cu${i}"></span></h2>
       <div class="cbtns"><button class="iconbtn" data-cmv="${i}" data-dir="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">${icon('up', 2)}</button><button class="iconbtn" data-cmv="${i}" data-dir="1" ${i === list.length - 1 ? 'disabled' : ''} aria-label="Move down">${icon('down', 2)}</button></div></div>
-      <div class="meta">${esc(filterSummary(cfg.f))}</div><div class="chartwrap" id="cc${i}"></div><div id="cf${i}"></div>
+      <div class="meta">${esc(pivotSummary(cfg))}</div><div class="chartwrap" id="cc${i}"></div><div id="cf${i}"></div>
       <div class="btnrow" style="margin-top:10px"><button class="btn" data-cedit="${i}">Edit</button><button class="btn" data-cren="${i}">Rename</button><button class="btn" data-cdel="${i}">Remove</button></div>
-      <div class="renbox" id="cr${i}" hidden><input type="text" value="${esc(cfg.title || autoTitle(cfg))}" maxlength="80"><button class="btn primary" data-crensave="${i}">Save</button></div></section>`;
+      <div class="renbox" id="cr${i}" hidden><input type="text" value="${esc(pivotTitle(cfg))}" maxlength="80"><button class="btn primary" data-crensave="${i}">Save</button></div></section>`;
   });
   h += `<details class="card"><summary class="lbl" style="cursor:pointer">Move these charts to another phone</summary>
     <div class="n" style="margin:8px 0">Copy this code, then paste it on the other device under the same section and press Load.</div>
@@ -1746,7 +2036,7 @@ function renderCustom(){
     <textarea id="cimport" placeholder="Paste a code here" style="margin-top:10px"></textarea>
     <div class="btnrow"><button class="btn primary" data-cimport>Load charts</button></div><div id="cmsg" class="msg"></div></details>`;
   $('#main').innerHTML = h;
-  V.redraw = () => list.forEach((cfg, i) => { const u = drawCfg($('#cc' + i), $('#cf' + i), cfg); const e = $('#cu' + i); if (e) e.textContent = u; });
+  V.redraw = () => list.forEach((cfg, i) => { const u = drawPivot($('#cc' + i), $('#cf' + i), cfg); const e = $('#cu' + i); if (e) e.textContent = u; });
   V.redraw();
 }
 
@@ -1893,62 +2183,72 @@ function suggestion(pm){
 }
 
 /* ---- render ---- */
-function proCard(title, unitId, body, note){ return `<section class="card gcard"><div class="ghead"><h2>${esc(title)} <span class="u" ${unitId ? `id="${unitId}"` : ''}></span></h2></div>${body}${note ? `<div class="note">${note}</div>` : ''}</section>`; }
+function proCard(title, unitId, body, note, key, ins){
+  return `<section class="card gcard"><div class="ghead"><h2>${esc(title)} <span class="u" ${unitId ? `id="${unitId}"` : ''}></span></h2>${key ? `<button class="ibtn" data-explain="${key}" aria-label="What is this?">i</button>` : ''}</div>`
+    + (ins != null ? `<div class="insight" ${typeof ins === 'string' && ins.startsWith('#') ? `id="${ins.slice(1)}">` : `>${ins}`}</div>` : '')
+    + `${body}${note ? `<div class="note">${note}</div>` : ''}</section>`;
+}
 function renderPro(){
   $('#hdrTitle').textContent = 'Pro';
   setHdrSub(); $('#hdrRight').innerHTML = refreshBtn(); $('#controls').innerHTML = '';
   if (!ACTS.length){ $('#main').innerHTML = `<section class="card empty">No workouts yet.</section>`; return; }
   const pm = proModel(), sg = suggestion(pm), u = U();
-  const missing = [!S.age && 'age', !S.restHr && 'resting heart rate'].filter(Boolean);
+  const rf = runFitness(), st = streaks();
+  const I = proInsights(pm, rf, st); I.pm = pm; V.proI = I;
+  const missing = [!S.age && 'age', !S.sex && 'sex', !S.restHr && 'resting heart rate'].filter(Boolean);
   let h = '';
-  if (missing.length) h += `<div class="banner">Add your ${missing.join(' and ')} in <b>Settings → Profile</b> for better heart-rate zones.</div>`;
+  if (missing.length) h += `<div class="banner">Add your ${missing.join(' and ')} in <b>Settings → Profile</b> for heart-rate zones and a fitness rating for your age.</div>`;
   // 15. today's suggestion
   const chip = {rest:'bad', easy:'warn', quality:'good', steady:'neutral'}[sg.level];
   h += `<section class="card sug ${chip}"><div class="eyebrow">Today's suggestion</div><h2 class="big">${esc(sg.head)}</h2><div class="n">${esc(sg.tip)}</div>
     <ul>${sg.reasons.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
     <div class="tiles4">
-      <div><span>Form</span><b>${fmtNum(sg.form)}</b></div>
-      <div><span>Injury-risk ratio</span><b>${sg.ratio == null ? '–' : sg.ratio.toFixed(2)}</b></div>
-      <div><span>Easy share, 14 d</span><b>${sg.easy == null ? '–' : Math.round(sg.easy) + '%'}</b></div>
-      <div><span>Since hard session</span><b>${sg.sinceHard == null ? '–' : sg.sinceHard + ' d'}</b></div></div>
+      <button data-explain="form"><span>Form ⓘ</span><b>${fmtNum(sg.form)}</b></button>
+      <button data-explain="acwr"><span>Injury-risk ratio ⓘ</span><b>${sg.ratio == null ? '–' : sg.ratio.toFixed(2)}</b></button>
+      <button data-explain="easy"><span>Easy share, 14 d ⓘ</span><b>${sg.easy == null ? '–' : Math.round(sg.easy) + '%'}</b></button>
+      <button data-explain="sincehard"><span>Since hard session ⓘ</span><b>${sg.sinceHard == null ? '–' : sg.sinceHard + ' d'}</b></button></div>
     <div class="note">Rule-based guidance from your recorded load and heart rate, not medical advice. Listen to your body.</div></section>`;
+  h += levelCard(I);
   // 2. fitness / fatigue / form
   h += proCard('Fitness, fatigue and form', 'pu_pmc', `<div class="meta">Last 90 days</div><div class="chartwrap" id="p_pmc"></div><div id="p_pmc_l"></div>`,
-    'Load per workout = minutes in each heart-rate zone × the zone number (Edwards TRIMP). <b>Fitness</b> is your 42-day average daily load, <b>fatigue</b> your 7-day average, <b>form</b> = fitness − fatigue. Form around −10 to −30 means productive training; below −30, very tired; above +10, fresh.');
+    'Load per workout = minutes in each heart-rate zone × the zone number (Edwards TRIMP). <b>Fitness</b> is your 42-day average daily load, <b>fatigue</b> your 7-day average, <b>form</b> = fitness − fatigue. Form around −10 to −30 means productive training; below −30, very tired; above +10, fresh.', 'pmc',
+    `Fitness <b>${Math.round(I.ctl)}</b> (≈ ${Math.round(I.ctl / 2)} min of zone-2 training a day)${I.trend == null ? '' : ` · ${I.trend >= 0 ? '▲' : '▼'} ${Math.abs(Math.round(I.trend))}% in 6 weeks`}. Higher than on ${Math.round(I.rank)}% of days in the past year.`);
   // 3. injury-risk ratio
   h += proCard('Injury-risk ratio', '', `<div class="meta">Last 7 days' load ÷ your 4-week average · last 12 weeks</div><div class="chartwrap" id="p_acwr"></div>`,
-    '0.8–1.3 is the usual safe band. Above 1.5 means a sudden spike, linked to higher injury risk.');
+    '0.8–1.3 is the usual safe band. Above 1.5 means a sudden spike, linked to higher injury risk.', 'acwr',
+    I.a28.length ? `In the safe band on <b>${I.safe} of the last ${I.a28.length} days</b>; highest ${Math.max(...I.a28).toFixed(2)}.` : null);
   // 4. monotony and strain
   h += proCard('Monotony and strain', 'pu_mono', `<div class="meta">Rolling 7-day blocks ending today</div><div class="chartwrap" id="p_mono"></div><div id="p_mono_l"></div>`,
-    'Monotony = average daily load ÷ its standard deviation over the 7 days (Foster). Above 2 means every day was equally hard, which is linked to staleness and illness. Strain = weekly load × monotony.');
+    'Monotony = average daily load ÷ its standard deviation over the 7 days (Foster). Above 2 means every day was equally hard, which is linked to staleness and illness. Strain = weekly load × monotony.', 'mono', '#ins_mono');
   // 6. 80/20
   h += proCard('80/20 intensity balance', '(% of time)', `<div class="meta">Time in zones, all workouts with heart rate · rolling 7-day blocks</div><div class="chartwrap" id="p_8020"></div><div id="p_8020_l"></div>`,
-    'Endurance athletes typically spend about 80% of training time easy (zone 1–2) and about 20% moderate to hard. Uses your watch\'s zones, or the zone of your average heart rate when a workout has no zone breakdown.');
+    'Endurance athletes typically spend about 80% of training time easy (zone 1–2) and about 20% moderate to hard. Uses your watch\'s zones, or the zone of your average heart rate when a workout has no zone breakdown.', '8020',
+    I.style ? `Your style: <b>${I.style.name}</b>, ${Math.round(I.style.e)}% easy over 12 weeks. That means ${esc(I.style.what)}.` : null);
   // 5. weekly increase check
   h += proCard('Weekly running increase', 'pu_ramp', `<div class="meta">Running distance per 7-day block</div><div class="chartwrap" id="p_ramp"></div><div id="p_ramp_l"></div>`,
-    'Flags blocks where running distance rose by more than 10% on the block before.');
+    'Flags blocks where running distance rose by more than 10% on the block before.', 'ramp', '#ins_ramp');
   // 8 & 9. running fitness
-  const rf = runFitness();
   h += proCard('Running fitness and race predictions', '', rf ? `
     <div class="tiles4"><div><span>VDOT</span><b>${rf.best.v.toFixed(1)}</b></div><div style="grid-column:span 3"><span>From your best run in the last 6 months</span><b style="font-size:13px">${fmtNum(rf.best.r.distance / u.dm, 2)} ${u.d} in ${fmtDur(rf.best.r.duration)} · ${fmtDay(rf.best.r.start)}</b></div></div>
-    <table class="atbl" style="margin-top:10px"><tr><th>Race</th><th>Predicted (VDOT)</th><th>Riegel</th><th>Pace</th></tr>
+    <h3 class="sub">Race predictions <button class="ibtn" data-explain="predict" aria-label="About predictions">i</button></h3><table class="atbl"><tr><th>Race</th><th>Predicted (VDOT)</th><th>Riegel</th><th>Pace</th></tr>
     ${rf.pred.map(p => `<tr><td>${p.n}</td><td>${fmtHMS(p.vdot)}</td><td>${fmtHMS(p.riegel)}</td><td>${fmtMS(p.vdot * 60 / (p.d / u.dm))} /${u.d}</td></tr>`).join('')}</table>
-    <h3 class="sub">Training paces (per ${u.d})</h3>
+    <h3 class="sub">Training paces (per ${u.d}) <button class="ibtn" data-explain="paces" aria-label="About training paces">i</button></h3>
     <table class="atbl">${rf.paces.map(p => `<tr><td><b>${p[0]}</b></td><td>${p[1]}</td><td class="n">${p[2]}</td></tr>`).join('')}</table>` : '<div class="empty">Needs a run of at least 3 km in the last 6 months.</div>',
-    'VDOT is Jack Daniels\' running-fitness score, worked out from the distance and time of your best recent run. Training runs are rarely all-out, so predictions are conservative; a race or time trial gives the truest number. Riegel\'s formula (T₂ = T₁ × (D₂/D₁)^1.06) is a second estimate from the same run.');
+    'VDOT is Jack Daniels\' running-fitness score, worked out from the distance and time of your best recent run. Training runs are rarely all-out, so predictions are conservative; a race or time trial gives the truest number. Riegel\'s formula (T₂ = T₁ × (D₂/D₁)^1.06) is a second estimate from the same run.', 'vdot',
+    rf ? `<b>${esc(runnerLevel(rf.best.v))}</b> (rough guide)${I.rating ? ` · <b>${I.rating.name}</b> VO₂max for ${I.rating.group} (${I.rating.pct})` : ' · add age and sex in Settings for a population rating'}.` : null);
   // 10. aerobic efficiency
   h += proCard('Aerobic efficiency', 'pu_ef', `<div class="meta">Runs of 3 km+ with heart rate · by month</div><div class="chartwrap" id="p_ef"></div><div id="p_ef_n"></div>`,
-    'Metres per minute for every beat per minute of heart rate. Rising means you run faster at the same heart rate, so your aerobic fitness is improving. Heat, hills and fatigue lower it.');
+    'Metres per minute for every beat per minute of heart rate. Rising means you run faster at the same heart rate, so your aerobic fitness is improving. Heat, hills and fatigue lower it.', 'ef', '#ins_ef');
   // 11. records
-  h += proCard('Personal records', '', `<table class="atbl">${records().map(r => `<tr><td>${esc(r[0])}</td><td><b>${esc(r[1])}</b></td><td class="n">${esc(r[2])}</td></tr>`).join('')}</table>`);
+  h += proCard('Personal records', '', `<table class="atbl">${records().map(r => `<tr><td>${esc(r[0])}</td><td><b>${esc(r[1])}</b></td><td class="n">${esc(r[2])}</td></tr>`).join('')}</table>`, '', 'records');
   // 12 & 13. hiking
   const hikes = ACTS.filter(a => a.type === 'hike' && a.distance > 0 && a.duration > 0);
   h += proCard('Hiking and climbing', '', hikes.length ? `<div class="meta">Climbing rate (VAM) per hike, latest 15</div><div class="chartwrap" id="p_vam"></div><div id="p_hike"></div>` : '<div class="empty">No hikes yet.</div>',
-    'VAM = metres climbed per hour of moving time. Naismith\'s rule predicts 1 hour per 5 km plus 1 hour per 600 m of ascent; comparing it with your actual time shows how quick you are on the hill.');
+    'VAM = metres climbed per hour of moving time. Naismith\'s rule predicts 1 hour per 5 km plus 1 hour per 600 m of ascent; comparing it with your actual time shows how quick you are on the hill.', 'naismith', hikes.length ? '#ins_hike' : null);
   // 14. calendar & streaks
-  const st = streaks();
   h += proCard('Activity calendar', '', `<div class="tiles4"><div><span>Current streak</span><b>${st.cur} d</b></div><div><span>Longest streak</span><b>${st.longest} d</b></div><div><span>Active days / week</span><b>${st.perWeek.toFixed(1)}</b></div><div><span>Days with workouts</span><b>${st.days.size}</b></div></div>
-    <div class="meta" style="margin-top:10px">Last 12 months · darker = more training load</div><div class="chartwrap" id="p_cal"></div>`);
+    <div class="meta" style="margin-top:10px">Last 12 months · darker = more training load</div><div class="chartwrap" id="p_cal"></div>`, '', 'calendar',
+    `${st.perWeek >= 6.6 ? 'Very consistent, but with few full rest days; one a week helps recovery.' : st.perWeek >= 4 ? 'Very consistent training.' : st.perWeek >= 2.5 ? 'Consistent training.' : 'Training is irregular; regular sessions build fitness faster than occasional big ones.'}`);
   // 7. heart-rate zone setup
   const tan = S.age ? Math.round(208 - 0.7 * S.age) : null;
   const obs = Math.max(0, ...ACTS.filter(a => a.start >= addDays(today0(), -365) && a.maxHr).map(a => a.maxHr)) || null;
@@ -1962,7 +2262,7 @@ function renderPro(){
     <table class="atbl">${ZONES.map((z, i) => { const lo = z.lo, hi = i < 4 ? ZONES[i + 1].lo : 1;
       const f = p => Math.round(rest ? rest + p * (mx - rest) : p * mx);
       return `<tr><td><b>Z${i + 1}</b> ${z.n}</td><td>${f(lo)}–${i < 4 ? f(hi) - 1 : mx} bpm</td><td class="n">${Math.round(lo * 100)}–${Math.round(hi * 100)}%</td></tr>`; }).join('')}</table>`,
-    'The highest heart rate your watch has recorded is often the best guide if you\'ve done hard efforts; the age formula can be off by 10 bpm or more. Your watch\'s own zone times (in the Sheet) use the zones set in the Zepp app.');
+    'The highest heart rate your watch has recorded is often the best guide if you\'ve done hard efforts; the age formula can be off by 10 bpm or more. Your watch\'s own zone times (in the Sheet) use the zones set in the Zepp app.', 'zones');
   $('#main').innerHTML = h;
 
   V.redraw = () => {
@@ -1975,7 +2275,7 @@ function renderPro(){
                   {name:'Fitness', color:'var(--accent)', values:sl(pm.ctl).map(v => +v.toFixed(1)), as:'line'},
                   {name:'Fatigue', color:'var(--c-yoga)', values:sl(pm.atl).map(v => +v.toFixed(1)), as:'line'}];
     renderCat($('#p_pmc'), {cats:pcats, series:pser, fmt:v => String(Math.round(v)), H:230, labels:false});
-    $('#p_pmc_l').innerHTML = legendHtml(pser);
+    $('#p_pmc_l').innerHTML = `<div class="legend">${[['form','var(--c-walk)','Form',0],['fitness','var(--accent)','Fitness',1],['fatigue','var(--c-yoga)','Fatigue',1]].map(([k, c, l, ln]) => `<button class="lgbtn" data-explain="${k}">${ln ? `<i class="lnsw" style="background:${c}"></i>` : `<i class="sw" style="background:${c}"></i>`}${l} ⓘ</button>`).join('')}</div>`;
     // ACWR, last 84 days
     const a84 = sl(pm.acwr).slice(-84), dd = d90.slice(-a84.length);
     renderCat($('#p_acwr'), {cats:dd.map(d => ({lab:d.getDate() === 1 ? MON[d.getMonth()] : String(d.getDate()), title:fmtDay(d)})),
@@ -1989,6 +2289,8 @@ function renderPro(){
                   {name:'Monotony', color:'var(--line)', values:mono.map(m => m.mono == null ? null : +m.mono.toFixed(2)), as:'line', ownScale:true, fmt:v => v.toFixed(1)}];
     renderCat($('#p_mono'), {cats:bk, series:mser, fmt:v => compact(v), H:220, lineLabels:'hi', extraTip:i => tipRow('Strain', mono[i].mono ? compact(Math.round(mono[i].load * mono[i].mono)) : '–')});
     $('#p_mono_l').innerHTML = legendHtml(mser);
+    { const mv = mono.slice(-4).map(m => m.mono).filter(v => v != null); I.mono = mv.length ? mv.reduce((p, q) => p + q, 0) / mv.length : null;
+      const el = $('#ins_mono'); if (el) el.innerHTML = I.mono == null ? '' : `Average monotony over the last 4 blocks: <b>${I.mono.toFixed(2)}</b>. ${I.mono < 1.5 ? 'Good mix of hard and easy days.' : I.mono < 2 ? 'Days are getting similar; make easy days easier.' : 'Every day is about as hard as the last. Add true easy or rest days.'}`; }
     // 80/20
     const zs = bk.map(b => zoneTotals(b.list)), pct = (z, i) => { const t = z.reduce((p, q) => p + q, 0); return t ? Math.round(i(z) / t * 100) : null; };
     const zser = [{name:'Easy (Z1–2)', color:'var(--c-walk)', values:zs.map(z => pct(z, x => x[0] + x[1]))},
@@ -2003,6 +2305,8 @@ function renderPro(){
       extraTip:i => i && rk[i - 1] ? tipRow('Change', (rk[i] >= rk[i - 1] ? '+' : '') + Math.round((rk[i] - rk[i - 1]) / rk[i - 1] * 100) + '%') : ''});
     $('#pu_ramp').textContent = `(${ru.u})`;
     const flags = rk.map((v, i) => i && rk[i - 1] > 0 && v > rk[i - 1] * 1.1 ? `${bk[i].title}: +${Math.round((v - rk[i - 1]) / rk[i - 1] * 100)}%` : null).filter(Boolean);
+    { const recent = rk.slice(-4).reduce((p, q) => p + q, 0) / 4; I.rampTxt = `Averaging <b>${ru.f(recent)} ${ru.u}</b> of running per 7 days lately; <b>${flags.length}</b> of the last 11 changes were jumps over 10%.`;
+      const el = $('#ins_ramp'); if (el) el.innerHTML = I.rampTxt; }
     $('#p_ramp_l').innerHTML = `<div class="note">${flags.length ? '⚠ Jumps over 10%: ' + flags.map(esc).join(' · ') : '✓ No jumps over 10% in these 12 blocks.'}</div>`;
     // efficiency by month
     const months = [...Array(12).keys()].map(k => new Date(today0().getFullYear(), today0().getMonth() - 11 + k, 1));
@@ -2013,6 +2317,11 @@ function renderPro(){
     $('#p_ef_n').innerHTML = evs.length >= 4 ? `<div class="note">${(() => { const a = evs.slice(-3).reduce((p, q) => p + q, 0) / Math.min(3, evs.slice(-3).length), b = evs.slice(0, 3).reduce((p, q) => p + q, 0) / Math.min(3, evs.slice(0, 3).length), c = (a - b) / b * 100;
       return `Last 3 months vs the first 3 shown: ${c >= 0 ? '▲' : '▼'} ${Math.abs(c).toFixed(1)}%`; })()}</div>` : '';
     $('#pu_ef').textContent = '(m/min per bpm)';
+    { const a = evs.slice(-3), b = evs.slice(0, 3);
+      if (evs.length >= 4){ const c = ((a.reduce((p, q) => p + q, 0) / a.length) - (b.reduce((p, q) => p + q, 0) / b.length)) / (b.reduce((p, q) => p + q, 0) / b.length) * 100;
+        I.efTxt = `${c > 2 ? '<b>Improving</b>: you\'re running' : c < -2 ? '<b>Declining</b>: you\'re running' : '<b>Stable</b>: you\'re running about'} ${Math.abs(c) > 2 ? Math.abs(Math.round(c)) + '% ' + (c > 0 ? 'faster' : 'slower') : 'as fast'} at the same heart rate compared with a year ago.`; }
+      else I.efTxt = 'Needs a few months of runs with heart rate to show a trend.';
+      const el = $('#ins_ef'); if (el) el.innerHTML = I.efTxt; }
     // hiking
     if (hikes.length){
       const hk = hikes.slice(-15);
@@ -2020,6 +2329,10 @@ function renderPro(){
         fmt:v => String(v), full:v => v + ' m/h', H:200, extraTip:i => tipRow('Climb', fmtNum(hk[i].elev) + ' m') + tipRow('Distance', fmtNum(hk[i].distance / u.dm, 1) + ' ' + u.d)});
       const rows = hikes.slice(-8).reverse().map(a => { const pred = a.distance / 1000 / 5 + (a.elev || 0) / 600, act = a.duration / 3600; return {a, pred, act, r:act / pred}; });
       const avg = rows.reduce((p, q) => p + q.r, 0) / rows.length;
+      { const vs = hikes.filter(a => a.elev > 0).map(a => a.elev / (a.duration / 3600)), last = vs.slice(-5), best = Math.max(...vs);
+        I.vamTxt = vs.length ? `Best <b>${Math.round(best)} m/h</b>; recent average ${Math.round(last.reduce((p, q) => p + q, 0) / last.length)} m/h.` : '';
+        I.naisTxt = `You take <b>${Math.abs(Math.round((avg - 1) * 100))}% ${avg >= 1 ? 'longer' : 'less time'}</b> than Naismith's rule predicts on recent hikes, ${avg < 0.85 ? 'well quicker than the average walker the rule assumes' : avg <= 1.1 ? 'about the pace the rule assumes' : 'slower than the rule assumes, which is normal on rough or steep ground or with long stops'}.`;
+        const el = $('#ins_hike'); if (el) el.innerHTML = I.vamTxt + ' ' + I.naisTxt; }
       $('#p_hike').innerHTML = `<div class="sum">Recent hikes take you <b>${Math.abs(Math.round((avg - 1) * 100))}% ${avg >= 1 ? 'longer' : 'less time'}</b> than Naismith's rule predicts.</div>
         <table class="atbl"><tr><th>Hike</th><th>Climb</th><th>Naismith</th><th>You</th></tr>${rows.map(x => `<tr><td>${fmtDM(x.a.start)} ${x.a.start.getFullYear()}<div class="n">${fmtNum(x.a.distance / u.dm, 1)} ${u.d}</div></td><td>${fmtNum(x.a.elev || 0)} m</td><td>${fmtDur(x.pred * 3600)}</td><td><b>${fmtDur(x.a.duration)}</b></td></tr>`).join('')}</table>`;
     }
@@ -2028,6 +2341,151 @@ function renderPro(){
     renderHeat($('#p_cal'), {from:addDays(today0(), -364), to:today0(), values:vals, full:v => 'load ' + Math.round(v), color:'var(--accent)', label:'Training'});
   };
   V.redraw();
+}
+
+/* =====================================================================
+   Pro: level insights and tap-to-explain
+   ===================================================================== */
+// Cooper Institute VO2max norms (ml/kg/min), percentile cut-offs 95/80/60/40 by age group
+const COOPER = {
+  m:{'20':[55.4,51.1,45.4,41.7],'30':[54,48.3,44,40.5],'40':[52.5,46.4,42.4,38.5],'50':[48.9,43.4,39.2,35.6],'60':[45.7,39.5,35.5,32.3],'70':[42.1,36.7,32.3,29.4]},
+  f:{'20':[49.6,43.9,39.5,36.1],'30':[47.4,42.4,37.8,34.4],'40':[45.3,39.7,36.3,33],'50':[41.1,36.7,33,30.1],'60':[37.8,33,30,27.5],'70':[36.7,30.9,28.1,25.9]},
+};
+function coopRating(v){
+  const age = +S.age, sex = S.sex;
+  if (!age || !['m','f'].includes(sex)) return null;
+  const g = String(Math.min(70, Math.max(20, Math.floor(age / 10) * 10)));
+  const t = COOPER[sex][g], names = ['Superior','Excellent','Good','Fair','Poor'];
+  const i = t.findIndex(x => v >= x); const k = i < 0 ? 4 : i;
+  return {name:names[k], pct:['top 5%','top 20%','top 40%','top 60%','bottom 40%'][k], group:`${sex === 'm' ? 'men' : 'women'} ${g}–${+g + 9}`, cls:k <= 1 ? 'good' : k === 2 ? 'ok' : 'low', next:k > 0 ? t[k - 1] : null, nextName:k > 0 ? names[k - 1] : null};
+}
+function runnerLevel(v){
+  return v < 30 ? 'Beginner' : v < 40 ? 'Recreational runner' : v < 50 ? 'Experienced recreational / club runner' : v < 60 ? 'Advanced club runner' : v < 70 ? 'Sub-elite' : 'Elite';
+}
+// WHO 2020: adults 150–300 min/week moderate, or 75–150 vigorous (1 vigorous minute ≈ 2 moderate)
+function whoWeek(){
+  const since = addDays(today0(), -27), l = ACTS.filter(a => a.start >= since);
+  let mod = 0, vig = 0;
+  l.forEach(a => { const z = zoneSecs(a); mod += (z[1] + z[2]) / 60; vig += (z[3] + z[4]) / 60; });
+  const days = new Set(l.filter(a => a.type === 'strength' || a.type === 'hiit').map(a => dayKey(a.start))).size;
+  return {mod:mod / 4, vig:vig / 4, eq:(mod + 2 * vig) / 4, strengthDays:days / 4};
+}
+function trainingStyle(z){
+  const t = z.reduce((p, q) => p + q, 0); if (!t) return null;
+  const e = (z[0] + z[1]) / t * 100, m = z[2] / t * 100, h = (z[3] + z[4]) / t * 100;
+  const name = e >= 75 ? (h > m ? 'Polarised' : 'Pyramidal') : e >= 60 ? 'Moderate-heavy' : 'Intensity-heavy';
+  const what = {Polarised:'mostly easy with some hard work and little in between, the pattern most elite endurance athletes use',
+    Pyramidal:'mostly easy, with more moderate than hard work; also common and effective',
+    'Moderate-heavy':'a lot of time at moderate effort; easier easy days usually help more',
+    'Intensity-heavy':'much of your time is moderate to hard, which builds fatigue faster than fitness'}[name];
+  return {e, m, h, name, what};
+}
+function badge(text, cls){ return `<span class="badge ${cls || ''}">${esc(text)}</span>`; }
+
+function proInsights(pm, rf, st){
+  const n = pm.L.length, i = n - 1, ctl = pm.ctl[i], ctl6 = pm.ctl[Math.max(0, i - 42)];
+  const trend = ctl6 > 0 ? (ctl - ctl6) / ctl6 * 100 : null;
+  const yr = pm.ctl.slice(-365), peak = Math.max(...yr), peakIdx = pm.ctl.lastIndexOf(peak);
+  const rank = yr.filter(x => x <= ctl).length / yr.length * 100;
+  const z12 = zoneTotals(ACTS.filter(a => a.start >= addDays(today0(), -83)));
+  const style = trainingStyle(z12);
+  const who = whoWeek();
+  const a28 = pm.acwr.slice(-28).filter(v => v != null), safe = a28.filter(v => v >= 0.8 && v <= 1.3).length;
+  const rating = rf ? coopRating(rf.best.v) : null;
+  return {ctl, ctl6, trend, peak, peakDay:addDays(today0(), -(n - 1 - peakIdx)), rank, style, who, safe, a28, rating, rf, st};
+}
+
+/* "Your level" card */
+function levelCard(I){
+  const rows = [];
+  const w = I.who.eq;
+  rows.push(['Weekly activity', `${Math.round(w)} min`, w >= 300 ? badge('Above the WHO range', 'good') : w >= 150 ? badge('Meets WHO guidance', 'good') : badge('Below WHO guidance', 'low'),
+    `Moderate-equivalent minutes per week, last 4 weeks. WHO recommends 150–300 for adults; more brings extra benefit.`, 'who']);
+  rows.push(['Strength days', `${I.who.strengthDays.toFixed(1)} / week`, I.who.strengthDays >= 2 ? badge('Meets WHO guidance', 'good') : badge('WHO suggests 2+', 'ok'),
+    'Days with strength or HIIT workouts, last 4 weeks.', 'strength']);
+  if (I.rf){
+    const r = I.rating;
+    rows.push(['Aerobic fitness', `VDOT ${I.rf.best.v.toFixed(1)}`, r ? badge(`${r.name} for ${r.group}`, r.cls) : badge('Add age and sex in Settings for a rating', ''),
+      r ? `About the ${r.pct} for ${r.group} (Cooper Institute norms). ${r.next ? `${r.nextName} starts at ${r.next}.` : ''} As a runner: ${runnerLevel(I.rf.best.v).toLowerCase()} (rough guide). Worked out from training runs, so probably an underestimate.` : `As a runner: ${runnerLevel(I.rf.best.v).toLowerCase()} (rough guide).`, 'vdot']);
+  }
+  if (I.trend != null) rows.push(['Fitness trend', `${I.trend >= 0 ? '+' : ''}${Math.round(I.trend)}% in 6 weeks`, I.trend > 3 ? badge('Building', 'good') : I.trend < -10 ? badge('Losing fitness', 'low') : badge('Holding steady', 'ok'),
+    `Fitness ${Math.round(I.ctl)}, higher than on ${Math.round(I.rank)}% of days in the last year. Peak: ${Math.round(I.peak)} on ${fmtDay(I.peakDay)}.`, 'fitness']);
+  rows.push(['Consistency', `${I.st.perWeek.toFixed(1)} days / week`, I.st.perWeek >= 6.6 ? badge('Very consistent; add a rest day', 'ok') : I.st.perWeek >= 4 ? badge('Very consistent', 'good') : I.st.perWeek >= 2.5 ? badge('Consistent', 'ok') : badge('Irregular', 'low'),
+    `Active days per week over the last 12 weeks. Longest streak ${I.st.longest} days.`, 'calendar']);
+  if (I.style) rows.push(['Training style', I.style.name, badge(`${Math.round(I.style.e)}% easy`, I.style.e >= 75 ? 'good' : I.style.e >= 60 ? 'ok' : 'low'),
+    `Last 12 weeks: ${Math.round(I.style.e)}% easy, ${Math.round(I.style.m)}% moderate, ${Math.round(I.style.h)}% hard; ${I.style.what}.`, '8020']);
+  return `<section class="card gcard"><div class="ghead"><h2>Your level</h2></div><div class="meta">Where you stand, compared with health guidelines, population norms and your own history. Tap a row to learn more.</div>
+    <div class="lvl">${rows.map(r => `<button class="lrow" data-explain="${r[4]}"><div class="lt"><span>${esc(r[0])}</span><b>${esc(r[1])}</b></div>${r[2]}<div class="ln">${esc(r[3])}</div></button>`).join('')}</div></section>`;
+}
+
+/* explanations: what it is · how to read it · your numbers */
+const EXPLAIN = {
+  form:{t:'Form', what:'How fresh you are. It\'s yesterday\'s fitness minus yesterday\'s fatigue, so hard days push it down and rest days bring it back up.',
+    read:[['Above +10','Fresh. Good before a race or test; if it stays high for weeks, fitness slowly fades.'],['−10 to +10','Neutral: maintaining.'],['−30 to −10','The productive zone: you\'re training hard enough to build fitness.'],['Below −30','Very tired. A run of days here raises the risk of illness, injury and overreaching.']],
+    you:I => { const f = Math.round(I.pm.form[I.pm.form.length - 1]); return `Your form today is <b>${f}</b>: ${f > 10 ? 'fresh' : f >= -10 ? 'neutral, maintaining' : f >= -30 ? 'in the productive training zone' : 'very tired; prioritise easy days and sleep'}.`; }},
+  fitness:{t:'Fitness', what:'Your long-term training load: a 42-day weighted average of daily load. It rises slowly when you train consistently and falls slowly when you stop.',
+    read:[['Rising','You\'re getting fitter. Rises of more than about 10% a week are hard to absorb.'],['Flat','Maintaining.'],['Falling','Detraining, or a planned rest or taper.']],
+    you:I => `Fitness <b>${Math.round(I.ctl)}</b>, which is like doing about <b>${Math.round(I.ctl / 2)} min of zone-2 training every day</b>. Six weeks ago it was ${Math.round(I.ctl6)} (${I.trend >= 0 ? '+' : ''}${Math.round(I.trend || 0)}%). It's higher than on ${Math.round(I.rank)}% of days in the past year; your peak was ${Math.round(I.peak)} on ${fmtDay(I.peakDay)}.`},
+  fatigue:{t:'Fatigue', what:'Your short-term load: a 7-day weighted average. It jumps after big days and drops quickly with rest.',
+    read:[['Above fitness','Recent training is harder than usual, so form is negative.'],['Below fitness','You\'ve eased off, so form is positive.']],
+    you:I => `Fatigue today is <b>${Math.round(I.pm.atl[I.pm.atl.length - 1])}</b>, against fitness ${Math.round(I.ctl)}.`},
+  acwr:{t:'Injury-risk ratio (acute:chronic)', what:'Load in the last 7 days divided by your average over the last 28 days. It flags sudden spikes compared with what your body is used to.',
+    read:[['Below 0.8','Lighter than usual: safe, but fitness may slip if it lasts.'],['0.8–1.3','The usual "sweet spot".'],['1.3–1.5','Building quickly; be careful.'],['Above 1.5','A spike, linked in studies to higher injury risk.']],
+    extra:'Researchers debate how precise this ratio is; treat it as a warning light, not a prediction.',
+    you:I => { const v = I.pm.acwr[I.pm.acwr.length - 1]; return `Today: <b>${v == null ? '–' : v.toFixed(2)}</b>. In the safe band on <b>${I.safe} of the last ${I.a28.length} days</b>${I.a28.length ? `; highest ${Math.max(...I.a28).toFixed(2)}` : ''}.`; }},
+  easy:{t:'Easy share', what:'The share of your training time in heart-rate zones 1–2 over the last 14 days.',
+    read:[['About 80%','The usual target for endurance training (the "80/20" rule).'],['Below 70%','Too much moderate or hard work; easy days are probably not easy enough.']],
+    you:I => I.style ? `Last 12 weeks: <b>${Math.round(I.style.e)}% easy</b>, ${Math.round(I.style.m)}% moderate, ${Math.round(I.style.h)}% hard.` : ''},
+  sincehard:{t:'Days since a hard session', what:'Days since a workout with at least 10 minutes in zones 4–5.',
+    read:[['0–1 days','Recovering: keep today easy.'],['2–3 days','Usually recovered enough for another quality session.'],['4+ days','Fresh; a good time for intervals, tempo or hills, if your plan has them.']], you:() => ''},
+  pmc:{t:'Fitness, fatigue and form', what:'Each workout gets a training load: minutes in each heart-rate zone × the zone number (Edwards TRIMP). For example, 30 min in zone 2 = 60, and 30 min in zone 4 = 120. The chart tracks how that load builds into fitness and fatigue over time.',
+    read:[['Fitness line','Long-term trend (42 days).'],['Fatigue line','Short-term (7 days).'],['Form bars','Fitness − fatigue. Below zero = training hard; above = fresh.']],
+    you:I => EXPLAIN.fitness.you(I) + ' ' + EXPLAIN.form.you(I)},
+  mono:{t:'Monotony and strain', what:'Monotony = average daily load ÷ how much it varies across the 7 days (Foster). Strain = weekly load × monotony.',
+    read:[['Below 1.5','Good variety of hard and easy days.'],['1.5–2','Getting samey.'],['Above 2','Every day is about as hard as the last; linked to staleness and illness, especially with high strain.']],
+    you:I => { const v = I.mono; return v == null ? '' : `Average monotony over the last 4 blocks: <b>${v.toFixed(2)}</b>.`; }},
+  '8020':{t:'80/20 intensity balance', what:'How your training time splits between easy (zones 1–2), moderate (zone 3) and hard (zones 4–5).',
+    read:[['Polarised','About 80% easy, most of the rest hard, very little moderate.'],['Pyramidal','Mostly easy, with more moderate than hard.'],['Moderate- or intensity-heavy','Too little easy work; usually means easy days aren\'t easy enough.']],
+    you:I => I.style ? `Your style over 12 weeks: <b>${I.style.name}</b>, ${Math.round(I.style.e)}% easy. That means ${I.style.what}.` : ''},
+  ramp:{t:'Weekly running increase', what:'Compares each 7-day block\'s running distance with the block before.',
+    read:[['Up to +10%','A common rule of thumb for safe progression.'],['More than +10%','Fine now and then (e.g. after an easy week), but repeated jumps raise injury risk.']],
+    you:I => I.rampTxt || ''},
+  vdot:{t:'VDOT (running fitness)', what:'Jack Daniels\' running-fitness score, worked out from the distance and time of your best run in the last 6 months. It behaves like VO₂max (ml of oxygen per kg per minute) and is usually close to it, often slightly lower.',
+    read:[['Population norms','The Cooper Institute ranks VO₂max by age and sex: Superior (top 5%), Excellent (top 20%), Good (top 40%), Fair (top 60%), Poor.'],['Runner level (rough guide)','Under 30 beginner · 30s recreational · 40s experienced/club · 50s advanced club · 60+ sub-elite and elite.']],
+    extra:'Training runs are rarely all-out, so this usually underestimates you. A race or a hard 5 km time trial gives the truest number.',
+    you:I => I.rf ? `Your VDOT is <b>${I.rf.best.v.toFixed(1)}</b>, from ${fmtNum(I.rf.best.r.distance / U().dm, 2)} ${U().d} in ${fmtDur(I.rf.best.r.duration)} on ${fmtDay(I.rf.best.r.start)}. ${I.rating ? `That's <b>${I.rating.name}</b> for ${I.rating.group} (${I.rating.pct}).` : 'Add your age and sex in Settings → Profile for a population rating.'} Level: ${runnerLevel(I.rf.best.v).toLowerCase()}.` : 'Needs a run of 3 km or more in the last 6 months.'},
+  predict:{t:'Race predictions', what:'Two estimates from the same best run. VDOT uses Daniels\' oxygen-cost model; Riegel\'s formula is T₂ = T₁ × (D₂ / D₁)^1.06.',
+    read:[['Both agree','Good sign the estimate is stable.'],['Longer races','Assume you\'ve trained for the distance; marathon predictions need long runs in your training to be realistic.']], you:() => ''},
+  paces:{t:'Training paces', what:'Target paces from your VDOT, following Jack Daniels\' training system.',
+    read:[['Easy','Most of your running. Builds aerobic base; conversational.'],['Marathon','Steady, long efforts.'],['Threshold','"Comfortably hard"; 20–40 min tempo or 5–10 min repeats. Raises the pace you can hold.'],['Interval','3–5 min hard repeats with equal recovery. Raises VO₂max.'],['Repetition','Short fast repeats (200–400 m) with full recovery. Speed and form.']], you:() => ''},
+  ef:{t:'Aerobic efficiency', what:'How fast you run per heartbeat: metres per minute divided by average heart rate.',
+    read:[['Rising','Running faster at the same heart rate: aerobic fitness improving.'],['Falling','Fatigue, heat, illness or hillier routes.']],
+    you:I => I.efTxt || ''},
+  vam:{t:'Climbing rate (VAM)', what:'Metres climbed per hour of moving time, for the whole hike (flats and descents included), so it\'s lower than climbing-only figures.',
+    read:[['Higher','Faster on the hills. Compare with your own past hikes on similar terrain.']], you:I => I.vamTxt || ''},
+  naismith:{t:'Naismith\'s rule', what:'A classic hill-walking estimate: 1 hour per 5 km plus 1 hour per 600 m of ascent.',
+    read:[['Faster than predicted','Fitter than the average walker the rule assumes.'],['Slower','Rough terrain, heavy pack, long breaks, or pacing for the long day.']], you:I => I.naisTxt || ''},
+  calendar:{t:'Consistency and streaks', what:'Days with at least one workout. Consistency matters more for fitness than any single big session.',
+    read:[['4+ days a week','Very consistent.'],['Every day for weeks','Make sure some days are truly easy, and take a full rest day regularly.']],
+    you:I => `Active on <b>${I.st.perWeek.toFixed(1)} days a week</b> (last 12 weeks). Current streak ${I.st.cur} days, longest ${I.st.longest}.`},
+  who:{t:'WHO activity guidance', what:'The World Health Organization (2020) recommends adults do 150–300 minutes of moderate activity a week, or 75–150 minutes vigorous, or a mix (1 vigorous minute counts as 2 moderate), plus muscle strengthening on 2+ days.',
+    read:[['How the app counts','Zones 2–3 count as moderate, zones 4–5 as vigorous. Workouts without heart rate are counted at the zone of their average where possible.']],
+    you:I => `Last 4 weeks, per week: <b>${Math.round(I.who.mod)} min moderate</b> + <b>${Math.round(I.who.vig)} min vigorous</b> = <b>${Math.round(I.who.eq)} moderate-equivalent minutes</b>.`},
+  strength:{t:'Strength days', what:'WHO also recommends muscle-strengthening activity on 2 or more days a week. The app counts days with a strength or HIIT workout.',
+    read:[], you:I => `Last 4 weeks: <b>${I.who.strengthDays.toFixed(1)} days a week</b>.`},
+  zones:{t:'Heart-rate zones', what:'Zones are bands of your maximum heart rate. With a resting heart rate entered, they use your heart-rate reserve (Karvonen: rest + % × (max − rest)), which fits fitter people better.',
+    read:[['Max HR','Your highest recorded heart rate is usually better than the age formula (208 − 0.7 × age), which can be off by 10+ bpm.']], you:() => ''},
+  records:{t:'Personal records', what:'Your bests, found across your whole history. Paces are whole-workout averages, not best splits.', read:[], you:() => ''},
+  load:{t:'Training load (TRIMP)', what:'Minutes in each heart-rate zone × the zone number. 30 min easy in zone 2 = 60; 30 min hard in zone 4 = 120. Workouts without heart rate count as 1.5 per minute.', read:[], you:() => ''},
+};
+function explainSheet(key){
+  const e = EXPLAIN[key]; if (!e) return;
+  const I = V.proI || {};
+  let you = ''; try { you = e.you(I) || ''; } catch(err){}
+  openSheet(`<h3>${esc(e.t)}</h3><p class="ex">${e.what}</p>
+    ${e.read.length ? `<div class="sgl">How to read it</div><table class="atbl extbl">${e.read.map(r => `<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</table>` : ''}
+    ${e.extra ? `<p class="n" style="margin-top:10px">${esc(e.extra)}</p>` : ''}
+    ${you ? `<div class="sgl">You</div><div class="you">${you}</div>` : ''}`);
 }
 
 /* =====================================================================
@@ -2187,6 +2645,7 @@ const SCHEDULE = [['6:17 AM', '47 0 * * *'], ['9:30 AM', '0 4 * * *'], ['6:17 PM
 function profileSettingsHtml(){
   return `<h3>Profile (for Pro)</h3><div class="card">
     <div class="srow"><div class="grow">Age</div><input type="number" min="10" max="100" value="${S.age || ''}" data-set="age" style="width:84px" placeholder="–"></div>
+    <div class="srow"><div class="grow">Sex<div class="n">For the fitness rating against population norms</div></div><select data-set="sex">${[['','Not set'],['m','Male'],['f','Female']].map(([k, l]) => `<option value="${k}" ${S.sex === k ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
     <div class="srow"><div class="grow">Resting heart rate<div class="n">Lowest you see on waking, in bpm</div></div><input type="number" min="30" max="110" value="${S.restHr || ''}" data-set="restHr" style="width:84px" placeholder="–"></div>
     <div class="srow"><div class="grow">Max heart rate<div class="n">Sets zone boundaries. Pro suggests values.</div></div><input type="number" min="120" max="230" value="${S.maxHr}" data-set="maxHr" style="width:84px"></div>
   </div>`;
@@ -2214,7 +2673,7 @@ function syncSettingsHtml(){
 
 /* ---------------- events ---------------- */
 document.addEventListener('click', async e => {
-  const b = e.target.closest('button, [data-i]'); if (!b) return;
+  const b = e.target.closest('button, [data-i], [data-psort], [data-sclose], [data-explain]'); if (!b) return;
   const d = b.dataset;
 
   // ---- refresh / sync ----
@@ -2235,26 +2694,50 @@ document.addEventListener('click', async e => {
   if ('colorsreset' in d){ S.palette = 'neon'; S.typeColors = {}; S.accent = ''; S.lineColor = ''; save(); applyColors(); renderSettings(); return; }
   // ---- pro ----
   if (d.usemax){ S.maxHr = +d.usemax; ACTS.forEach(a => delete a._load); save(); renderPro(); toast('Max heart rate set to ' + d.usemax + ' bpm', 'ok'); return; }
-  // ---- analysis ----
-  if (d.af){
-    const c = curCfg(), arr = c.f[d.af] || [], v = d.af === 'types' ? d.v : +d.v;
-    c.f[d.af] = arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
-    V.filtersOpen = true; save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return;
+  // ---- analysis (pivot) ----
+  if ('sclose' in d){ closeSheet(); return; }
+  if (d.explain){ explainSheet(d.explain); return; }
+  const pv = () => { save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); };
+  const numKey = v => isNaN(+v) || v === '' ? v : +v;
+  if (d.pchip){ sheetFor(d.pchip); return; }
+  if (d.padd){ sheetFor('add:' + d.padd); return; }
+  if (d.psetrows != null){ const P = curPivot(); if (P.cols === d.psetrows) P.cols = ''; P.rows = d.psetrows; P.sort = null; if (P.chart === 'heat' && P.rows !== 'day') P.chart = 'bar'; closeSheet(); pv(); return; }
+  if (d.psetcols != null){ const P = curPivot(); P.cols = d.psetcols; if (P.cols && P.chart === 'bar') P.chart = 'stack'; if (!P.cols && P.showAs === 'col') P.showAs = 'value'; closeSheet(); pv(); return; }
+  if (d.paddval){ const P = curPivot(); P.vals.push({m:d.paddval, how:AM[d.paddval].hows[0]}); closeSheet(); pv(); return; }
+  if (d.phow){ const P = curPivot(); P.vals[+d.i].how = d.phow; pv(); sheetFor('val:' + d.i); return; }
+  if (d.pchval){ const P = curPivot(); P.vals[+d.vi] = {m:d.pchval, how:AM[d.pchval].hows[0]}; closeSheet(); pv(); return; }
+  if (d.pvmove != null){ const P = curPivot(), i = +d.pvmove, j = i + +d.dir; [P.vals[i], P.vals[j]] = [P.vals[j], P.vals[i]]; closeSheet(); pv(); return; }
+  if (d.pvdel != null){ const P = curPivot(); P.vals.splice(+d.pvdel, 1); closeSheet(); pv(); return; }
+  if (d.paddfilt){ const P = curPivot(); P.filters.push(d.paddfilt.startsWith('m:') ? {f:d.paddfilt, min:'', max:''} : {f:d.paddfilt, in:[]}); save(); sheetFor('filter:' + (P.filters.length - 1)); return; }
+  if (d.pdate){ const P = curPivot(), f = P.filters[+d.i]; f.preset = d.pdate; pv(); if (d.pdate === 'custom') sheetFor('filter:' + d.i); else closeSheet(); return; }
+  if (d.pfall != null){ const P = curPivot(), f = P.filters[+d.pfall]; f.in = [...document.querySelectorAll(`[data-pfin="${d.pfall}"]`)].map(x => numKey(x.value)); pv(); sheetFor('filter:' + d.pfall); return; }
+  if (d.pfnone != null){ curPivot().filters[+d.pfnone].in = []; pv(); sheetFor('filter:' + d.pfnone); return; }
+  if (d.pfdel != null){ const P = curPivot(); if (P.filters[+d.pfdel].f !== 'date') P.filters.splice(+d.pfdel, 1); closeSheet(); pv(); return; }
+  if (d.pfnum != null){
+    const P = curPivot(), f = P.filters[+d.pfnum], c = numConv(f.f.slice(2));
+    const rd = id => { const t = $(id).value.trim(); if (!t) return ''; const n = c.mmss ? num(t) : parseFloat(t.replace(',', '.')); return n == null || isNaN(n) ? '' : c.from(n); };
+    f.min = rd('#pfmin'); f.max = rd('#pfmax'); closeSheet(); pv(); return;
   }
-  if (d.afclear){ curCfg().f[d.afclear] = []; V.filtersOpen = true; save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return; }
+  if (d.pview){ curPivot().view = d.pview; pv(); return; }
+  if (d.psort){ const P = curPivot(); const cur = P.sort || {k:'label', dir:TIME_DIMS.includes(P.rows) || P.rows === 'workout' ? -1 : 1};
+    P.sort = cur.k === d.psort ? {k:d.psort, dir:-cur.dir} : {k:d.psort, dir:d.psort === 'label' ? 1 : -1}; pv(); return; }
+  if ('pvall' in d){ V.pvAll = true; const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return; }
+  if ('pswap' in d){ const P = curPivot(); if (P.cols && !['workout','day'].includes(P.rows)){ [P.rows, P.cols] = [P.cols, P.rows]; P.sort = null; } else if (P.cols) toast('Each workout and Day can only be rows.'); pv(); return; }
+  if ('pren' in d){ const bx = $('#arename'); bx.hidden = !bx.hidden; if (!bx.hidden) bx.querySelector('input').focus(); return; }
+  if ('prensave' in d){ curPivot().title = $('#arename input').value.trim(); pv(); return; }
   if ('apin' in d){
-    const c = structuredClone(curCfg()); c.title = c.title || autoTitle(c);
+    const c = structuredClone(curPivot()); c.title = pivotTitle(c);
     S.custom = [...(S.custom || []), c]; save(); renderNav();
     const m = $('#apinmsg'); m.className = 'msg ok';
     m.textContent = S.navOn.includes('custom') ? 'Pinned. It\'s on your Custom page.' : 'Pinned. Turn on "Custom" in Settings → Bottom bar to see your charts.';
     return;
   }
-  if ('areset' in d){ S.analysis = defaultCfg(); save(); renderAnalysis(); return; }
-  if ('asave' in d){ const c = structuredClone(curCfg()); S.custom[V.editIdx] = c; S.analysis = V.prevAnalysis || defaultCfg(); V.editIdx = null; save(); V.tab = 'custom'; render(); toast('Chart updated', 'ok'); return; }
-  if ('acancel' in d){ S.analysis = V.prevAnalysis || defaultCfg(); V.editIdx = null; save(); V.tab = 'custom'; render(); return; }
+  if ('areset' in d){ S.analysis = defaultPivot(); V.pvAll = false; pv(); return; }
+  if ('asave' in d){ const c = structuredClone(curPivot()); S.custom[V.editIdx] = c; S.analysis = V.prevAnalysis || defaultPivot(); V.editIdx = null; save(); V.tab = 'custom'; render(); toast('Chart updated', 'ok'); return; }
+  if ('acancel' in d){ S.analysis = V.prevAnalysis || defaultPivot(); V.editIdx = null; save(); V.tab = 'custom'; render(); return; }
   // ---- custom page ----
   if (d.cmv != null){ const i = +d.cmv, j = i + +d.dir, o = S.custom; [o[i], o[j]] = [o[j], o[i]]; save(); const y = window.scrollY; renderCustom(); window.scrollTo({top:y}); return; }
-  if (d.cedit != null){ V.prevAnalysis = structuredClone(curCfg()); S.analysis = structuredClone(S.custom[+d.cedit]); V.editIdx = +d.cedit; V.filtersOpen = false; V.tab = 'analysis'; render(); return; }
+  if (d.cedit != null){ V.prevAnalysis = structuredClone(curPivot()); S.analysis = toPivot(structuredClone(S.custom[+d.cedit])); V.editIdx = +d.cedit; V.pvAll = false; V.tab = 'analysis'; render(); return; }
   if (d.cren != null){ const box = $('#cr' + d.cren); box.hidden = !box.hidden; if (!box.hidden) box.querySelector('input').focus(); return; }
   if (d.crensave != null){ const i = +d.crensave, v = $('#cr' + i).querySelector('input').value.trim(); S.custom[i].title = v; save(); const y = window.scrollY; renderCustom(); window.scrollTo({top:y}); return; }
   if (d.cdel != null){
@@ -2265,12 +2748,12 @@ document.addEventListener('click', async e => {
   if ('cimport' in d){
     const m = $('#cmsg');
     try { const arr = JSON.parse(decodeURIComponent(escape(atob($('#cimport').value.trim()))));
-      if (!Array.isArray(arr) || !arr.every(x => x && x.measure && x.f)) throw new Error('bad');
-      S.custom = [...(S.custom || []), ...arr]; save(); renderNav(); renderCustom(); toast(`Added ${arr.length} chart${arr.length > 1 ? 's' : ''}`, 'ok'); }
+      if (!Array.isArray(arr) || !arr.every(x => x && (x.rows || (x.measure && x.f)))) throw new Error('bad');
+      S.custom = [...(S.custom || []), ...arr.map(toPivot)]; save(); renderNav(); renderCustom(); toast(`Added ${arr.length} chart${arr.length > 1 ? 's' : ''}`, 'ok'); }
     catch(err){ m.className = 'msg err'; m.textContent = 'That code didn\'t work. Copy it again from the other device.'; }
     return;
   }
-  if (d.tab){ if (d.tab !== V.tab){ if (V.tab === 'analysis' && V.editIdx != null){ S.analysis = V.prevAnalysis || S.analysis; V.editIdx = null; } V.tab = d.tab; V.sel = null; V.listLimit = 25; if (d.tab !== 'settings'){ S.lastTab = d.tab; save(); } render(); } return; }
+  if (d.tab){ if (d.tab !== V.tab){ if (V.tab === 'analysis' && V.editIdx != null){ S.analysis = V.prevAnalysis || S.analysis; V.editIdx = null; } closeSheet(); V.pvAll = false; V.tab = d.tab; V.sel = null; V.listLimit = 25; if (d.tab !== 'settings'){ S.lastTab = d.tab; save(); } render(); } return; }
   if (d.period){ V.period = d.period; V.sel = null; V.listLimit = 25; renderWorkout(); return; }
   if ('compare' in d){ S.compare = !S.compare; V.sel = null; save(); renderWorkout(); return; }
   if (d.metric || d.gmetric){
@@ -2321,19 +2804,12 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('change', e => {
   const t = e.target;
-  if (t.dataset.ac){
-    const c = curCfg(), k = t.dataset.ac; let v = t.value;
-    if (k === 'bins') v = Math.max(3, Math.min(30, parseInt(v) || 12));
-    c[k] = v;
-    if (k === 'measure') c.how = fixHow(c.measure, c.how);
-    if (k === 'measure2') c.how2 = v ? AM[v].hows[0] : '';
-    if (k === 'by' && c.split === v) c.split = '';
-    if (k === 'chart' && v === 'stack' && !c.split) c.split = 'type';
-    if (k === 'chart' && v === 'scatter' && c.xm === c.measure){ c.xm = 'distance'; c.measure = c.measure === 'distance' ? 'pace' : c.measure; c.how = fixHow(c.measure, c.how); }
-    c.title = '';
-    save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return;
-  }
-  if (t.dataset.af2){ const c = curCfg(); c.f[t.dataset.af2] = t.value; V.filtersOpen = true; save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return; }
+  if (t.dataset.pfin != null){ const P = curPivot(), f = P.filters[+t.dataset.pfin], v = isNaN(+t.value) ? t.value : +t.value;
+    f.in = t.checked ? [...new Set([...f.in, v])] : f.in.filter(x => x !== v); save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return; }
+  if (t.dataset.pdatefrom != null || t.dataset.pdateto != null){ const i = +(t.dataset.pdatefrom ?? t.dataset.pdateto), f = curPivot().filters[i];
+    f[t.dataset.pdatefrom != null ? 'from' : 'to'] = t.value; save(); renderAnalysis(); return; }
+  if (t.dataset.pchart != null){ const P = curPivot(); P.chart = t.value; if (t.value === 'heat' && P.rows !== 'day'){ P.rows = 'day'; P.cols = ''; } if (t.value === 'scatter' && P.vals.length < 2) P.vals.push({m:'pace', how:'wavg'}); save(); renderAnalysis(); return; }
+  if (t.dataset.pshow != null){ curPivot().showAs = t.value; save(); const y = window.scrollY; renderAnalysis(); window.scrollTo({top:y}); return; }
 
   if (t.id === 'fileIn' && t.files[0]){
     const f = t.files[0];
@@ -2362,7 +2838,7 @@ window.addEventListener('scroll', () => {
   else if (compactHdr && y < 8){ compactHdr = false; $('#hdr').classList.remove('scrolled'); }
 }, {passive:true});
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (V.redraw) V.redraw(); else if (V.tab !== 'settings') drawAll(); }, 120); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && V.sel != null){ V.sel = null; renderWorkout(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#sheet').classList.contains('open')){ closeSheet(); return; } if (e.key === 'Escape' && V.sel != null){ V.sel = null; renderWorkout(); } });
 
 /* installable app: offline helper (only when hosted, e.g. on GitHub Pages) */
 if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
